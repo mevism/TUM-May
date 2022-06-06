@@ -1,5 +1,4 @@
-@extends('layouts.backend')
-@section('content')
+<?php $__env->startSection('content'); ?>
     <!-- Page Content -->
     <div class="content">
         <!-- Stats -->
@@ -40,4 +39,6 @@
         <!-- END Stats -->
     </div>
     <!-- END Page Content -->
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/Mevis/resources/views/admin/index.blade.php ENDPATH**/ ?>
