@@ -26,15 +26,18 @@ class CoursesController extends Controller
      */
     public function addIntake(Request $request)
     {
-        $projects = Intake::where([
-            ['intake_name','!=',Null],
-            [function($query) use($request){
-                if(($term=$request->term)){
-                    $query->orWhere('intake_name','LIKE','%'.$term. '%')->get();
-                }
-            }]
-        ])->orderBy("id","desc")->paginate(2);
-        return view('courses::intake.addIntake', compact('projects'))->with('i',(request()->input('page',1)-1)*5);
+        $data =  Intake::all();
+        return view('courses::intake.addIntake')->with('data',$data);
+        
+        // $projects = Intake::where([
+        //     ['intake_name','!=',Null],
+        //     [function($query) use($request){
+        //         if(($term=$request->term)){
+        //             $query->orWhere('intake_name','LIKE','%'.$term. '%')->get();
+        //         }
+        //     }]
+        // ])->orderBy("id","desc")->paginate(2);
+        // return view('courses::intake.addIntake', compact('projects'))->with('i',(request()->input('page',1)-1)*5);
     }
 
     public function storeIntake(Request $request)
@@ -48,7 +51,7 @@ class CoursesController extends Controller
 
     public function showIntake()
     {   
-        $data = Intake::all();
+        $data = Intake::latest()->get();
         return view('courses::intake.showIntake')->with('data',$data);
     }
 
@@ -86,7 +89,7 @@ class CoursesController extends Controller
 
     public function showSchool(){
 
-        $data    =   School::all();
+        $data    =   School::latest()->get();
         return view('courses::school.showSchool')->with('data',$data);
 
     }
@@ -131,7 +134,7 @@ class CoursesController extends Controller
 
     public function showDepartment()
     {
-        $data = Department::all();
+        $data = Department::latest()->get();
         return view('courses::department.showDepartment')->with('data',$data);
     }
 
@@ -174,25 +177,32 @@ class CoursesController extends Controller
      * Information about Course
     */
     public function addCourse(){
+        $campuses      =  Campus::all();
         $schools       =  School::all();
         $departments   =  Department::all();
-        $campuses      =  Campus::all();
-         return view('courses::course.addCourse')->with(['schools' => $schools, 'departments'=>$departments,'campuses'=> $campuses]);
+        
+         return view('courses::course.addCourse')->with([
+             'schools' => $schools, 
+             'departments'=>$departments,
+             'campuses'=> $campuses
+            ]);
         
     }
-  
+   public function searchCourse(){
+
+   }
 
     public function storeCourse(Request $request){
       
 
         $courses                      =    new Course;
+        $courses->campus_id           =    $request->input('campus');
+        $courses->school_id           =    $request->input('school');
+        $courses->department_id       =    $request->input('department');
         $courses->course_name         =    $request->input('course_name');
         $courses->course_code         =    $request->input('course_code');
         $courses->course_duration     =    $request->input('course_duration');
         $courses->course_requirements =    $request->input('course_requirements');
-        $courses->campus_id           =    $request->input('campus ');
-        $courses->school_id           =    $request->input('school');
-        $courses->department_id       =    $request->input('department');
         $courses->save();
 
         return redirect()->route('courses.addCourse')->with('success','Course Created');
@@ -200,15 +210,15 @@ class CoursesController extends Controller
 
     public function showCourse()
     {
-        $data = Course::all();
+        $data = Course::latest()->get();
         return view('courses::course.showCourse')->with('data',$data);
     }
 
-    public function addDepens(Request $request){
-        $data = Department::select('name','id')->where('id',$request->id)->take(5)->get();
+    // public function addDepens(Request $request){
+    //     $data = Department::select('name','id')->where('id',$request->id)->take(5)->get();
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 
     public function editCourse($id){
         $data    =   Course::find($id);
@@ -255,7 +265,7 @@ class CoursesController extends Controller
 
     public function showClasses()
     {
-        $data = Classes::all();
+        $data = Classes::latest()->get();
         return view('courses::class.showClasses')->with('data',$data);
     }
     public function editClasses($id){

@@ -32,12 +32,13 @@
 
                    <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo e(route('courses.storeCourse')); ?>" method="POST">
                     <?php echo csrf_field(); ?>
+                   
                     <div class="col-12 col-xl-12">
                       <select name="campus" id="campus" class="form-control form-control-alt">
-                        <option selected disabled>Select Campus</option>
+                        <option selected diasabled>Select Campus</option>
                         <?php $__currentLoopData = $campuses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $campus): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <option value="<?php echo e($campus->name); ?>"><?php echo e($campus->name); ?></option>        
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($campus->name); ?>"><?php echo e($campus->name); ?></option>                      
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                    

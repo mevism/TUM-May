@@ -43,8 +43,9 @@ Route::prefix('courses')->group(function() {
     Route::get('/editCourse/{id}', 'CoursesController@editCourse')->name('courses.editCourse');
     Route::put('/updateCourse/{id}', 'CoursesController@updateCourse')->name('courses.updateCourse');
     Route::get('/destroyCourse/{id}', 'CoursesController@destroyCourse')->name('courses.destroyCourse');
+    Route::post('/searchCourse', 'CoursesController@searchCourse')->name('courses.search');
 
-
+    
     Route::get('/addClasses', 'CoursesController@addClasses')->name('courses.addClasses');
     Route::post('/storeClasses', 'CoursesController@storeClasses')->name('courses.storeClasses');
     Route::get('/showClasses', 'CoursesController@showClasses')->name('courses.showClasses');

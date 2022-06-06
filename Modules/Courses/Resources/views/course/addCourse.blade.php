@@ -34,12 +34,13 @@
 
                    <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.storeCourse') }}" method="POST">
                     @csrf
+                   
                     <div class="col-12 col-xl-12">
                       <select name="campus" id="campus" class="form-control form-control-alt">
-                        <option selected disabled>Select Campus</option>
+                        <option selected diasabled>Select Campus</option>
                         @foreach ($campuses as $campus)
-                        <option value="{{ $campus->name }}">{{ $campus->name }}</option>        
-                      @endforeach
+                        <option value="{{ $campus->name }}">{{ $campus->name }}</option>                      
+                        @endforeach
                       </select>
                     </div>
                    

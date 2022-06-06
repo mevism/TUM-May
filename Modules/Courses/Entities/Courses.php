@@ -9,7 +9,10 @@ class Courses extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = ['campus_id'];
+    protected $guared = [];
+    
+    protected $table = 'courses';
     
     protected static function newFactory()
     {
