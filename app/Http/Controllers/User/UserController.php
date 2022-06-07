@@ -32,7 +32,7 @@ class UserController extends Controller
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
 
-            if (Auth::guard('user')->user()->role_id === 2){
+            if (json_decode(Auth::guard('user')->user()->role_id)->role){
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
 
@@ -58,26 +58,26 @@ class UserController extends Controller
 
     }
     public function dashboard(){
-
-       if (Auth::guard('user')->user()->role_id === 1){
+        $roles = json_decode(Auth::guard('user')->user()->role_id)->role;
+       if ($roles == 1){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('admin.index');
            }
-       }elseif (Auth::guard('user')->user()->role_id === 6){
+       }elseif ($roles == 6){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('student.index');
            }
-       }elseif (Auth::guard('user')->user()->role_id === 2){
+       }elseif ($roles == 2){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('approval::cod.index');
            }
-       }elseif (Auth::guard('user')->user()->role_id === 4){
+       }elseif ($roles == 4){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{

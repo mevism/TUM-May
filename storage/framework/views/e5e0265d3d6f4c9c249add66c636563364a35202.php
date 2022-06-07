@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
     <!-- Page Content -->
 
@@ -16,7 +17,7 @@
 
     <script src = "<?php echo e(asset('/js/build.js')); ?>"></script>
     <script>
-        retrieveApplication(0);
+        retrieveApplication({"status" : 0, "role" : 4});
     </script>
 <?php $__env->stopSection(); ?>
 

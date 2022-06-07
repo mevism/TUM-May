@@ -49,15 +49,16 @@ class ApprovalController extends Controller
      *@views
      */
     public function pending(){
+        $roles = json_decode(Auth::guard('user')->user()->role_id)->role;
 
-       if (Auth::guard('user')->user()->role_id === 2){
+       if ($roles == 2){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('approval::cod.pending');
            }
        }
-       if (Auth::guard('user')->user()->role_id === 4){
+       if ($roles == 4){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
@@ -66,14 +67,15 @@ class ApprovalController extends Controller
        }
     }
     public function approved(){
-       if (Auth::guard('user')->user()->role_id === 2){
+       $roles = json_decode(Auth::guard('user')->user()->role_id)->role;
+       if ($roles == 2){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('approval::cod.approved');
            }
        }
-       if (Auth::guard('user')->user()->role_id === 4){
+       if ($roles == 4){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
@@ -82,14 +84,15 @@ class ApprovalController extends Controller
        }
     }
     public function rejected(){
-       if (Auth::guard('user')->user()->role_id === 2){
+       $roles = json_decode(Auth::guard('user')->user()->role_id)->role;
+       if ($roles == 2){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('approval::cod.rejected');
            }
        }
-       if (Auth::guard('user')->user()->role_id === 4){
+       if ($roles == 4){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
@@ -98,14 +101,15 @@ class ApprovalController extends Controller
        }
     }
     public function search(){
-       if (Auth::guard('user')->user()->role_id === 2){
+       $roles = json_decode(Auth::guard('user')->user()->role_id)->role;
+       if ($roles == 2){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('approval::cod.search');
            }
        }
-       if (Auth::guard('user')->user()->role_id === 4){
+       if ($roles == 4){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
@@ -114,14 +118,15 @@ class ApprovalController extends Controller
        }
     }
     public function viewPending(){
-       if (Auth::guard('user')->user()->role_id === 2){
+       $roles = json_decode(Auth::guard('user')->user()->role_id)->role;
+       if ($roles == 2){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('approval::cod.view');
            }
        }
-       if (Auth::guard('user')->user()->role_id === 4){
+       if ($roles == 4){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
