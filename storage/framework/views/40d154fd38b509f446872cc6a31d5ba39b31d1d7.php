@@ -1,5 +1,4 @@
-@extends('application::layouts.simple')
-@section('content')
+<?php $__env->startSection('content'); ?>
 
     <div id="page-container">
         <!-- Main Container -->
@@ -13,7 +12,7 @@
                             <div class="w-100">
                                 <a class="link-fx fw-semibold fs-2 text-white" target="_blank" href="https://www.tum.ac.ke/">
                                     <span class="d-flex justify-content-center">
-                                        <img src="{{ url('media/tum-logo/tum-logo.png') }}" alt="logo" style="width: 50% !important; height: 50% !important;">
+                                        <img src="<?php echo e(url('media/tum-logo/tum-logo.png')); ?>" alt="logo" style="width: 50% !important; height: 50% !important;">
                                     </span>
                                     <div class="h3 p-3">
                                         Technical University of Mombasa
@@ -29,7 +28,7 @@
                                 <strong>TUM</strong> &copy; <span data-toggle="year-copy"></span>
                             </p>
                             <ul class="list list-inline mb-0 py-2">
-                                <img src="{{ url('media/tum-logo/iso.png') }}" alt="iso image" style="height: 50px !important; width: 200px !important;">
+                                <img src="<?php echo e(url('media/tum-logo/iso.png')); ?>" alt="iso image" style="height: 50px !important; width: 200px !important;">
                             </ul>
                         </div>
                     </div>
@@ -39,7 +38,7 @@
                     <div class="hero-static col-lg-8 d-flex flex-column align-items-center bg-body-light">
                         <div class="p-3 w-100 d-lg-none text-center">
                             <a class="link-fx fw-semibold fs-3 text-dark" href="https://www.tum.ac.ke/">
-                                <img src="{{ url('media/tum-logo/tum-logo.png') }}" alt="logo">
+                                <img src="<?php echo e(url('media/tum-logo/tum-logo.png')); ?>" alt="logo">
                             </a>
                         </div>
                         <div class="p-4 w-100 flex-grow-1 d-flex align-items-center">
@@ -47,19 +46,20 @@
                                 <!-- Header -->
                                 <div class="text-center mb-5">
                                     <h5 class="fw-bold mb-2 text-uppercase">
-                                        Phone Verification | {{ session('phone') }}
+                                        Phone Verification | <?php echo e(session('phone')); ?>
+
                                     </h5>
                                 </div>
                                 <!-- END Header -->
                                 <div class="row g-0 justify-content-center">
                                     <div class="col-sm-8 col-xl-4">
-                                        <form class="js-validation-signin" action="{{ route('application.phonereverification') }}" method="POST">
-                                            @csrf
+                                        <form class="js-validation-signin" action="<?php echo e(route('application.phonereverification')); ?>" method="POST">
+                                            <?php echo csrf_field(); ?>
                                             <div class="form-floating mb-4">
-                                                <input type="hidden" class="form-control form-control-alt" name="phone_number" value="{{ session('phone') }}">
+                                                <input type="hidden" class="form-control form-control-alt" name="phone_number" value="<?php echo e(session('phone')); ?>">
                                             </div>
                                             <div class="form-floating mb-4">
-                                                <input type="text" class="form-control form-control-alt" name="verification_code" value="{{ session('code') }}">
+                                                <input type="text" class="form-control form-control-alt" name="verification_code" value="<?php echo e(session('code')); ?>">
                                                 <label class="form-label" for="username">Verification Code</label>
                                             </div>
                                             <div class="d-flex justify-content-center align-items-center mb-4">
@@ -80,7 +80,7 @@
                                 <strong>TUM</strong> &copy; <span data-toggle="year-copy"></span>
                             </p>
                             <ul class="list list-inline mb-0 py-2">
-                                <img src="{{ url('media/tum-logo/iso.png') }}" alt="iso image" style="height: 50px !important; width: 200px !important;">
+                                <img src="<?php echo e(url('media/tum-logo/iso.png')); ?>" alt="iso image" style="height: 50px !important; width: 200px !important;">
                             </ul>
                         </div>
                     </div>
@@ -91,4 +91,6 @@
         </main>
         <!-- END Main Container -->
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('application::layouts.simple', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\TUM\Modules/Application\Resources/views/auth/reverifyphone.blade.php ENDPATH**/ ?>

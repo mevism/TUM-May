@@ -24,8 +24,14 @@
         Route::get('/verifyphone', 'ApplicationController@verifyemail')->name('application.phoneverify');
         Route::get('/details', 'ApplicationController@details')->name('application.details')->middleware('auth');
         Route::get('/verifyphone', 'ApplicationController@phoneverify')->name('application.phone');
-        Route::post('/save', 'ApplicationController@makeupdate')->name('application.save');
+
+
+
         Route::get('/logout', 'ApplicationController@logout')->name('application.logout');
+
+        Route::group(['middleware' => ['auth', 'is_verified']], function (){
+            Route::post('/updateDetails', 'ApplicationController@makeupdate')->name('application.updateDetails');
+        });
 
         Route::group(['middleware' => ['user_updated', 'auth']], function (){
             Route::get('/applicant', 'ApplicationController@dashboard')->name('application.applicant');
@@ -35,6 +41,7 @@
             Route::get('/applyNow/{course}', 'ApplicationController@applyNow')->name('application.apply');
             Route::post('/submitApplication', 'ApplicationController@application')->name('application.save');
             Route::get('/profile', 'ApplicationController@myProfile')->name('applicant.profile');
+            Route::post('/save', 'ApplicationController@makeupdate')->name('application.save');
         });
 
     });

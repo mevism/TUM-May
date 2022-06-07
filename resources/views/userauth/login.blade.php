@@ -1,78 +1,103 @@
 @extends('layouts.simple')
 
 @section('content')
-
-    <style>
-        .img{
-            background-image: url("/media/photos/photo33@2x.jpg");
-            background-size: cover;
-
-        }
-        .block{
-            background-color: rgb(0,0, 0,0.5);
-        }
-        .form-check-label{
-            color: whitesmoke;
-        }
-    </style>
-    <div  id="page-container">
-
+   <div id="page-container">
         <!-- Main Container -->
-        <main class="img" id="main-container">
+        <main id="main-container">
             <!-- Page Content -->
-            <div class="hero-static d-flex align-items-center">
-                <div class="content">
-                    <div class="row justify-content-center push">
-                        <div class="col-md-8 col-lg-6 col-xl-4">
-                            <!-- Sign In Block -->
-                            <div class="block block-rounded mb-0">
-                                <div class="block-header block-header-default">
-                                    <h3 class="block-title"> {{ config('app.name') }} | Sign in</h3>
-                                    <div class="block-options">
-                                        <a class="btn-block-option fs-sm" href="">Forgot Password?</a>
+            <div class="bg-image" style="background-image: url('media/photos/photo28@2xjpg');">
+                <div class="row g-0 bg-primary-dark-op">
+                    <!-- Meta Info Section -->
+                    <div class="hero-static col-lg-4 d-none d-lg-flex flex-column justify-content-center">
+                        <div class="p-4 p-xl-5 flex-grow-1 d-flex align-items-center">
+                            <div class="w-100">
+                                <a class="link-fx fw-semibold fs-2 text-white" target="_blank" href="https://www.tum.ac.ke/">
+                                    <span class="d-flex justify-content-center">
+                                        <img src="{{ url('media/tum-logo/tum-logo.png') }}" alt="logo" style="width: 50% !important; height: 50% !important;">
+                                    </span>
+                                    <div class="h3 p-3">
+                                        Technical University of Mombasa
                                     </div>
+                                </a>
+                                <p class="text-white-75 me-xl-8 mt-2">
+                                    Welcome to Technical University of Mombasa. A Technical University of Global Excellence in Advancing Knowledge, Science and Technology.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="p-4 p-xl-5 d-xl-flex justify-content-between align-items-center fs-sm">
+                            <p class="fw-medium text-white-50 mb-0">
+                                <strong>TUM</strong> &copy; <span data-toggle="year-copy"></span>
+                            </p>
+                            <ul class="list list-inline mb-0 py-2">
+                                <img src="{{ url('media/tum-logo/iso.png') }}" alt="iso image" style="height: 50px !important; width: 200px !important;">
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END Meta Info Section -->
+
+                    <!-- Main Section -->
+                    <div class="hero-static col-lg-8 d-flex flex-column align-items-center bg-body-light">
+                        <div class="p-3 w-100 d-lg-none text-center">
+                            <a class="link-fx fw-semibold fs-3 text-dark" href="https://www.tum.ac.ke/">
+                                <img src="{{ url('media/tum-logo/tum-logo.png') }}" alt="logo">
+                            </a>
+                        </div>
+                        <div class="p-4 w-100 flex-grow-1 d-flex align-items-center">
+                            <div class="w-100">
+                                <!-- Header -->
+                                <div class="text-center mb-5">
+                                    <h5 class="fw-bold mb-2 text-uppercase">
+                                        Sign In | {{ config('app.name') }}
+                                    </h5>
+                                    <p class="fw-medium text-muted">
+                                        Welcome, please login or <a href="{{ route('application.register') }}"> register </a> for a new account.
+                                    </p>
                                 </div>
-                                <div class="block-content">
-                                    <div class="p-sm-3 px-lg-4 px-xxl-5 py-lg-5">
-                                        <h1 class="h2 mb-1"></h1>
-                                        <p class="fw-medium text-muted">
-                                        </p>
+                                <!-- END Header -->
+
+                                <!-- Sign In Form -->
+                                <!-- jQuery Validation (.js-validation-signin class is initialized in js/pages/op_auth_signin.min.js which was auto compiled from _js/pages/op_auth_signin.js) -->
+                                <!-- For more info and examples you can check out https://github.com/jzaefferer/jquery-validation -->
+                                <div class="row g-0 justify-content-center">
+                                    <div class="col-sm-8 col-xl-4">
                                         <form class="js-validation-signin" action="{{ route('user.login') }}" method="POST">
                                             @csrf
-                                            <div class="py-3">
-                                                <div class="mb-4">
-                                                    <label class="form-label" style="color: snow !important;">User ID</label>
-                                                    <input type="text" class="form-control form-control-alt form-control-lg" name="username">
-                                                </div>
-                                                <div class="mb-4">
-                                                    <label class="form-label" style="color: snow !important;">Password</label>
-                                                    <input type="password" class="form-control form-control-alt form-control-lg" name="password">
-                                                </div>
-                                                <div class="mb-4">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="login-remember" name="login-remember">
-                                                        <label class="form-check-label" for="login-remember">Remember Me</label>
-                                                    </div>
-                                                </div>
+                                            <div class="form-floating mb-4">
+                                                <input type="text" class="form-control form-control-alt" id="username" name="username">
+                                                <label class="form-label" for="username">User ID</label>
                                             </div>
-                                            <div class="row mb-4">
-                                                <div class="col-md-12 col-xl-12">
-                                                    <button type="submit" class="btn w-100 btn-alt-primary">
-                                                        <i class="fa fa-fw fa-sign-in-alt me-1 opacity-50"></i> Sign In
+                                            <div class="form-floating mb-4">
+                                                <input type="password" class="form-control form-control-alt" id="password" name="password">
+                                                <label class="form-label" for="username">Password</label>
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                <div>
+                                                    <a class="text-muted fs-sm fw-medium d-block d-lg-inline-block mb-1" href="#">
+                                                        Forgot Password?
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">
+                                                        Sign In
                                                     </button>
                                                 </div>
                                             </div>
                                         </form>
-                                        <div class="block-options">
-                                            <a class="btn-block-option fs-sm" style="color: snow;" href="{{ route('application.register') }}"> Seeking new admission? Sign up here </a>
-                                        </div>
-                                        <!-- END Sign In Form -->
                                     </div>
                                 </div>
+                                <!-- END Sign In Form -->
                             </div>
-                            <!-- END Sign In Block -->
+                        </div>
+                        <div class="px-4 py-3 w-100 d-lg-none d-flex flex-column flex-sm-row justify-content-between fs-sm text-center text-sm-start">
+                            <p class="fw-medium text-white-50 mb-0">
+                                <strong>TUM</strong> &copy; <span data-toggle="year-copy"></span>
+                            </p>
+                            <ul class="list list-inline mb-0 py-2">
+                                <img src="{{ url('media/tum-logo/iso.png') }}" alt="iso image" style="height: 50px !important; width: 200px !important;">
+                            </ul>
                         </div>
                     </div>
+                    <!-- END Main Section -->
                 </div>
             </div>
             <!-- END Page Content -->

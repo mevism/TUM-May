@@ -53,8 +53,9 @@ class Updatedprofile
         }
 
         if (Auth::user()->user_status === 0){
-            return redirect()->route('application.details')->with('warning', 'fuck!!!!!!!!!!!!!!!!!!!!!!!First update your user profile to continue');
+            return redirect()->route('application.details')->with('warning', 'First update your user profile to continue');
         }
+
         return $next($request);
     }
 }

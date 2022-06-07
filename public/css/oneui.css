@@ -14865,6 +14865,7 @@ small,
 
 .hero-static {
   min-height: 100vh;
+    background-color: #1ac76a !important;
 }
 
 .block {

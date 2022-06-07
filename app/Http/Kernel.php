@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\Admin\Admin;
 use App\Http\Middleware\Applicant\Applicant;
+use App\Http\Middleware\Applicant\Isverified;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\Student\Student;
 use App\Http\Middleware\SuperAdmin;
@@ -75,7 +76,7 @@ class Kernel extends HttpKernel
         'student' => Student::class,
         'authenticate' => Authenticate::class,
         'user_updated' => Updatedprofile::class,
-        'twofactorverification' => Twofactorverification::class,
+        'is_verified' => Isverified::class,
     ];
 
 }

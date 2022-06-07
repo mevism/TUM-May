@@ -49,16 +49,18 @@ class ApplicationController extends Controller
 
     public function signup(Request $request){
 
+//        return $request->all();
+
         $validated = $request->validate([
             'email' => 'required|email|unique:applicants',
-            'pnumber' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10',
+            'mobile' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required|string',
             'captcha' => 'required|captcha',
         ]);
 
             $app = new Applicant;
-            $app->mobile = $request->pnumber;
+            $app->mobile = $request->mobile;
             $app->username = $request->email;
             $app->email = $request->email;
             $app->password = Hash::make($request->password);
@@ -70,17 +72,17 @@ class ApplicationController extends Controller
             ]);
 
             Mail::to($app->email)->send(new VerifyEmails($app));
+//
+////            return $app;
+//
+////            $verification_code = rand(1, 999999);
+//
+//            VerifyUser::create([
+//                'user_id' => $app->id,
+//                'verification_code' => $verification_code,
+//            ]);
 
-//            return $app;
-
-            $verification_code = rand(1, 999999);
-
-            VerifyUser::create([
-                'user_id' => $app->id,
-                'verification_code' => $verification_code,
-            ]);
-
-            return redirect(route('root'))->with(['info' => 'Enter the code send to your phone', 'code' => $verification_code, 'phone' => $request->pnumber]);
+            return redirect(route('root'))->with(['info' => 'Account verification email was sent to verify your account']);
     }
 
     public function phoneverify(){
@@ -124,9 +126,6 @@ class ApplicationController extends Controller
             'verification_code' => 'required|alpha_num',
             'phone_number' => 'required|alpha_num'
         ]);
-//        $unverifiedmobile = VerifyUser::where('verification_code' , $request->verification_code)->first();
-//
-//        if (isset($unverified)){
 
             $applicant = Auth::user();
 
@@ -141,9 +140,6 @@ class ApplicationController extends Controller
             }else{
                 abort(403);
             }
-//        }else{
-//            return redirect()->back()->with('info', 'Phone number already verified');
-//        }
 
         return redirect()->back()->with('error', 'Phone number failed verification');
     }
@@ -171,6 +167,7 @@ class ApplicationController extends Controller
     }
 
     public function checkverification(){
+
         return view('application::auth.landing');
     }
 
@@ -229,7 +226,7 @@ class ApplicationController extends Controller
             'id_number' => 'required|alpha_num|min:7'
         ]);
 
-        $request->all();
+//        $request->all();
 
         $user = Applicant::where('id', Auth::user()->id)->first();
         $user->sname = $request->sname;
