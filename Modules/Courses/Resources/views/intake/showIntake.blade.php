@@ -3,11 +3,11 @@
 @section('content')
     <div class="bg-body-light">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <div class="flex-grow-1">
-                    <h4 class="h3 fw-bold mb-2">
+                    <h5 class="h5 fw-bold mb-0">
                         INTAKES
-                    </h4>
+                    </h5>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
@@ -22,11 +22,7 @@
             </div>
         </div>
     </div>
-    <form action="" class="col-3" >
-        <div class="form-group">
-            <input type="search" name="search" id="search" class="form-control" placeholder="Search here" >
-        </div>
-    </form>
+ 
     <main id="main-container">
         <!-- Page Content -->
         <div class="content">
@@ -41,17 +37,17 @@
                 <thead>
                     
                   <tr>
-                    <th class="text-left fs-sm">S/No:</th>
-                    <th>Class</th>
+                    <th>Courses</th>
+                    <th>Intakes</th>
                   </tr>
                   
                 </thead>
                 <tbody>@foreach ($data as $intake)
                   <tr>
-                    <td class="text-left fs-sm">{{ $intake->id }}</td>
+                    <td class="fw-semibold fs-sm">{{ $intake->course_id }}</td>
                     <td class="fw-semibold fs-sm">{{ $intake->intake_name }}</td>
-                     {{-- <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editIntake/'.$intake->id) }}">edit</a> </td>
-                    <td> <a class="btn btn-sm btn-alt-danger" href="{{ url('destroyIntake/'.$intake->id) }}">delete</a> </td>  --}}
+                    <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editIntake', $intake->id) }}">edit</a> </td>
+                    <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroyIntake', $intake->id) }}">delete</a> </td> 
                   </tr>
                   @endforeach
          

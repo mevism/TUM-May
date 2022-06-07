@@ -5,12 +5,13 @@ namespace Modules\Courses\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Courses\Entities\Campus;
 use Modules\Courses\Entities\Intake;
 use Modules\Courses\Entities\School;
 use Modules\Courses\Entities\Classes;
+use Modules\Courses\Entities\Attendance;
 use Modules\Courses\Entities\Department;
 use Illuminate\Contracts\Support\Renderable;
-use Modules\Courses\Entities\Campus;
 
 class CoursesController extends Controller
 {
@@ -20,29 +21,38 @@ class CoursesController extends Controller
         return view('courses::index');
     }
 
+    // public function searchCourse(Request $request){
+    //     $projects = Intake::where([
+    //          ['intake_name','!=',Null],
+    //         [function($query) use($request){
+    //             if(($term=$request->term)){
+    //                 $query->orWhere('intake_name','LIKE','%'.$term. '%')->get();
+    //             }
+    //          }]
+    //      ])->orderBy("id","desc")->paginate(2);
+    //      return view('courses::Intake.showIntake', compact('projects'))->with('i',(request()->input('page',1)-1)*5);
+    // }
+
     /**
      * Show the form for a new Intake Information.
      * 
      */
-    public function addIntake(Request $request)
+    public function addIntake()
     {
         $data =  Intake::all();
-        return view('courses::intake.addIntake')->with('data',$data);
+        $courses = Course::all();
+        return view('courses::intake.addIntake')->with(['data'=>$data,'courses'=>$courses]);
         
-        // $projects = Intake::where([
-        //     ['intake_name','!=',Null],
-        //     [function($query) use($request){
-        //         if(($term=$request->term)){
-        //             $query->orWhere('intake_name','LIKE','%'.$term. '%')->get();
-        //         }
-        //     }]
-        // ])->orderBy("id","desc")->paginate(2);
-        // return view('courses::intake.addIntake', compact('projects'))->with('i',(request()->input('page',1)-1)*5);
+        
     }
 
     public function storeIntake(Request $request)
     {
+        $request->validate([
+            'intake_name' => 'unique:intakes'
+        ]);
         $intakes                =    new Intake;
+        $intakes->course_id     =    $request->input('course[]');
         $intakes->intake_name   =    $request->input('intake_name_from')."-".$request->input('intake_name_to')." ".date('Y');
         $intakes->save();
 
@@ -51,7 +61,7 @@ class CoursesController extends Controller
 
     public function showIntake()
     {   
-        $data = Intake::latest()->get();
+        $data = Intake::latest()->filter(request(['search']))->get();
         return view('courses::intake.showIntake')->with('data',$data);
     }
 
@@ -77,6 +87,53 @@ class CoursesController extends Controller
         $data  = Intake::find($id);
         $data->delete();
         return redirect()->route('courses.showIntake');
+    }
+
+    /**
+     *
+     * Information about School
+    */
+    public function addAttendance(){
+        $intakes = Intake::all();
+        return view('courses::attendance.addAttendance')->with('intakes',$intakes);
+    }
+    public function showAttendance(){
+
+        $data    =   Attendance::latest()->get();
+        return view('courses::attendance.showAttendance')->with('data',$data);
+
+    }
+
+    public function editAttendance($id){
+        $data    =   Attendance::find($id);
+        $intakes  = Intake::all();
+        return view('courses::attendance.editAttendance')->with(['data'=>$data,'intakes'=>$intakes]);
+    }
+
+    public function updateAttendance(Request $request, $id){
+        return $request->input('attendance_name');
+        $data    =   Attendance::find($id);
+        $data->attendance_name  =     $request->input('attendance_name');
+        $data->intake_id  =     $request->input('intake');
+        $data->save();
+        $data->update();
+        return redirect()->route('courses.showAttendance')->with('status','Data Updated Successfully');
+
+    }
+    public function storeAttendance(Request $request){
+       
+        $attendances         =     new Attendance;
+        $attendances->attendance_name  =     $request->input('attendance_name');
+        $attendances->intake_id  =     $request->input('intake');
+        $attendances->save();
+
+        return redirect()->route('courses.addAttendance')->with('success','Attendance Created');
+    }
+    public function destroyAttendance($id){
+        $data  = Attendance::find($id);
+        $data->delete();
+        return redirect()->route('courses.showAttendance');
+
     }
 
     /**
@@ -115,7 +172,7 @@ class CoursesController extends Controller
 
         return redirect()->route('courses.addSchool')->with('success','School Created');
     }
-    public function deleteSchool($id){
+    public function destroySchool($id){
         $data  = School::find($id);
         $data->delete();
         return redirect()->route('courses.showSchool');
@@ -182,15 +239,12 @@ class CoursesController extends Controller
         $departments   =  Department::all();
         
          return view('courses::course.addCourse')->with([
-             'schools' => $schools, 
-             'departments'=>$departments,
-             'campuses'=> $campuses
+             'schools'     =>    $schools, 
+             'departments' =>    $departments,
+             'campuses'    =>    $campuses
             ]);
         
     }
-   public function searchCourse(){
-
-   }
 
     public function storeCourse(Request $request){
       
@@ -221,11 +275,22 @@ class CoursesController extends Controller
     // }
 
     public function editCourse($id){
+        $campuses      =  Campus::all();
+        $schools       =  School::all();
+        $departments   =  Department::all();
+        
         $data    =   Course::find($id);
-        return view('courses::course.editCourse')->with('data',$data);
+        return view('courses::course.editCourse')->with([
+            'data'          =>    $data,
+            'schools'       =>    $schools, 
+            'departments'   =>    $departments,
+            'campuses'      =>    $campuses
+        ]);
     }
 
     public function updateCourse(Request $request, $id){
+
+       
         $data    =   Course::find($id);
         $data->course_name         =    $request->input('course_name');
         $data->campus_id           =    $request->input('campus');

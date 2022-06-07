@@ -85,7 +85,7 @@
               </a>
               <ul class="nav-main-submenu">
                     <li class="nav-main-item">
-                      <a class="nav-main-link<?php echo e(request()->is('intake/addIntake') ? ' active' : ''); ?>" href="<?php echo e(route('courses.addIntake')); ?>">
+                      <a class="nav-main-link<?php echo e(request()->is('intake/showIntake') ? ' active' : ''); ?>" href="<?php echo e(route('courses.showIntake')); ?>">
                         <i class="nav-main-link-icon si si-calendar"></i>
                         <span class="nav-main-link-name">Intakes</span>
                       </a>
@@ -93,27 +93,33 @@
                   
                          
                       <li class="nav-main-item">
-                          <a class="nav-main-link<?php echo e(request()->is('school/addSchool') ? ' active' : ''); ?>" href="<?php echo e(route('courses.addSchool')); ?>">
+                          <a class="nav-main-link<?php echo e(request()->is('school/showSchool') ? ' active' : ''); ?>" href="<?php echo e(route('courses.showSchool')); ?>">
                             <i class="nav-main-link-icon si si-graduation"></i>
                               <span class="nav-main-link-name">Schools</span>
                           </a>
                       </li>
              
                   <li class="nav-main-item">
-                    <a class="nav-main-link<?php echo e(request()->is('department/addDepartment') ? ' active' : ''); ?>" href="<?php echo e(route('courses.addDepartment')); ?>">
+                    <a class="nav-main-link<?php echo e(request()->is('department/showDepartment') ? ' active' : ''); ?>" href="<?php echo e(route('courses.showDepartment')); ?>">
                       <i class="nav-main-link-icon si si-user"></i>
                       <span class="nav-main-link-name">Department</span>
                     </a>
                   </li>
                          
                       <li class="nav-main-item">
-                          <a class="nav-main-link<?php echo e(request()->is('courses/index') ? ' active' : ''); ?>" href="<?php echo e(route('courses.addCourse')); ?>">
+                          <a class="nav-main-link<?php echo e(request()->is('courses/showCourse') ? ' active' : ''); ?>" href="<?php echo e(route('courses.showCourse')); ?>">
                             <i class="nav-main-link-icon si si-layers"></i>
                               <span class="nav-main-link-name">Courses</span>
                           </a>
                       </li> 
                       <li class="nav-main-item">
-                          <a class="nav-main-link<?php echo e(request()->is('classes/index') ? ' active' : ''); ?>" href="<?php echo e(route('courses.addClasses')); ?>">
+                        <a class="nav-main-link<?php echo e(request()->is('attendance/index') ? ' active' : ''); ?>" href="<?php echo e(route('courses.showAttendance')); ?>">
+                          <i class="nav-main-link-icon si si-layers"></i>  
+                          <span class="nav-main-link-name">Attendances</span>
+                        </a>
+                      </li>
+                      <li class="nav-main-item">
+                          <a class="nav-main-link<?php echo e(request()->is('classes/index') ? ' active' : ''); ?>" href="<?php echo e(route('courses.showClasses')); ?>">
                             <i class="nav-main-link-icon si si-layers"></i>  
                             <span class="nav-main-link-name">Classes</span>
                           </a>

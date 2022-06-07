@@ -3,15 +3,15 @@
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
             <div class="h5 fw-bold mb-0">
-                <h5>DEPARTMENTS</h5>
+                <h5>ATTENDANCES</h5>
             </div>
             <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-alt">
                     <li class="breadcrumb-item">
-                        <a class="link-fx" href="javascript:void(0)">Departments</a>
+                        <a class="link-fx" href="javascript:void(0)">Attendances</a>
                     </li>
                     <li class="breadcrumb-item" aria-current="page">
-                        View departments
+                        View attendances
                     </li>
                 </ol>
             </nav>
@@ -27,22 +27,22 @@
         <div class="block-content block-content-full">
           <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
             <span class="d-flex justify-content-end">
-                <a class="btn btn-alt-info" href="<?php echo e(route('courses.addDepartment')); ?>">Add</a>
+                <a class="btn btn-alt-info" href="<?php echo e(route('courses.addAttendance')); ?>">Add</a>
             </span><br>
             <thead>
                 
               <tr>
-                <th>Schools</th>
-                <th>Departments</th>
+                <th>Intakes</th>
+                <th>Attendance</th>
               </tr>
               
             </thead>
-            <tbody><?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <tbody><?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr> 
-                <td> <?php echo e($department->school_id); ?></td>
-                <td> <?php echo e($department->name); ?></td>
-                <td> <a class="btn btn-sm btn-alt-info" href="<?php echo e(route('courses.editDepartment', $department->id)); ?>">edit</a> </td>
-                <td> <a class="btn btn-sm btn-alt-danger" href="<?php echo e(route('courses.destroyDepartment', $department->id)); ?>">delete</a> </td> 
+                <td> <?php echo e($attendance->intake_id); ?></td>
+                <td> <?php echo e($attendance->attendance_name); ?></td>
+                <td> <a class="btn btn-sm btn-alt-info" href="<?php echo e(route('courses.editAttendance', $attendance->id)); ?>">edit</a> </td>
+                <td> <a class="btn btn-sm btn-alt-danger" href="<?php echo e(route('courses.destroyAttendance', $attendance->id)); ?>">delete</a> </td> 
               </tr>
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
      
@@ -55,4 +55,4 @@
     <!-- END Page Content -->
 </main>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/Mevis/Modules/Courses/Resources/views/department/showDepartment.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/Mevis/Modules/Courses/Resources/views/attendance/showAttendance.blade.php ENDPATH**/ ?>

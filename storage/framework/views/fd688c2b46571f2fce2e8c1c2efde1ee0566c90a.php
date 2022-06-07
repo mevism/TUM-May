@@ -3,16 +3,16 @@
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <div class="flex-grow-1">
-                    <h4 class="h3 fw-bold mb-2">
+                    <h5 class="h5 fw-bold mb-0">
                         SCHOOLS
-                    </h4>
+                    </h5>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
                         <li class="breadcrumb-item">
                             <a class="link-fx" href="javascript:void(0)">Schools</a>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">
+                        <li class="breadcrumb-item" aria-current="page" >
                             View schools
                         </li>
                     </ol>
@@ -29,21 +29,16 @@
             <div class="block-content block-content-full">
               <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
                 <span class="d-flex justify-content-end">
-                    <a class="btn btn-alt-info" href="<?php echo e(route('courses.addClasses')); ?>">Add</a>
-                </span><hr>
+                    <a class="btn btn-alt-info" href="<?php echo e(route('courses.addSchool')); ?>">Add</a>
+                </span><br>
                 <thead>
-                    
-                  <tr>
-                    <th class="text-left fs-sm">S/No:</th>
-                    <th>Class</th>
-                  </tr>
-                  
+                    <th>Schools</th>
                 </thead>
                 <tbody><?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $school): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                   <tr>
-                    <td class="text-left fs-sm"><?php echo e($school->id); ?></td>
                     <td class="fw-semibold fs-sm"><?php echo e($school->name); ?></td>
-                     
+                    <td> <a class="btn btn-sm btn-alt-info" href="<?php echo e(route('courses.editSchool', $school->id)); ?>">edit</a> </td>
+                    <td> <a class="btn btn-sm btn-alt-danger" href="<?php echo e(route('courses.destroySchool', $school->id)); ?>">delete</a> </td> 
                   </tr>
                   <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
          

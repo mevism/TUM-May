@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('course_name');
             $table->integer('school_id');
             $table->integer('department_id');
-            $table->string('campus');
+            $table->string('campus_id');
             $table->string('course_code')->unique();
             $table->integer('course_duration');
             $table->longText('course_requirements');
