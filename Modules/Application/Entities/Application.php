@@ -9,10 +9,12 @@ class Application extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
-    
+    protected $fillable = [
+        'amount', 'receipt', 'user_id', 'telephone', 'status', 'intake_name', 'attendance', 'year', 'academic_program', 'course', 'created_at', 'updated_at'
+    ];
+
     protected static function newFactory()
     {
-        return \Modules\Application\Database\factories\ApplicationFactory::new();
+        return \database\factories\ApplicationFactory::new();
     }
 }

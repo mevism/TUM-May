@@ -190,9 +190,9 @@ class ApplicationController extends Controller
 
             } else {
 
-            return view('application::applicant.home')->with(['success' => 'Welcome', 'courses' => $courses]);
+                return view('application::applicant.home')->with(['success' => 'Welcome', 'courses' => $courses]);
 
-                    }
+            }
             redirect()->route('application.login')->with('error', 'Please try again');
         }
 
@@ -274,7 +274,6 @@ class ApplicationController extends Controller
     }
 
     public function myCourses(){
-
         $mycourses = Application::where('user_id', Auth::user()->id)->get();
         return view('application::applicant.mycourses')->with('courses', $mycourses);
     }
@@ -285,7 +284,6 @@ class ApplicationController extends Controller
     }
 
     public function applyNow(Course $course){
-
         $schools = School::all();
         $departments = Department::all();
         $courses = Course::all();

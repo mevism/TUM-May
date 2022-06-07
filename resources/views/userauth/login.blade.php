@@ -15,7 +15,7 @@
             color: whitesmoke;
         }
     </style>
-    <div  id="page-container">
+    <div id = "page-container">
 
         <!-- Main Container -->
         <main class="img" id="main-container">

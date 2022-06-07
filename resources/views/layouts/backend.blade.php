@@ -239,7 +239,11 @@
                     @if(auth()->guard('user')->user()->id === 1)
                         Administrator
                     @elseif(auth()->guard('user')->user()->id === 6)
-                    Student
+                        Student
+                    @elseif(auth()->guard('user')->user()->id === 2)
+                        COD
+                    @elseif(auth()->guard('user')->user()->id === 4)
+                        DEAN
                     @else
                     Admins
                     @endif
@@ -253,7 +257,7 @@
             <li class="nav-main-item{{ request()->is('intakes/*') ? ' open' : '' }}">
               <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
                 <i class="nav-main-link-icon si si-calendar"></i>
-                <span class="nav-main-link-name">Intakes</span>
+                <span class="nav-main-link-name">Intakes Now</span>
               </a>
               <ul class="nav-main-submenu">
                 <li class="nav-main-item">
@@ -269,7 +273,7 @@
               </ul>
             </li>
 
-              <li class="nav-main-item{{ request()->is('school/*') ? ' open' : '' }}">
+              <li class="nav-main-item{{ request()->is('school/*') ? 'open' : '' }}">
                   <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
                       <i class="nav-main-link-icon si si-graduation"></i>
                       <span class="nav-main-link-name">Schools</span>
@@ -339,6 +343,42 @@
                       <li class="nav-main-item">
                           <a class="nav-main-link{{ request()->is('classes/index') ? ' active' : '' }}" href="{{ url('addclass') }}">
                               <span class="nav-main-link-name">Add classes</span>
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+              <li class="nav-main-item{{ request()->is('approvals/*') ? ' open' : '' }}">
+                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
+                      <i class="nav-main-link-icon si si-layers"></i>
+                      <span class="nav-main-link-name">Approvals</span>
+                  </a>
+                  <ul class="nav-main-submenu">
+                      <li class="nav-main-item">
+                          <a class="nav-main-link{{ request()->is('approvals/pending') ? ' active' : '' }}" href="{{ url('pendingApproval') }}">
+                              <span class="nav-main-link-name">Pending</span>
+                          </a>
+                      </li>
+                      <li class="nav-main-item">
+                          <a class="nav-main-link{{ request()->is('approvals/approved') ? ' active' : '' }}" href="{{ url('approvedApproval') }}">
+                              <span class="nav-main-link-name">Approved</span>
+                          </a>
+                      </li>
+                      <li class="nav-main-item">
+                          <a class="nav-main-link{{ request()->is('approvals/rejected') ? ' active' : '' }}" href="{{ url('rejectedApproval') }}">
+                              <span class="nav-main-link-name">Rejected</span>
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+              <li class="nav-main-item{{ request()->is('students/*') ? ' open' : '' }}">
+                  <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
+                      <i class="nav-main-link-icon si si-layers"></i>
+                      <span class="nav-main-link-name">Students</span>
+                  </a>
+                  <ul class="nav-main-submenu">
+                      <li class="nav-main-item">
+                          <a class="nav-main-link{{ request()->is('students/search') ? ' active' : '' }}" href="{{ url('searchStudent') }}">
+                              <span class="nav-main-link-name">Search</span>
                           </a>
                       </li>
                   </ul>

@@ -49,14 +49,16 @@ class UserController extends Controller
             }
         }
         if(Auth::guard('web')->attempt($logins, true)){
+            if (Auth::guard('user')->user()->role_id === 6)
+                return redirect()->route('application.applicant')->with('success', 'Welcome Bro'." ".Auth::user()->name." ".Auth::user()->role_id."  ".'to'." ".config('app.name').".");
 
-            return redirect()->route('application.applicant')->with('success', 'Welcome'." ".Auth::user()->name." ".'to'." ".config('app.name').".");
         }else{
             return redirect('/')->with('error', 'Your details did not match to any record in the database');
         }
 
     }
     public function dashboard(){
+
        if (Auth::guard('user')->user()->role_id === 1){
            if (!Auth::guard('user')->check()){
                abort(403);
@@ -69,11 +71,22 @@ class UserController extends Controller
            } else{
                return view('student.index');
            }
+       }elseif (Auth::guard('user')->user()->role_id === 2){
+           if (!Auth::guard('user')->check()){
+               abort(403);
+           } else{
+               return view('approval::cod.index');
+           }
+       }elseif (Auth::guard('user')->user()->role_id === 4){
+           if (!Auth::guard('user')->check()){
+               abort(403);
+           } else{
+               return view('approval::dean.index');
+           }
        }else{
            return redirect('application/applicant');
        }
-    //           return redirect('application/applicant');
-        }
+    }
 
 
     //    public function logout(){
