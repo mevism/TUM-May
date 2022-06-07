@@ -5,15 +5,15 @@
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
             <div class="h5 fw-bold mb-0">
-                <h5>DEPARTMENTS</h5>
+                <h5>ATTENDANCES</h5>
             </div>
             <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-alt">
                     <li class="breadcrumb-item">
-                        <a class="link-fx" href="javascript:void(0)">Departments</a>
+                        <a class="link-fx" href="javascript:void(0)">Attendances</a>
                     </li>
                     <li class="breadcrumb-item" aria-current="page">
-                        View departments
+                        View attendances
                     </li>
                 </ol>
             </nav>
@@ -29,22 +29,22 @@
         <div class="block-content block-content-full">
           <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
             <span class="d-flex justify-content-end">
-                <a class="btn btn-alt-info" href="{{ route('courses.addDepartment') }}">Add</a>
+                <a class="btn btn-alt-info" href="{{ route('courses.addAttendance') }}">Add</a>
             </span><br>
             <thead>
                 
               <tr>
-                <th>Schools</th>
-                <th>Departments</th>
+                <th>Intakes</th>
+                <th>Attendance</th>
               </tr>
               
             </thead>
-            <tbody>@foreach ($data as $department)
+            <tbody>@foreach ($data as $attendance)
               <tr> 
-                <td> {{ $department->school_id }}</td>
-                <td> {{ $department->name }}</td>
-                <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editDepartment', $department->id) }}">edit</a> </td>
-                <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroyDepartment', $department->id) }}">delete</a> </td> 
+                <td> {{ $attendance->intake_id }}</td>
+                <td> {{ $attendance->attendance_name }}</td>
+                <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editAttendance', $attendance->id) }}">edit</a> </td>
+                <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroyAttendance', $attendance->id) }}">delete</a> </td> 
               </tr>
               @endforeach
      

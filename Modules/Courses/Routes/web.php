@@ -44,6 +44,15 @@ Route::prefix('courses')->group(function() {
     Route::put('/updateCourse/{id}', 'CoursesController@updateCourse')->name('courses.updateCourse');
     Route::get('/destroyCourse/{id}', 'CoursesController@destroyCourse')->name('courses.destroyCourse');
 
+    Route::post('/searchCourse', 'CoursesController@searchCourse')->name('courses.searchCourse');
+
+    Route::get('/addAttendance', 'CoursesController@addAttendance')->name('courses.addAttendance');
+    Route::post('/storeAttendance', 'CoursesController@storeAttendance')->name('courses.storeAttendance');
+    Route::get('/showAttendance', 'CoursesController@showAttendance')->name('courses.showAttendance');
+    Route::get('/editAttendance/{id}', 'CoursesController@editAttendance')->name('courses.editAttendance');
+    Route::put('/updateAttendance/{id}', 'CoursesController@updateAttendance')->name('courses.updateAttendance');
+    Route::get('/destroyAttendance/{id}', 'CoursesController@destroyAttendance')->name('courses.destroyAttendance');
+
 
     Route::get('/addClasses', 'CoursesController@addClasses')->name('courses.addClasses');
     Route::post('/storeClasses', 'CoursesController@storeClasses')->name('courses.storeClasses');

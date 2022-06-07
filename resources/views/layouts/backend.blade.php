@@ -85,7 +85,7 @@
               </a>
               <ul class="nav-main-submenu">
                     <li class="nav-main-item">
-                      <a class="nav-main-link{{ request()->is('intake/addIntake') ? ' active' : '' }}" href="{{ route('courses.addIntake') }}">
+                      <a class="nav-main-link{{ request()->is('intake/showIntake') ? ' active' : '' }}" href="{{ route('courses.showIntake') }}">
                         <i class="nav-main-link-icon si si-calendar"></i>
                         <span class="nav-main-link-name">Intakes</span>
                       </a>
@@ -93,27 +93,33 @@
                   
                          
                       <li class="nav-main-item">
-                          <a class="nav-main-link{{ request()->is('school/addSchool') ? ' active' : '' }}" href="{{  route('courses.addSchool') }}">
+                          <a class="nav-main-link{{ request()->is('school/showSchool') ? ' active' : '' }}" href="{{  route('courses.showSchool') }}">
                             <i class="nav-main-link-icon si si-graduation"></i>
                               <span class="nav-main-link-name">Schools</span>
                           </a>
                       </li>
              
                   <li class="nav-main-item">
-                    <a class="nav-main-link{{ request()->is('department/addDepartment') ? ' active' : '' }}" href="{{  route('courses.addDepartment') }}">
+                    <a class="nav-main-link{{ request()->is('department/showDepartment') ? ' active' : '' }}" href="{{  route('courses.showDepartment') }}">
                       <i class="nav-main-link-icon si si-user"></i>
                       <span class="nav-main-link-name">Department</span>
                     </a>
                   </li>
                          
                       <li class="nav-main-item">
-                          <a class="nav-main-link{{ request()->is('courses/index') ? ' active' : '' }}" href="{{  route('courses.addCourse') }}">
+                          <a class="nav-main-link{{ request()->is('courses/showCourse') ? ' active' : '' }}" href="{{  route('courses.showCourse') }}">
                             <i class="nav-main-link-icon si si-layers"></i>
                               <span class="nav-main-link-name">Courses</span>
                           </a>
                       </li> 
                       <li class="nav-main-item">
-                          <a class="nav-main-link{{ request()->is('classes/index') ? ' active' : '' }}" href="{{ route('courses.addClasses')}}">
+                        <a class="nav-main-link{{ request()->is('attendance/index') ? ' active' : '' }}" href="{{ route('courses.showAttendance')}}">
+                          <i class="nav-main-link-icon si si-layers"></i>  
+                          <span class="nav-main-link-name">Attendances</span>
+                        </a>
+                      </li>
+                      <li class="nav-main-item">
+                          <a class="nav-main-link{{ request()->is('classes/index') ? ' active' : '' }}" href="{{ route('courses.showClasses')}}">
                             <i class="nav-main-link-icon si si-layers"></i>  
                             <span class="nav-main-link-name">Classes</span>
                           </a>

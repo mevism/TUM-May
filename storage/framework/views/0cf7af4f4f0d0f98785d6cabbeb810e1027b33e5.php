@@ -1,6 +1,4 @@
-@extends('layouts.backend')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="bg-body-light">
   <div class="content content-full">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
@@ -12,24 +10,24 @@
       </div>
   </div>
 </div>
-    <div class="content">
-      <div  style="margin-left:20%;" class="block block-rounded col-md-9 col-lg-8 col-xl-6">
+    <div class="content" style="margin-left: 30%;margin-top:2%;">
+        <div class="block block-rounded col-md-8 col-lg-6 col-xl-5">
             <div class="block-header block-header-default">
               <h3 class="block-title">Edit Intake</h3>
             </div>
             <div class="block-content block-content-full">
               <div class="row">
-                <div class="col-lg-12 space-y-0">
+                <div class="col-lg-8 space-y-2">
 
-                   <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.updateIntake',$data->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
+                   <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo e(route('courses.updateIntake',$data->id)); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
                     <div class="row">
                       <div  class="col-12">
                         <label for="intake_name">From:</label>
-                        {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_from" placeholder="Name"> --}}
-                        <select class="form-control form-control-alt text-uppercase" name="intake_name_from" id="intake_name">
-                          <option value="{{ $data->intake_name }}"> </option>
+                        
+                        <select class="form-control form-control-alt" name="intake_name_from" id="intake_name">
+                          <option value="<?php echo e($data->intake_name); ?>"> </option>
                           <option value="January">January</option>
                           <option value="February">February</option>
                           <option value="March">March</option>
@@ -47,8 +45,8 @@
                       <br>
                       <div class="col-12">
                         <label for="intake_name">To:</label>
-                        {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_to" placeholder="Name"> --}}
-                        <select type="month" class="form-control form-control-alt text-uppercase" name="intake_name_to" id="intake_name">
+                        
+                        <select type="month" class="form-control form-control-alt" name="intake_name_to" id="intake_name">
                           <option selected disabled> </option>
                           <option value="January">January</option>
                           <option value="February">February</option>
@@ -75,4 +73,6 @@
             </div>
           </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/Mevis/Modules/Courses/Resources/views/intake/editIntake.blade.php ENDPATH**/ ?>

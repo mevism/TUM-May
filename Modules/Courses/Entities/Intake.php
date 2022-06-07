@@ -15,4 +15,11 @@ class Intake extends Model
     {
         return \Modules\Courses\Database\factories\IntakeFactory::new();
     }
+
+    public function scopeFilter($query, array $filter){
+        if($filter['search'] ?? false){
+            $query->where('intake_name','LIKE','%'.request('search').'%')->orWhere('course_id','LIKE','%'.request('search').'%');
+        }
+
+    }
 }

@@ -22,34 +22,36 @@
 </div>
 
     <div class="content">
-        <div style="margin-left:30%;"class="block block-rounded col-md-8 col-lg-6 col-xl-5">
+      <div  style="margin-left:20%;" class="block block-rounded col-md-9 col-lg-8 col-xl-6">
             <div class="block-header block-header-default">
               <h3 class="block-title">ADD Intake</h3>
             </div>
             <div class="block-content block-content-full">
               <div class="row">
-                <div class="col-lg-8 space-y-2">
+                <div class="col-lg-12 space-y-0">
 
                    <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.storeIntake') }}" method="POST">
                     @csrf
                     <div class="row">
+                      <div class="col-12">                
+                      </div>
                         <div  class="col-12">
                           <label for="intake_name">From:</label>
                           {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_from" placeholder="Name"> --}}
                           <select class="form-control form-control-alt" name="intake_name_from" id="intake_name">
                             <option selected disabled> </option>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
+                            <option value="Jan">January</option>
+                            <option value="Feb">February</option>
                             <option value="March">March</option>
                             <option value="April">April</option>
                             <option value="May">May</option>
                             <option value="June">June</option>
                             <option value="July">July</option>
                             <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
+                            <option value="Sept">September</option>
+                            <option value="Oct">October</option>
+                            <option value="Nov">November</option>
+                            <option value="Dec">December</option>
                           </select>
                         </div>
                         <br>
@@ -58,22 +60,29 @@
                           {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_to" placeholder="Name"> --}}
                           <select type="month" class="form-control form-control-alt" name="intake_name_to" id="intake_name">
                             <option selected disabled> </option>
-                            <option value="January">January</option>
-                            <option value="February">February</option>
+                            <option value="Jan">January</option>
+                            <option value="Feb">February</option>
                             <option value="March">March</option>
                             <option value="April">April</option>
                             <option value="May">May</option>
                             <option value="June">June</option>
                             <option value="July">July</option>
                             <option value="August">August</option>
-                            <option value="September">September</option>
-                            <option value="October">October</option>
-                            <option value="November">November</option>
-                            <option value="December">December</option>
+                            <option value="Sept">September</option>
+                            <option value="Oct">October</option>
+                            <option value="Nov">November</option>
+                            <option value="Dec">December</option>
                           </select>
                         </div>
                     </div>
-                    
+                    <select name="course[]" multiple id="course" class="form-control form-control-alt">
+                      <option selected diasabled>Select Course</option>
+                      @foreach ($courses as $course)
+                      <option value="{{ $course->course_name }}">{{ $course->course_name }}</option>                      
+                      @endforeach
+                    </select>
+          
+                
                     <div class="col-12">
                       <button type="submit" class="btn btn-dark">Add</button>
                     </div>

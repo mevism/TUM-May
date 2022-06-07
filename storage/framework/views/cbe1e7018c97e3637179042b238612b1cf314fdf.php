@@ -2,11 +2,11 @@
 
 <div class="bg-body-light">
     <div class="content content-full">
-        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
             <div class="flex-grow-1">
-                <h4 class="h3 fw-bold mb-2">
+                <h5 class="h5 fw-bold mb-0">
                     CLASSES
-                </h4>
+                </h5>
             </div>
             <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-alt">
@@ -33,20 +33,17 @@
           <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
             <span class="d-flex justify-content-end">
                 <a class="btn btn-alt-info" href="<?php echo e(route('courses.addClasses')); ?>">Add</a>
-            </span><hr>
+            </span><br>
             <thead>
-                
               <tr>
-                <th class="text-left fs-sm">S/No:</th>
-                <th>Class</th>
+                <th>Classes</th>
               </tr>
-              
             </thead>
             <tbody><?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $class): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
               <tr>
-                <td class="text-left fs-sm"><?php echo e($class->id); ?></td>
                 <td class="fw-semibold fs-sm"><?php echo e($class->name); ?></td>
-                 
+                <td> <a class="btn btn-sm btn-alt-info" href="<?php echo e(route('courses.editClasses', $class->id)); ?>">edit</a> </td>
+                <td> <a class="btn btn-sm btn-alt-danger" href="<?php echo e(route('courses.destroyClasses', $class->id)); ?>">delete</a> </td> 
               </tr>
               <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
      
