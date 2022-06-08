@@ -7,6 +7,8 @@ use App\Http\Middleware\Applicant\Applicant;
 use App\Http\Middleware\Applicant\Isverified;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\Student\Student;
+use App\Http\Middleware\COD\COD;
+use App\Http\Middleware\DEAN\DEAN;
 use App\Http\Middleware\SuperAdmin;
 use App\Http\Middleware\User\Twofactorverification;
 use App\Http\Middleware\User\Updatedprofile;
@@ -73,6 +75,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'admin' => Admin::class,
         'applicant' => Applicant::class,
+        'student' => Student::class,
+        'cod' => COD::class,
+        'dean' => DEAN::class,
         'student' => Student::class,
         'authenticate' => Authenticate::class,
         'user_updated' => Updatedprofile::class,

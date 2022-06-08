@@ -70,7 +70,11 @@
                     @if(auth()->guard('user')->user()->id === 1)
                         Administrator
                     @elseif(auth()->guard('user')->user()->id === 6)
-                    Student
+                        Student
+                    @elseif(auth()->guard('user')->user()->id === 2)
+                        COD
+                    @elseif(auth()->guard('user')->user()->id === 4)
+                        DEAN
                     @else
                     Admins
                     @endif

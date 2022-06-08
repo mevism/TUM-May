@@ -2,11 +2,11 @@
 @section('content')
     <div class="bg-body-light">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-                <div class="flex-grow-1">
-                    <h1 class="h5 fw-bold mb-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
+                <div class="flex-grow-0">
+                    <h5 class="h5 fw-bold mb-0">
                         Courses
-                    </h1>
+                    </h5>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
@@ -25,42 +25,39 @@
         <div class="block-content block-content-full">
             <div class="row">
                 <div class="col-lg-12">
-                    <table class="table table-responsive-md table-borderless table-striped">
-                        @if(count($data)> 0)
-                            <thead>
-                            <tr>
-                                <th>Course Code</th>
-                                <th>Course Name</th>
-                                <th>School</th>
-                                <th>Department</th>
-                                <th>Duration</th>
-                                <th>Requirement</th>
-                                <th>Course Type</th>
-                                <th> Apply</th>
-                            </tr>
-                            </thead>
-                        <tbody>
-                            @foreach ($data as $course)
-                                <tr>
-                                    <td> {{ $course->course_code }}</td>
-                                    <td> {{ $course->course_name }}</td>
-                                    <td> {{ $course->school_id }}</td>
-                                    <td> {{ $course->department_id }}</td>
-                                    <td> {{ $course->course_duration }}</td>
-                                    <td> {{ $course->course_requirements }}</td>
-                                    <td> Full Time</td>
-                                    <td nowrap=""> <a class="btn btn-sm btn-alt-info" href="{{ route('application.apply', $course->id) }}">Apply now </a> </td>
-                                </tr>
-                            @endforeach
-                        @else
+            <table class="table table-borderless table-striped js-dataTable-responsive">
+                @if(count($data)>0)
+                    <tr>
+                        <th>Course name</th>
+                        <th>Department</th>
+                        <th>School</th>
+                        <th>Campus</th>
+{{--                        <th>Requirements</th>--}}
+                        <th>Duration</th>
+                        <th>Course type</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                    @foreach($data as $course)
 
-                            <span class="fw-light small text-center">
-                            There are no courses on offer
-                        </span>
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
+                        <tr>
+                            <td> {{ $course->course_name }}</td>
+                            <td> {{ $course->department_id }}</td>
+                            <td> {{ $course->school_id }}</td>
+                            <td> {{ $course->campus_id }}</td>
+{{--                            <td> {{ $course->course_requirements }}</td>--}}
+                            <td> {{ $course->course_duration }}</td>
+                            <td> Full Time</td>
+                            <td nowrap=""> <a class="btn btn-sm btn-alt-secondary" href="{{ route('application.viewOne', $course->id) }}">View </a> </td>
+                            <td nowrap=""> <a class="btn btn-sm btn-alt-info" href="{{ route('application.apply', $course->id) }}">Apply now </a> </td>
+                        </tr>
+                    @endforeach
+                @else
+                <tr>
+                    <small class="text-center text-muted">There are no courses on offer</small>
+                </tr>
+                @endif
+        </table>
+        </div>
             </div>
         </div>
     </div>

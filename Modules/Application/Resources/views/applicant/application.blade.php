@@ -2,11 +2,11 @@
 @section('content')
     <div class="bg-body-light">
         <div class="content content-full">
-            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-                <div class="flex-grow-1">
-                    <h1 class="h5 fw-bold mb-2">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
+                <div class="flex-grow-0">
+                    <h5 class="h5 fw-bold mb-0">
                         Applications
-                    </h1>
+                    </h5>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
                     <ol class="breadcrumb breadcrumb-alt">
@@ -26,11 +26,8 @@
         <div class="row">
             <div class="col-md-12 col-xl-12">
                 <!-- Updates -->
-                <form class="js-validation-signin" method="post" action="{{ route('application.save') }}" enctype="multipart/form-data">
+                <form class="js-validation-signin" method="post" action="{{ route('application.submit') }}" enctype="multipart/form-data">
                     @csrf
-{{--                    <input name="name" type="text" class="form-control">--}}
-{{--                    <a class="btn btn-alt-info"--}}
-{{--                </form>--}}
                 <ul class="timeline timeline-alt py-0">
                     <li class="timeline-event">
                         <div class="timeline-event-icon bg-default">
@@ -49,43 +46,84 @@
                                 <div class="row" style="padding: 5px !important;">
                                     <label class="col-sm-2 col-form-label" for="example-hf-email">School</label>
                                     <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
-                                        <select name="school" class="form-control form-control-alt text-uppercase">
-                                            <option value="{{ $course->school_id }}" selected>{{ $course->school_id }}</option>
-                                            @foreach($schools as $school)
-                                                <option value="{{ $school->name }}" >{{ $school->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control form-control-alt" name="school" value="{{ $course->school_id }}" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row" style="padding: 5px !important;">
                                     <label class="col-sm-2 col-form-label" for="example-hf-email">Department</label>
                                     <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
-                                        <select name="department" class="form-control form-control-alt text-uppercase">
-                                            <option value="{{ $course->department_id }}" selected>{{ $course->department_id }}</option>
-                                            @foreach($departments as $department)
-                                                <option value="{{ $department->name }}" >{{ $department->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control form-control-alt" name="department" value="{{ $course->department_id }}" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row" style="padding: 5px !important;">
                                     <label class="col-sm-2 col-form-label" for="example-hf-password">Course</label>
                                     <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
-                                        <select name="course" class="form-control form-control-alt text-uppercase">
-                                            <option value="{{ $course->course_name }}" selected>{{ $course->course_name }}</option>
-                                            @foreach($courses as $course)
-                                                <option value="{{ $course->course_name }}" >{{ $course->course_name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="text" class="form-control form-control-alt" name="course" value="{{ $course->course_name }}" readonly>
                                     </div>
                                 </div>
 
                                 <div class="row" style="padding: 5px !important;">
                                     <label class="col-sm-2 col-form-label" for="example-hf-email">Campus</label>
                                     <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
-                                        <input name="campus" class="form-control form-control-alt" readonly value="{{ $course->campus }}">
+                                        <input name="campus" class="form-control form-control-alt" readonly value="{{ $course->campus_id }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-event">
+                        <div class="timeline-event-icon bg-default">
+                            <i class="fa fa-book-open"></i>
+                        </div>
+                        <div class="timeline-event-block block">
+                            <div class="block-header">
+                                <h3 class="block-title">Cluster Subjects</h3>
+                                <div class="block-options">
+                                    <div class="timeline-event-time block-options-item fs-sm">
+                                        <i class="fa fa-info" title="user information"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block-content">
+                                <div class="row" style="padding: 5px !important;">
+                                    <label class="col-sm-2 col-form-label" for="example-hf-email">Subject 1</label>
+                                    <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
+                                        <div class="input-group">
+                                            <span class="input-group-text input-group-text-alt">{{ Str::limit( $course->subject_1, $limit = 3 , $end='' )  }}</span>
+                                            <input type="text" class="form-control form-control-alt" name="subject1" value="{{ old('subject1') }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding: 5px !important;">
+                                    <label class="col-sm-2 col-form-label" for="example-hf-email">Subject 2</label>
+                                    <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
+                                        <div class="input-group">
+                                            <span class="input-group-text input-group-text-alt">{{ Str::limit( $course->subject_2, $limit = 3 , $end='' )  }}</span>
+                                            <input type="text" class="form-control form-control-alt" name="subject2" value="{{ old('subject2') }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding: 5px !important;">
+                                    <label class="col-sm-2 col-form-label" for="example-hf-password">Subject 3</label>
+                                    <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
+                                        <div class="input-group">
+                                            <span class="input-group-text input-group-text-alt">{{ Str::limit( $course->subject_3, $limit = 3 , $end='' )  }}</span>
+                                            <input type="text" class="form-control form-control-alt" name="subject3" value="{{ old('subject3') }}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding: 5px !important;">
+                                    <label class="col-sm-2 col-form-label" for="example-hf-email">Subject 4 {{ $course->id }}</label>
+                                    <div class="col-sm-8 text-uppercase" style="padding: 5px !important;">
+                                        <div class="input-group">
+                                            <span class="input-group-text input-group-text-alt">{{ Str::limit( $course->subject_4, $limit = 3 , $end='' )  }}</span>
+                                            <input type="text" class="form-control form-control-alt" name="subject4" value="{{ old('subject4') }}">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -105,33 +143,6 @@
                                 </div>
                             </div>
                             <div class="block-content block-content-full">
-                                <div class="row">
-                                    <div class="col-md-2" style="padding: 7px !important;">
-                                        <label class="form-check-label"> Primary school</label>
-                                    </div>
-                                    <div class="col-md-8" style="padding: 10px !important;">
-                                        <div style="padding: 7px !important;">
-                                        <input type="text" class="form-control form-control-alt text-uppercase" value="{{ old('primary') }}" name="primary" placeholder="Institution name">
-                                        </div>
-                                        <div style="padding: 7px !important;">
-                                        <input type="text" class="form-control form-control-alt text-uppercase" value="{{ old('primaryqualification') }}" name="primaryqualification" placeholder="Qualifications acquired">
-                                        </div>
-                                        <div class="row" style="padding: 7px !important;">
-                                            <div class="col-6">
-                                                <input type="month" class="form-control form-control-alt" value="{{ old('pristartdate') }}" name="pristartdate">
-                                                <small class="text-muted">Starting year</small>
-                                            </div>
-                                            <div class="col-6">
-                                                <input type="month" class="form-control form-control-alt" value="{{ old('prienddate') }}" name="prienddate">
-                                                <small class="text-muted">Year Finished</small>
-                                            </div>
-                                        </div><div style="padding: 7px !important;">
-                                        <input type="file" class="form-control form-control-alt" value="{{ old('primarycert') }}" name="primarycert" placeholder="upload certificate">
-                                            <small class="text-muted">Upload certificate</small>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="row">
                                     <div class="col-md-2" style="padding: 7px !important;">
                                         <label class="form-check-label"> Secondary school</label>
@@ -386,10 +397,10 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="text-uppercase" style="padding: 7px !important;">
-                                            <input type="text" class="form-control form-control-alt text-uppercase" value="{{ old('sponsorname') }}" name="sponsorname" placeholder="Sponsor name">
+                                            <input type="text" class="form-control form-control-alt" value="{{ old('sponsorname') }}" name="sponsorname" placeholder="Sponsor name">
                                         </div>
                                         <div class="text-uppercase" style="padding: 7px !important;">
-                                            <input type="text" class="form-control form-control-alt text-uppercase" value="{{ old('sponsormobile') }}" name="sponsormobile" placeholder="Sponsor mobile number">
+                                            <input type="text" class="form-control form-control-alt" value="{{ old('sponsormobile') }}" name="sponsormobile" placeholder="Sponsor mobile number">
                                         </div>
                                         <div class="text-uppercase" style="padding: 7px !important;">
                                             <input type="text" class="form-control form-control-alt text-uppercase" value="{{ old('sponsorcounty') }}" name="sponsorcounty" placeholder="Sponsor county of residence">

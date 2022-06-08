@@ -38,10 +38,11 @@
             Route::get('/course', 'ApplicationController@myCourses')->name('applicant.course');
             Route::get('/courses', 'ApplicationController@allCourses')->name('applicant.courses');
             Route::get('/apply', 'ApplicationController@apply')->name('applicant.apply');
-            Route::get('/applyNow/{course}', 'ApplicationController@applyNow')->name('application.apply');
+            Route::get('/applyNow/{course}', 'ApplicationController@applyNow')->name('application.apply');;
+            Route::get('/viewCourse/{course}', 'ApplicationController@viewCourse')->name('application.viewOne');;
             Route::post('/submitApplication', 'ApplicationController@application')->name('application.save');
             Route::get('/profile', 'ApplicationController@myProfile')->name('applicant.profile');
-            Route::post('/save', 'ApplicationController@makeupdate')->name('application.save');
+            Route::post('/submit/Application', 'ApplicationController@application')->name('application.submit');
         });
 
     });
