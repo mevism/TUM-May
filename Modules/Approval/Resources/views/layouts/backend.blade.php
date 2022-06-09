@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-  @if(auth()->guard('user')->user()->role_id === 2)
+  @if(json_decode(auth()->guard('user')->user()->role_id)->role == 2)
      <title>COD Console</title>
  @else
     <title>DEAN Console</title>
@@ -146,7 +146,7 @@
             <i class="fa fa-circle-notch text-primary"></i>
           </span>
           <img src = '/Images/clientlogo.png' style = 'width:40%;margin-left:20%;height:50%;border-radius:50%;'>
-          @if(auth()->guard('user')->user()->role_id === 2)
+          @if(json_decode(auth()->guard('user')->user()->role_id)->role == 2)
              <span class="smini-hide fs-5 tracking-wider"><span class="fw-normal">COD</span></span>
          @else
             <span class="smini-hide fs-5 tracking-wider"><span class="fw-normal">DEAN</span></span>
@@ -226,7 +226,7 @@
     <!-- END Sidebar -->
 
     <!-- Header -->
-    <header id="page-header">
+    <header id="page-header" style = 'background-color:#d89837;'>
       <!-- Header Content -->
       <div class="content-header">
         <!-- Left Section -->
@@ -259,8 +259,12 @@
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
               <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                 <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
-                <p class="mt-2 mb-0 fw-medium">{{ auth()->guard('user')->user()->name }} {{ auth()->guard('user')->user()->name }} {{ auth()->guard('user')->user()->name }}</p>
-                <p class="mb-0 text-muted fs-sm fw-medium">Applicant</p>
+                <p class="mt-2 mb-0 fw-medium">{{ auth()->guard('user')->user()->name }}</p>
+                @if(json_decode(auth()->guard('user')->user()->role_id)->role == 2)
+                    <p class="mb-0 text-muted fs-sm fw-medium">COD</p>
+                @else
+                    <p class="mb-0 text-muted fs-sm fw-medium">DEAN</p>
+                @endif
               </div>
               <div class="p-2">
 {{--                <a class="dropdown-item d-flex align-items-center justify-content-between" href="javascript:void(0)">--}}

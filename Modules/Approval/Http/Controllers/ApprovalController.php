@@ -136,6 +136,20 @@ class ApprovalController extends Controller
     }
     public function searchValue(Request $request){
         $data = $request->json()->all();
+        $search_app = Application::join('applicants_approve', 'applicants_approve.id', '=', 'applications_approval.applications_id')
+              		->join('education_approval', 'education_approval.user_id', '=', 'applicants_approve.id')
+              		->join('work_approval', 'work_approval.user_id', '=', 'applicants_approve.id')
+                    ->orWhere('id_number', 'LIKE', '%'.$data['value'].'%')
+                    ->orWhere('index_number', 'LIKE', '%'.$data['value'].'%')
+                    ->orWhere('county', 'LIKE', '%'.$data['value'].'%')
+                    ->orWhere('sub_county', 'LIKE', '%'.$data['value'].'%')
+                    ->orWhere('town', 'LIKE', '%'.$data['value'].'%')
+                    ->orWhere('address', 'LIKE', '%'.$data['value'].'%')
+                    ->whereJsonContains('academics->kcse', 'LIKE', '%'.$data['value'].'%')
+                    ->whereJsonContains('academics->kcpe', 'LIKE', '%'.$data['value'].'%')
+                    ->orWhere('name', 'LIKE', '%'.$data['value'].'%')
+              		->get();
+
         $apps = DB::table('applications_approval')
                     ->leftJoin('applicants_approve', 'applicants_approve.user_id', '=', 'applications_approval.user_id')
                     ->orWhere('id_number', 'LIKE', '%'.$data['value'].'%')
@@ -144,20 +158,24 @@ class ApprovalController extends Controller
                     ->orWhere('kcpe', 'LIKE', '%'.$data['value'].'%')
                     ->orWhere('name', 'LIKE', '%'.$data['value'].'%')
                     ->get();
-        print_r(json_encode(['user' => $apps, 'role' => Auth::guard('user')->user()->role_id]));
+        print_r(json_encode(['user' => $apps, 'role' => json_decode(Auth::guard('user')->user()->role_id)->role]));
     }
     public function getApplication(Request $request){
         $data = $request->json()->all();
-        $intake = Intake::select('*')->where('intake_id', $data['app'])->get();
-        print_r(json_encode(['app' => $intake]));
-    }
-    public function getCourses(Request $request){
-        $data = $request->json()->all();
-        $data_arr = json_decode($data['courses']);
+        $intakes = Intake::select('*')->where('intake_id', (int)$data['app'])->get();
+        $department = json_decode(Auth::guard('user')->user()->role_id)->department; //Make sure the course is in its department
         $courses = [];
-        foreach($data_arr as $id)
-            array_push($courses,Course::select('*')->where('id', $id)->get());
-        print_r(json_encode($courses));
+        foreach($intakes as $intake){
+            foreach(json_decode($intake['courses']) as $id){
+                $courses_data = Course::select('*')
+                ->where('id', $id)
+                ->where('department', $department)
+                ->get();
+                if(count($courses_data) > 0)
+                    $courses[] = $courses_data;
+            }
+        }
+        print_r(json_encode(['app' => $intake, 'courses' => $courses]));
     }
     public function candidate(Request $request){
         $data = $request->json()->all();
@@ -223,7 +241,7 @@ class ApprovalController extends Controller
 
         $status = 2;
         $level = "COD";
-        if(Auth::guard('user')->user()->role_id === 4){
+        if(json_decode(Auth::guard('user')->user()->role_id)->role == 4){
             $status = 4;
             $level = "DEAN";
             //Check whether COD had rejected before
@@ -252,7 +270,7 @@ class ApprovalController extends Controller
 
         $status = 1;
         $level = "COD";
-        if(Auth::guard('user')->user()->role_id === 4){
+        if(json_decode(Auth::guard('user')->user()->role_id)->role == 4){
             $status = 3;
             $level = "DEAN";
             //Check whether COD had rejected before
@@ -274,14 +292,14 @@ class ApprovalController extends Controller
         $data = $request->json()->all();
         $status = 0;
         //User is COD
-        if(Auth::guard('user')->user()->role_id === 2){
+        if(json_decode(Auth::guard('user')->user()->role_id)->role == 2){
             if($data['status'] == 1) //If COD Approved
                 $status = 6;
             if($data['status'] == 2) //If COD Rejected
                 $status = 9;
         }
         //User is Dean
-        if(Auth::guard('user')->user()->role_id === 4){
+        if(json_decode(Auth::guard('user')->user()->role_id)->role == 4){
             if($data['status'] == 3 || $data['status'] == 5) //If DEAN Approved
                 $status = 7;
             if($data['status'] == 4 || $data['status'] == 8) //If DEAN Rejected
@@ -303,117 +321,141 @@ class ApprovalController extends Controller
 
         $collection = explode(',',$data['id']);
         $applications = [];
+
+        $department = json_decode(Auth::guard('user')->user()->role_id)->department;
+
+        $courses = Course::select('*')->where('department', $department)->get(); //courses in users department
         foreach($collection as $item){
-            $applications = Application::select('*')->where('final_status', (int)$item)->get();
+            foreach($courses as $course){
+                $application_data = DB::table('applications_approval')
+                                ->where('final_status', '=', (int)$item)
+                                ->where('course', '=', $course['id'])
+                                ->get();
+                if(count($application_data) > 0)
+                    $applications[] = $application_data;
+            }
         }
-        $pending = [];
+
+        $fetched = [];
 
         if(count($applications) > 0){
-            foreach($applications as $foundItem){
-                $intake = $foundItem['intake_name'];
-                $intakeId = (int)$foundItem['intake_id'];
-                $status = (int)$foundItem['final_status'];
-                $programs = $foundItem['academic_program'];
-                $date = $foundItem['intake_date'];
-                $time = strtotime($date);
-                $sweet_date = date("D/M/Y",$time);
-                $id = $foundItem['applications_id'];
+            foreach($applications as $application){
+                if(count($application) > 0){
+                    foreach($application as $foundItem){
 
-                $expire = false;
-                if(date("Y-m-d") > date("Y-m-d",$time))
-                    $expire = true;
-                if(in_array($intakeId,array_column($pending,"intake"))){
-                    $work_key = array_keys(array_column($pending,"intake"),$intakeId)[0];
-                    if(in_array($programs,array_column($pending[$work_key]["academic"],"program"))){
-                        $program_key = array_keys(array_column($pending[$work_key]["academic"],"program"),$programs)[0];
-                        $pending[$work_key]["academic"][$program_key]["number"] = (int)$pending[$work_key]["academic"][$program_key]["number"] + 1;
-                    }else{
-                        $pending[$work_key]["academic"][] = [ "program" => $programs, "number" => 1];
+                        $intake = $foundItem->intake_name;
+                        $intakeId = (int)$foundItem->intake_id;
+                        $status = (int)$foundItem->final_status;
+                        $programs = $foundItem->academic_program;
+                        $date = $foundItem->intake_date;
+                        $time = strtotime($date);
+                        $sweet_date = date("D/M/Y",$time);
+                        $id = $foundItem->applications_id;
+
+                        $expire = false;
+                        if(date("Y-m-d") > date("Y-m-d",$time))
+                            $expire = true;
+                        if(in_array($intakeId,array_column($fetched,"intake"))){
+                            $work_key = array_keys(array_column($fetched,"intake"),$intakeId)[0];
+                            if(in_array($programs,array_column($fetched[$work_key]["academic"],"program"))){
+                                $program_key = array_keys(array_column($fetched[$work_key]["academic"],"program"),$programs)[0];
+                                $fetched[$work_key]["academic"][$program_key]["number"] = (int)$fetched[$work_key]["academic"][$program_key]["number"] + 1;
+                            }else{
+                                $fetched[$work_key]["academic"][] = [ "program" => $programs, "number" => 1];
+                            }
+                            $keys = array_column($fetched[$work_key]["academic"], 'program');
+                            array_multisort($keys, SORT_ASC, $fetched[$work_key]["academic"]);
+                        }else{
+                            $fetched[] = array(
+                                "intake" => $intakeId,
+                                "name" => $intake,
+                                "status" => $status,
+                                "academic" => [
+                                    [
+                                        "program" => $programs,
+                                        "number" => 1
+                                    ]
+                                ],
+                                "date" => $date,
+                                "sweet_date" => $sweet_date,
+                                "id" => $id,
+                                "expire" => $expire
+                            );
+                        }
+
                     }
-                    $keys = array_column($pending[$work_key]["academic"], 'program');
-                    array_multisort($keys, SORT_ASC, $pending[$work_key]["academic"]);
-                }else{
-                    $pending[] = array(
-                        "intake" => $intakeId,
-                        "name" => $intake,
-                        "status" => $status,
-                        "academic" => [
-                            [
-                                "program" => $programs,
-                                "number" => 1
-                            ]
-                        ],
-                        "date" => $date,
-                        "sweet_date" => $sweet_date,
-                        "id" => $id,
-                        "expire" => $expire
-                    );
                 }
             }
         }
 
-        $keys = array_column($pending, 'date');
-        array_multisort($keys, SORT_DESC, $pending);
-        print_r(json_encode(['list' => $pending]));
+        $keys = array_column($fetched, 'date');
+        array_multisort($keys, SORT_DESC, $fetched);
+        print_r(json_encode(['list' => $fetched]));
 
     }
     public function graph(){
-        $applications = Application::all();
+
+        $department = json_decode(Auth::guard('user')->user()->role_id)->department;
+        $courses = Course::select('*')->where('department', $department)->get(); //courses in users department
+        $applications = [];
+        foreach($courses as $course){
+            $applications_data = Application::select('*')->where('course', $course['id'])->get();
+            if(count($applications_data) > 0)
+                $applications[] = $applications_data;
+        }
         $graphData = [];
         if(count($applications) > 0){
-            foreach($applications as $foundItem){
-                $intake = $foundItem["intake_name"];
-                $intake_id = $foundItem["intake_id"];
-                $status = json_decode($foundItem['status']);
-                $side = $foundItem['final_status'];
-                $TIMESTAMP = $status[count($status) - 1]->date;
-                $time = strtotime($TIMESTAMP);
-                $c_time = date("Y-m-d",$time);
-                $c_year = date("Y",$time);
-                $approved = 0;
-                $rejected = 0;
-                $pending = 0;
-                if(Auth::guard('user')->user()->role_id === 2){
-                    if($side === 2 || $side === 9){
-                        $rejected = 1;
+            foreach($applications as $application){
+                if(count($application) > 0){
+                    foreach($application as $foundItem){
+                        $intake = $foundItem["intake_name"];
+                        $intake_id = $foundItem["intake_id"];
+                        $status = json_decode($foundItem['status']);
+                        $side = $foundItem['final_status'];
+                        $TIMESTAMP = $status[count($status) - 1]->date;
+                        $time = strtotime($TIMESTAMP);
+                        $c_time = date("Y-m-d",$time);
+                        $c_year = date("Y",$time);
+                        $approved = 0;
+                        $rejected = 0;
+                        $pending = 0;
+                        if(json_decode(Auth::guard('user')->user()->role_id)->role == 2){
+                            if($side === 2 || $side === 9)
+                                $rejected = 1;
+                            if($side === 0)
+                                $pending = 1;
+                            if($side === 1 || $side === 6)
+                                $approved = 1;
+                        }
+                        if(json_decode(Auth::guard('user')->user()->role_id)->role == 4){
+                            if($side === 4 || $side === 8 || $side === 10)
+                                $rejected = 1;
+                            if($side === 9 || $side === 6) //COD PUSHED APPROVED OR REJECTED
+                                $pending = 1;
+                            if($side === 3 || $side === 5 || $side === 7)
+                                $approved = 1;
+                        }
+                        if(in_array($intake_id,array_column($graphData,"id"))){
+                            $work_key = array_keys(array_column($graphData,"id"),$intake_id)[0];
+                            $graphData[$work_key]["count"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["count"] + 1;
+                            $graphData[$work_key]["approved"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["approved"] + (int)$approved;
+                            $graphData[$work_key]["rejected"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["rejected"] + (int)$rejected;
+                            $graphData[$work_key]["pending"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["pending"] + (int)$pending;
+                            $graphData[$work_key]["year"] = $c_year;
+                            $graphData[$work_key]["date"][] = $c_time;
+                        }else{
+                            $graphData[] = array(
+                                "date" => [$c_time],
+                                "year" => $c_year,
+                                "count" => 1,
+                                "intake" => $intake,
+                                "id" => $intake_id,
+                                "approved" => $approved,
+                                "rejected" => $rejected,
+                                "pending" => $pending
+                            );
+                        }
                     }
-                    if($side === 0){
-                        $pending = 1;
-                    }
-                    if($side === 1 || $side === 6){
-                        $approved = 1;
-                    }
-                }
-                if(Auth::guard('user')->user()->role_id === 4){
-                    if($side === 4 || $side === 8 || $side === 10){
-                        $rejected = 1;
-                    }
-                    if($side === 9 || $side === 6){ //COD PUSHED APPROVED OR REJECTED
-                        $pending = 1;
-                    }
-                    if($side === 3 || $side === 5 || $side === 7){
-                        $approved = 1;
-                    }
-                }
-                if(in_array($intake_id,array_column($graphData,"id"))){
-                    $work_key = array_keys(array_column($graphData,"id"),$intake_id)[0];
-                    $graphData[$work_key]["count"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["count"] + 1;
-                    $graphData[$work_key]["approved"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["approved"] + (int)$approved;
-                    $graphData[$work_key]["rejected"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["rejected"] + (int)$rejected;
-                    $graphData[$work_key]["pending"] = (int)$graphData[array_keys(array_column($graphData,"id"),$intake_id)[0]]["pending"] + (int)$pending;
-                    $graphData[$work_key]["year"] = $c_year;
-                    $graphData[$work_key]["date"][] = $c_time;
-                }else{
-                    $graphData[] = array(
-                        "date" => [$c_time],
-                        "year" => $c_year,
-                        "count" => 1,
-                        "intake" => $intake,
-                        "id" => $intake_id,
-                        "approved" => $approved,
-                        "rejected" => $rejected,
-                        "pending" => $pending
-                    );
                 }
             }
         }

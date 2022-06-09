@@ -18,39 +18,40 @@ use Modules\Application\Entities\VerifyUser;
 
 class UserController extends Controller
 {
+
     public function login(Request $request){
 
         $logins = $request->only('username', 'password');
 
         if (Auth::guard('user')->attempt($logins)){
             $name = Auth::guard('user')->user()->name;
-            if (Auth::guard('user')->user()->role_id === 6){
+            if (json_decode(Auth::guard('user')->user()->role_id)->role == 6){
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
 
-            if (Auth::guard('user')->user()->role_id === 1){
+            if (json_decode(Auth::guard('user')->user()->role_id)->role == 1){
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
 
-            if (json_decode(Auth::guard('user')->user()->role_id)->role){
+            if (json_decode(Auth::guard('user')->user()->role_id)->role == 2){
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
 
-            if (Auth::guard('user')->user()->role_id === 4){
+            if (json_decode(Auth::guard('user')->user()->role_id)->role == 4){
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
 
-            if (Auth::guard('user')->user()->role_id === 7){
+            if (json_decode(Auth::guard('user')->user()->role_id)->role == 7){
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
 
-            if (Auth::guard('user')->user()->role_id === 3){
+            if (json_decode(Auth::guard('user')->user()->role_id)->role == 3){
                 return redirect()->intended('/dashboard')->with('success', 'Welcome'." ".$name." ".'to'." ".config('app.name').".");
             }
         }
         if(Auth::guard('web')->attempt($logins, true)){
-            if (Auth::guard('user')->user()->role_id === 6)
-                return redirect()->route('application.applicant')->with('success', 'Welcome Bro'." ".Auth::user()->name." ".Auth::user()->role_id."  ".'to'." ".config('app.name').".");
+            if (json_decode(Auth::guard('user')->user()->role_id)->role == 6)
+                return redirect()->route('application.applicant')->with('success', 'Welcome'." ".Auth::user()->name." ".Auth::user()->role_id."  ".'to'." ".config('app.name').".");
 
         }else{
             return redirect('/')->with('error', 'Your details did not match to any record in the database');
@@ -58,26 +59,26 @@ class UserController extends Controller
 
     }
     public function dashboard(){
-        $roles = json_decode(Auth::guard('user')->user()->role_id)->role;
-       if ($roles == 1){
+
+       if (json_decode(Auth::guard('user')->user()->role_id)->role == 1){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('admin.index');
            }
-       }elseif ($roles == 6){
+       }elseif (json_decode(Auth::guard('user')->user()->role_id)->role == 6){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('student.index');
            }
-       }elseif ($roles == 2){
+       }elseif (json_decode(Auth::guard('user')->user()->role_id)->role == 2){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
                return view('approval::cod.index');
            }
-       }elseif ($roles == 4){
+       }elseif (json_decode(Auth::guard('user')->user()->role_id)->role == 4){
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{

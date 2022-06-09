@@ -17,7 +17,7 @@
                 <div id = 'name-preview'>
                     <h4><span id = 'pending-preview'></span> Pending</h4>
                 </div>
-                <div class = 'card-build' style = 'background-color:#006600;'>
+                <div class = 'card-build' style = 'background-color:#097B3E;'>
                     <img src = '{{ asset('/Images/apply.png') }}' alt = 'Application Card'>
                 </div>
             </section>
@@ -25,7 +25,7 @@
                 <div id = 'name-preview'>
                    <h4><span id = 'approved-preview'></span> Approved</h4>
                 </div>
-                <div class = 'card-build' style = 'background-color:#ffa144;'>
+                <div class = 'card-build' style = 'background-color:#d89837;'>
                     <img src = '{{ asset('/Images/cap.png') }}' alt = 'Application Card'>
                 </div>
             </section>
@@ -33,7 +33,7 @@
                 <div id = 'name-preview'>
                     <h4><span id = 'rejected-preview'></span> Rejected</h4>
                 </div>
-                <div class = 'card-build' style = 'background-color:#006600;'>
+                <div class = 'card-build' style = 'background-color:#097B3E;'>
                     <img src = '{{ asset('/Images/apply.png') }}' alt = 'Application Card'>
                 </div>
             </section>

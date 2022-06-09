@@ -46,14 +46,29 @@
     color : #fff;
     border-radius : 2px;
 }
-#other-table div{
-    width : 23%
+#number{
+    width : 5%!important;
+}
+#other-table section{
+    width : 98%;
     margin : 1%;
+    box-shadow : 2px 3px 3px #ccc;
+    display : flex;
+}
+#other-table p{
+    width : 100%;
+    background-color : rgba(234,234,234,0.6);
+}
+#other-table div{
+    width : 23%;
+    margin : 1%;
+    text-align : center;
 }
 #other-table{
     width : 98%;
     margin : 1%;
     display : flex;
+    flex-wrap : wrap;
 }
 .part-level div{
     margin : 1%;
@@ -264,11 +279,16 @@
         height : 80px;
     }
     .part-level div{
-        width : 23%;
+        width : 18%;
     }
     #level-parent{
         flex-direction : row;
         width : 43%;
         height : 50px;
+    }
+    #other-table section{
+        width : 46%;
+        margin : 1%;
+
     }
 }

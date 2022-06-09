@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
     <!-- Page Content -->
 
@@ -7,7 +6,27 @@
     <script src = "<?php echo e(asset('/js/plugins/chart.js/Chart.min.js')); ?>" ></script>
     <script src = "<?php echo e(asset('/js/utils.js')); ?>" ></script>
     <script src = "<?php echo e(asset('jquery.js')); ?>" ></script>
-
+    <div class="bg-body-light">
+        <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+                <div class="flex-grow-1">
+                    <h1 class="h5 fw-bold mb-2">
+                        Approvals
+                    </h1>
+                </div>
+                <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
+                    <ol class="breadcrumb breadcrumb-alt">
+                        <li class="breadcrumb-item">
+                            <a class="link-fx" href="javascript:void(0)">Location</a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            Pending
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
     <div class="content-force">
         <div class="row">
             Pending

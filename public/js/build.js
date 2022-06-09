@@ -1,5 +1,6 @@
     const ServerData = new (function(){
         this.studies = ['Diploma','Certificate','Graduate','Non-standard','Post-Graduate','Under-Graduate'];
+        this.attendance_arr = ['REGULAR','FULL-TIME','PART-TIME','ONLINE-LEARNING','HOLIDAY-LEARNING','DISTANCE-LEARNING','EVENING']
         this.bindAuth = async function(r, h, c, m){
             let pop = { method : r }
             if(r == "POST")
@@ -157,29 +158,6 @@
                                     ) : '<p>No academic profile</p>'}
                                 </div>
                                 <div id = 'other-table'>
-                                    ${ (a.status) ? $.parseJSON(a.status).map( a =>
-                                        `<div>
-                                            <p>Action</p>
-                                            ${ (a.status == 1) ? `COD APPROVED` : (a.status == 2) ? `COD REJECTED` : (a.status == 3) ? `COD APPROVED & DEAN APPROVED` : (a.status == 4) ? `COD APPROVED & DEAN REJECTED` : (a.status == 5) ? `COD REJECTED & DEAN APPROVED` : (a.status == 6) ? `COD HAS APPROVED & PUSHED TO DEAN` : (a.status == 7) ? `DEAN HAS APPROVED & PUSHED FOR MAIL` : (a.status == 8) ? `COD REJECTED && DEAN REJECTED` : (a.status == 9) ? `COD REJECTED && PUSHED TO DEAN` : (a.status == 10) ? `DEAN HAS REJECTED && PUSHED TO MAIL` :  `STILL PENDING` }
-                                        </div>
-                                        <div>
-                                            <p>Reason</p>
-                                            ${ a.reason }
-                                        </div>
-                                        <div>
-                                            <p>Designation</p>
-                                            ${ a.level }
-                                        </div>
-                                        <div>
-                                            <p>Date</p>
-                                            ${ a.date }
-                                        </div>
-
-                                        `
-                                    ) : '<p>Not yet pushed</p>'
-                                    }
-                                </div>
-                                <div id = 'other-table'>
                                     ${ (a.work) ? $.parseJSON(a.work).map( a =>
                                         `<div>
                                             <p>Institution</p>
@@ -196,6 +174,34 @@
 
                                         `
                                     ) : '<p>No work profile</p>'}
+                                </div>
+                                <div id = 'other-table'>
+                                    ${ (a.status) ? $.parseJSON(a.status).map( (a,k) =>
+                                        `
+                                        <section>
+                                            <div id = 'number'>
+                                                ${ (k + 1) }
+                                            </div>
+                                            <div>
+                                                <p>Action</p>
+                                                ${ (a.status == 1) ? `COD APPROVED` : (a.status == 2) ? `COD REJECTED` : (a.status == 3) ? `COD APPROVED & DEAN APPROVED` : (a.status == 4) ? `COD APPROVED & DEAN REJECTED` : (a.status == 5) ? `COD REJECTED & DEAN APPROVED` : (a.status == 6) ? `COD HAS APPROVED & PUSHED TO DEAN` : (a.status == 7) ? `DEAN HAS APPROVED & PUSHED FOR MAIL` : (a.status == 8) ? `COD REJECTED && DEAN REJECTED` : (a.status == 9) ? `COD REJECTED && PUSHED TO DEAN` : (a.status == 10) ? `DEAN HAS REJECTED && PUSHED TO MAIL` :  `STILL PENDING` }
+                                            </div>
+                                            <div>
+                                                <p>Reason</p>
+                                                ${ a.reason }
+                                            </div>
+                                            <div>
+                                                <p>Designation</p>
+                                                ${ a.level }
+                                            </div>
+                                            <div>
+                                                <p>Date</p>
+                                                ${ a.date }
+                                            </div>
+                                        </section>
+                                        `
+                                    ) : '<p>Not yet pushed</p>'
+                                    }
                                 </div>
                             </section>
 
@@ -235,30 +241,62 @@
             $('#rejected-preview').html(setRejected)
             $('#pending-preview').html(setPending)
 
-            var chartData = {
-				datasets: [{
-					data: [
-						approvalValue.reduce(ServerData.getSum, 0),
-						rejectedValue.reduce(ServerData.getSum, 0),
-						pendingValue.reduce(ServerData.getSum, 0)
-					],
-					backgroundColor: [
-						window.chartColors.green,
-						window.chartColors.red,
-						window.chartColors.yellow,
-					],
-					label: text
-				}],
-				labels: [
-					'Approved',
-					'Rejected',
-					'Pending',
-				]
+            let pieData = [
+                setApprove,
+                setRejected,
+                setPending
+            ]
+            let backgroundColor = [
+                window.chartColors.tum,
+                window.chartColors.red,
+                window.chartColors.gold
+            ]
+            let labels = [
+                'Approved',
+                'Rejected',
+                'Pending'
+            ]
+            if(setPending == 0 && setRejected == 0 && setPending == 0){
+                pieData = [100]
+                backgroundColor = [window.chartColors.tum]
+                labels = ['No Data']
             }
+            var chartData = {
+				datasets : [{
+					data : pieData,
+					backgroundColor : backgroundColor,
+					label : text
+				}],
+				labels : labels
+            }
+            console.log(approvalValue)
+            console.log(rejectedValue)
+            console.log(pendingValue)
+            console.log(countValue)
+
             if(type == "bar"){
-                chartData = {
-                    labels: xValue,
-                    datasets: [
+                let xBind = ["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"]
+                let datasets = [
+                    {
+                        type: 'bar',
+                        label: "No Data",
+                        backgroundColor: window.chartColors.tum,
+                        data:[1,2,3,4,5,6,7,8,9,10],
+                        borderColor: 'white',
+                        borderWidth: 2
+                    },
+                    {
+                        type : 'line',
+                        label : "No Data",
+                        borderColor : window.chartColors.gold,
+                        borderWidth : 2,
+                        fill : false,
+                        data : [1,2,3,4,5,6,7,8,9,10]
+                    }
+                ]
+                if(countValue.length > 0){
+                    xBind = xValue
+                    datasets = [
                         {
                             type: 'line',
                             label: "Total Applications",
@@ -278,7 +316,7 @@
                         {
                             type: 'bar',
                             label: "Rejected",
-                            backgroundColor: window.chartColors.green,
+                            backgroundColor: window.chartColors.tum,
                             data: rejectedValue,
                             borderColor: 'white',
                             borderWidth: 2
@@ -286,12 +324,16 @@
                         {
                             type: 'bar',
                             label: "Pending",
-                            backgroundColor: window.chartColors.yellow,
+                            backgroundColor: window.chartColors.gold,
                             data: pendingValue,
                             borderColor: 'white',
                             borderWidth: 2
                         }
                     ]
+                }
+                chartData = {
+                    labels : xBind,
+                    datasets
                 };
             }
             var ctx = document.getElementById(id).getContext('2d');
@@ -335,6 +377,7 @@
                 id = "4,8,10"
         }
         let list_data = await ServerData.bindAuth('POST',link,true,{ id })
+        console.log(list_data)
         let list_string = `<div id = 'time-out'><img src = '/Images/clipboard.svg'>No ${type} lists</div>`
         if(list_data.list.length > 0){
             list_string = list_data.list.map(p =>
@@ -355,13 +398,12 @@
                                         <p>${ a.number }</p>
                                     </div>
                                     <div>
-                                        <button id = 'view-application-list' app = '${ p.intake }' program = '${ a.program }' status = '${ id }'>
+                                        <button id = 'view-application-list' app = '${ p.intake }' program = '${ a.program }' status = '${ id }' name = '${ p.name }'>
                                             View
                                         </button>
                                     </div>
                                 `
-                            )
-                         }
+                         )}
                         </section>
                         <section class = 'footer-list'>
                             <div>
@@ -382,23 +424,20 @@
     const retrievePost = async() => {
         const app = sessionStorage.getItem('appId')
         const program = sessionStorage.getItem('programId')
+        const name = sessionStorage.getItem('nameIntake')
 
         let collect = await ServerData.bindAuth('POST',`/approval/getApplication`,true,{ 'app' : app })
-        ServerData.collect = collect.app[0]
-        console.log(ServerData.collect)
-        console.log(ServerData.collect.attendances)
-        ServerData.attendance_arr = [
-            'REGULAR','FULL-TIME','PART-TIME','ONLINE-LEARNING','HOLIDAY-LEARNING','DISTANCE-LEARNING','EVENING'
-        ]
+        ServerData.collect = collect.app
+        let courses = collect.courses
+
+        $('#intake_name').html(name)
+        $('#intake_program').html(ServerData.studies[program])
 
         let attendance_data = []
         $.parseJSON(ServerData.collect.attendances).map( (data, key) => {
             attendance_data.push({ 'id' : data + ',' + ServerData.attendance_arr[data], 'text' : ServerData.attendance_arr[data] })
         })
 
-        let courses = await ServerData.bindAuth('POST',`/approval/getCourses`,true,{ 'courses' : ServerData.collect.courses })
-
-        console.log(courses)
         let course_data = []
         if(courses.length > 0){
             courses.map( (data, key) => {
@@ -438,6 +477,7 @@
             sessionStorage.setItem('appId',e.currentTarget.attributes[1].value)
             sessionStorage.setItem('programId',e.currentTarget.attributes[2].value)
             sessionStorage.setItem('status',e.currentTarget.attributes[3].value)
+            sessionStorage.setItem('nameIntake',e.currentTarget.attributes[4].value)
             document.location.assign(`/approval/pendingView`)
         })
         $(document).on('click','#prev',function(e){
@@ -525,29 +565,6 @@
                                     ) : '<p>No academic profile</p>'}
                                 </div>
                                 <div id = 'other-table'>
-                                    ${ (a.status) ? $.parseJSON(a.status).map( a =>
-                                        `<div>
-                                            <p>Action</p>
-                                            ${ (a.status == 1) ? `COD APPROVED` : (a.status == 2) ? `COD REJECTED` : (a.status == 3) ? `COD APPROVED & DEAN APPROVED` : (a.status == 4) ? `COD APPROVED & DEAN REJECTED` : (a.status == 5) ? `COD REJECTED & DEAN APPROVED` : (a.status == 6) ? `COD HAS APPROVED & PUSHED TO DEAN` : (a.status == 7) ? `DEAN HAS APPROVED & PUSHED FOR MAIL` : (a.status == 8) ? `COD REJECTED && DEAN REJECTED` : (a.status == 9) ? `COD REJECTED && PUSHED TO DEAN` : (a.status == 10) ? `DEAN HAS REJECTED && PUSHED TO MAIL` :  `STILL PENDING` }
-                                        </div>
-                                        <div>
-                                            <p>Reason</p>
-                                            ${ a.reason }
-                                        </div>
-                                        <div>
-                                            <p>Designation</p>
-                                            ${ a.level }
-                                        </div>
-                                        <div>
-                                            <p>Date</p>
-                                            ${ a.date }
-                                        </div>
-
-                                        `
-                                    ) : '<p>Not yet pushed</p>'
-                                    }
-                                </div>
-                                <div id = 'other-table'>
                                     ${ (a.work) ? $.parseJSON(a.work).map( a =>
                                         `<div>
                                             <p>Institution</p>
@@ -565,6 +582,35 @@
                                         `
                                     ) : '<p>No work profile</p>'}
                                 </div>
+                                <div id = 'other-table'>
+                                    ${ (a.status) ? $.parseJSON(a.status).map( (a,k) =>
+                                        `
+                                            <section>
+                                                <div id = 'number'>
+                                                    ${ (k + 1) }
+                                                </div>
+                                                <div>
+                                                    <p>Action</p>
+                                                    ${ (a.status == 1) ? `COD APPROVED` : (a.status == 2) ? `COD REJECTED` : (a.status == 3) ? `COD APPROVED & DEAN APPROVED` : (a.status == 4) ? `COD APPROVED & DEAN REJECTED` : (a.status == 5) ? `COD REJECTED & DEAN APPROVED` : (a.status == 6) ? `COD HAS APPROVED & PUSHED TO DEAN` : (a.status == 7) ? `DEAN HAS APPROVED & PUSHED FOR MAIL` : (a.status == 8) ? `COD REJECTED && DEAN REJECTED` : (a.status == 9) ? `COD REJECTED && PUSHED TO DEAN` : (a.status == 10) ? `DEAN HAS REJECTED && PUSHED TO MAIL` :  `STILL PENDING` }
+                                                </div>
+                                                <div>
+                                                    <p>Reason</p>
+                                                    ${ a.reason }
+                                                </div>
+                                                <div>
+                                                    <p>Designation</p>
+                                                    ${ a.level }
+                                                </div>
+                                                <div>
+                                                    <p>Date</p>
+                                                    ${ a.date }
+                                                </div>
+                                            </section>
+                                        `
+                                    ) : '<p>Not yet pushed</p>'
+                                    }
+                                </div>
+
                             </section>
 
                         `

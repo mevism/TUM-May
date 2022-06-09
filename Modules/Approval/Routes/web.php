@@ -25,7 +25,6 @@ Route::prefix('approval')->group(function() {
         Route::get('/pendingView', 'ApprovalController@viewPending');
 
         Route::post('/fetchData', 'ApprovalController@fetchData');
-        Route::post('/getCourses', 'ApprovalController@getCourses');
         Route::post('/getApplications', 'ApprovalController@candidate');
         Route::post('/getApplication', 'ApprovalController@getApplication');
         Route::post('/approveApplication', 'ApprovalController@approve');
@@ -33,6 +32,5 @@ Route::prefix('approval')->group(function() {
         Route::post('/getCandidate', 'ApprovalController@searchValue');
         Route::post('/push', 'ApprovalController@push');
     });
-
 
 });
