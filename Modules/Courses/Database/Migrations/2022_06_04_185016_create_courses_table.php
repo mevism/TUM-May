@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('courses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('course_name');
-            $table->integer('school_id');
-            $table->integer('department_id');
+            $table->string('school_id');
+            $table->string('subject1');
+            $table->string('subject2');
+            $table->string('subject3');
+            $table->string('subject4');
+            $table->string('department_id');
             $table->string('campus_id');
             $table->string('course_code')->unique();
             $table->integer('course_duration');
             $table->longText('course_requirements');
-            $table->integer('attendance_id');
+            $table->string('attendance_id');
             $table->timestamps();
             $table->softDeletes();
         });

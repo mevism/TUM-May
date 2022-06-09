@@ -1,3 +1,4 @@
+
 @extends('layouts.backend')
 
 @section('content')
@@ -6,7 +7,7 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <div class="flex-grow-1">
                     <h5 class="h5 fw-bold mb-0">
-                        INTAKES
+                        VIEW Courses
                     </h5>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -15,13 +16,15 @@
                             <a class="link-fx" href="javascript:void(0)">Intakes</a>
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
-                            View intakes
+                            View selected intake
                         </li>
                     </ol>
                 </nav>
             </div>
         </div>
+
     </div>
+    
  
     <main id="main-container">
         <!-- Page Content -->
@@ -33,25 +36,37 @@
               <div class="row">
                 <div class="col-12">
               <table class="table table-borderless table-striped table-vcenter js-dataTable-responsive">
-                <span class="d-flex justify-content-end">
-                    <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addIntake') }}">Create</a>
-                </span>
                 <thead>
                     
                   <tr>
-                    <th>Intakes</th>
+                    <th>Course Code</th>
+                    <th>Courses</th>
+                    <th>Department</th>
+                    <th>Campus</th>
+                    <th>Period</th>
+                    <th colspan="3" class="text-center" >Action</th>
                   </tr>
                   
                 </thead>
-                <tbody>@foreach ($data as $intake)
-                  <tr>
-                    <td class="fw-semibold fs-sm">{{ $intake->intake_from }} - {{ $intake->intake_to }}</td>
-                    <td> <a class="btn btn-sm btn-alt-secondary" href="{{ route('courses.viewIntake', $intake->id) }}">view</a> </td>
-                    <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editIntake', $intake->id) }}">edit</a> </td>
-                    <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroyIntake', $intake->id) }}">delete</a> </td> 
-                  </tr>
-                  @endforeach
-         
+                <tbody>
+                    @foreach ($courses as $course)
+                    
+                         @foreach ($course as $item)
+                         <tr>
+                            <td>{{ $item->course_code }}</td>
+                            <td>{{ $item->course_name }}</td>
+                            <td>{{ $item->department_id }}</td>
+                            <td>{{ $item->campus_id }}</td>
+                            <td>{{ $item->course_duration }}</td>
+                            <td><a href="" class="btn btn-sm btn-alt-secondary" data-toggle="click-ripple">view</a></td>
+                            <td><a href="" class="btn btn-sm btn-alt-info" data-toggle="click-ripple">edit</a></td>
+                            <td><a href="" class="btn btn-sm btn-alt-danger" data-toggle="click-ripple">delete</a></td>
+
+                         </tr>
+                         @endforeach
+
+                     @endforeach
+                
                 </tbody>
               </table>
                 </div>

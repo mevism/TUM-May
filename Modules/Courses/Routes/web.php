@@ -19,6 +19,7 @@ Route::prefix('courses')->group(function() {
     Route::get('/editIntake/{id}', 'CoursesController@editIntake')->name('courses.editIntake');
     Route::put('/updateIntake/{id}', 'CoursesController@updateIntake')->name('courses.updateIntake');
     Route::get('/destroyIntake/{id}', 'CoursesController@destroyIntake')->name('courses.destroyIntake');
+    Route::get('/viewIntake/{id}', 'CoursesController@viewIntake')->name('courses.viewIntake');
 
 
     Route::get('/addSchool', 'CoursesController@addSchool')->name('courses.addSchool');

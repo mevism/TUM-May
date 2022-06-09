@@ -404,7 +404,7 @@
       <div class="content py-3">
         <div class="row fs-sm">
           <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-            Designed by <a class="fw-semibold" style="color: gold !important;" href="https://support.tum.ac.ke/" target="_blank">TUM ICTs</a>
+            Designed by <a class="fw-semibold" style="color: gold !important;" href="https://support.tum.ac.ke/" target="_blank">TUM ICTS</a>
           </div>
           <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
             <a class="fw-semibold" style="color: gold !important;" href="https://www.tum.ac.ke/" target="_blank">Technical University of Mombasa</a> &copy; <span data-toggle="year-copy"></span>

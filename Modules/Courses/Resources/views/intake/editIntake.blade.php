@@ -27,42 +27,13 @@
                     <div class="row">
                       <div  class="col-12">
                         <label for="intake_name">From:</label>
-                        {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_from" placeholder="Name"> --}}
-                        <select class="form-control form-control-alt text-uppercase" name="intake_name_from" id="intake_name">
-                          <option value="{{ $data->intake_name }}"> </option>
-                          <option value="January">January</option>
-                          <option value="February">February</option>
-                          <option value="March">March</option>
-                          <option value="April">April</option>
-                          <option value="May">May</option>
-                          <option value="June">June</option>
-                          <option value="July">July</option>
-                          <option value="August">August</option>
-                          <option value="September">September</option>
-                          <option value="October">October</option>
-                          <option value="November">November</option>
-                          <option value="December">December</option>
-                        </select>
+                        <input type="month" class="form-control form-control-alt" id="intake_name_from" name="intake_name_from" placeholder="Name">
+                      
                       </div>
                       <br>
                       <div class="col-12">
                         <label for="intake_name">To:</label>
-                        {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_to" placeholder="Name"> --}}
-                        <select type="month" class="form-control form-control-alt text-uppercase" name="intake_name_to" id="intake_name">
-                          <option selected disabled> </option>
-                          <option value="January">January</option>
-                          <option value="February">February</option>
-                          <option value="March">March</option>
-                          <option value="April">April</option>
-                          <option value="May">May</option>
-                          <option value="June">June</option>
-                          <option value="July">July</option>
-                          <option value="August">August</option>
-                          <option value="September">September</option>
-                          <option value="October">October</option>
-                          <option value="November">November</option>
-                          <option value="December">December</option>
-                        </select>
+                        <input type="month" class="form-control form-control-alt" id="intake_name_to" name="intake_name_to" placeholder="Name">
                       </div>
                   </div>
                     <div class="col-12">
@@ -76,3 +47,5 @@
           </div>
     </div>
 @endsection
+
+

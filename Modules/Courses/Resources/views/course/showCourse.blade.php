@@ -32,20 +32,22 @@
  <!-- Main Container -->
  <main id="main-container">
   <!-- Page Content -->
-  <div class="content">
+  
 
     <!-- Dynamic Table Responsive -->
     <div class="block block-rounded">
       
       <div class="block-content block-content-full">
+        <div class="row">
+          <div class="col-12">
         <!-- DataTables init on table by adding .js-dataTable-responsive class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
         <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
           <span class="d-flex justify-content-end">
-            <a class="btn btn-alt-info" href="{{ route('courses.addCourse') }}">Add</a>
+            <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addCourse') }}">Create</a>
         </span><br>
           <thead>
             <tr>
-              <th>  Campuses     </th>
+              <th>  Campus     </th>
               <th>  Schools     </th>
               <th>  Departments </th>
               <th> Courses       </th>
@@ -64,6 +66,7 @@
             @endforeach
           </tbody>
         </table>
+        </div>
       </div>
     </div>
     <!-- Dynamic Table Responsive -->

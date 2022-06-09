@@ -139,7 +139,7 @@
     <!-- END Sidebar -->
 
     <!-- Header -->
-    <header id="page-header">
+    <header id="page-header" style="background: #d89837 !important">
       <!-- Header Content -->
       <div class="content-header">
         <!-- Left Section -->
@@ -153,7 +153,7 @@
 
           <!-- Toggle Mini Sidebar -->
           <!-- Layout API, functionality initialized in Template._uiApiLayout()-->
-          <button type="button" class="btn btn-sm btn-alt-secondary me-2 d-none d-lg-inline-block" data-toggle="layout" data-action="sidebar_mini_toggle">
+          <button type="button" class="btn btn-sm btn-alt-dark me-2 d-none d-lg-inline-block" data-toggle="layout" data-action="sidebar_mini_toggle">
             <i class="fa fa-fw fa-list-ul fa-flip-horizontal"></i>
           </button>
           <!-- END Toggle Mini Sidebar -->
@@ -165,8 +165,8 @@
         <div class="d-flex align-items-center">
           <!-- User Dropdown -->
           <div class="dropdown d-inline-block ms-2">
-            <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img class="rounded-circle" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="Header Avatar" style="width: 21px;">
+            <button type="button" class="btn btn-sm btn-alt-dark d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img class="rounded-circle" src="{{ asset('media/avatars/may.png') }}" alt="Header Avatar" style="width: 21px;">
               <span class="d-none d-sm-inline-block ms-2">
                   @if(Auth::guard('user')->check())
                       {{ Auth::guard('user')->user()->name }}
@@ -177,8 +177,8 @@
               <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0" aria-labelledby="page-header-user-dropdown">
-              <div class="p-3 text-center bg-body-light border-bottom rounded-top">
-                <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ asset('media/avatars/avatar10.jpg') }}" alt="">
+              <div class="p-3 text-center bg-body-dark border-bottom rounded-top">
+                <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ asset('media/avatars/may.png') }}" alt="">
                 <p class="mt-2 mb-0 fw-medium">
            {{-- {{ Auth::guard('user')->user()->name }}--}}
                     @if(Auth::guard('user')->check())
@@ -337,14 +337,14 @@
     <!-- END Main Container -->
 
     <!-- Footer -->
-    <footer id="page-footer" class="bg-body-dark">
+    <footer id="page-footer" class="" style="background: rgba(0, 0, 0, 0.7) !important">
       <div class="content py-3">
-        <div class="row fs-sm">
+        <div class="row fs-sm" style="color: white; !mportant">
           <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-            Designed by <a class="fw-semibold" href="https://support.tum.ac.ke/" target="_blank">TUM ICTs</a>
+            Designed by <a class="fw-semibold"  style="color: gold;" href="https://support.tum.ac.ke/" target="_blank">TUM ICTS</a>
           </div>
           <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-            <a class="fw-semibold" href="https://www.tum.ac.ke/" target="_blank">Technical University of Mombasa</a> &copy; <span data-toggle="year-copy"></span>
+            <a class="fw-semibold" href="https://www.tum.ac.ke/" style="color: gold;" target="_blank">Technical University of Mombasa</a> &copy; <span data-toggle="year-copy"></span>
           </div>
         </div>
       </div>
