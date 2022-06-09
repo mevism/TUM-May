@@ -22,14 +22,16 @@
 </div>
 <main id="main-container">
     <!-- Page Content -->
-    <div class="content">
+    
       <!-- Dynamic Table Responsive -->
       <div class="block block-rounded">
        
         <div class="block-content block-content-full">
+          <div class="row">
+            <div class="col-12">
           <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
             <span class="d-flex justify-content-end">
-                <a class="btn btn-alt-info" href="{{ route('courses.addAttendance') }}">Add</a>
+                <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addAttendance') }}">Create</a>
             </span><br>
             <thead>
                 
@@ -50,6 +52,7 @@
      
             </tbody>
           </table>
+            </div>
         </div>
       </div>
       <!-- Dynamic Table Responsive -->

@@ -24,28 +24,26 @@
   </div>
 </div>
     <div class="content">
-        <div  style="margin-left:20%;" class="block block-rounded col-md-9 col-lg-8 col-xl-6">
+        <div  class="block block-rounded">
             <div class="block-header block-header-default">
               <h3 class="block-title">ADD COURSE</h3>
             </div>
             <div class="block-content block-content-full">
               <div class="row">
-                <div class="col-lg-12 space-y-0">
-
+                 
+                <div class="col-lg-8 space-y-0">
                    <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.storeCourse') }}" method="POST">
-                    @csrf
-                   
+                    @csrf 
                     <div class="col-12 col-xl-12">
-                      <select name="campus" id="campus" class="form-control form-control-alt text-uppercase">
+                      <select name="campus" id="campus" value="{{ old('campus') }}" class="form-control form-control-alt text-uppercase">
                         <option selected diasabled>Select Campus</option>
                         @foreach ($campuses as $campus)
                         <option value="{{ $campus->name }}">{{ $campus->name }}</option>                      
                         @endforeach
                       </select>
-                    </div>
-                   
+                    </div>                  
                     <div class="col-12 col-xl-12">
-                      <select name="school" id="school" class="form-control form-control-alt text-uppercase">
+                      <select name="school" id="school" value="{{ old('school') }}" class="form-control form-control-alt text-uppercase">
                         <option selected disabled> Select School</option>
                         @foreach ($schools as $school)
                           <option value="{{ $school->name }}">{{ $school->name }}</option>        
@@ -53,7 +51,7 @@
                       </select>
                     </div>
                     <div class="col-12 col-xl-12">
-                      <select name="department" id="department" class="form-control form-control-alt text-uppercase">
+                      <select name="department" id="department" value="{{ old('department') }}" class="form-control form-control-alt text-uppercase">
                         <option selected disabled> Select Department</option>
                         @foreach ($departments as $department)
                         <option value="{{ $department->name }}">{{ $department->name }}</option>        
@@ -61,23 +59,51 @@
                       </select>
                     </div>
                     <div class="col-12 col-xl-12">
-                      <input type="text" class="form-control form-control-alt text-uppercase" id="course_name" name="course_name" placeholder="Course Name">
+                      <input type = "text" class = "form-control form-control-alt text-uppercase" id = "course_name"value="{{ old('course_name') }}" name="course_name" placeholder="Course Name">
                     </div>
                     <div class="col-12 col-xl-12">
-                        <input type="text" class="form-control form-control-alt text-uppercase" id="course_code" name="course_code" placeholder="Course Code">
+                        <input type = "text" class = "form-control form-control-alt text-uppercase" id = "course_code" value="{{ old('course_code') }}"name="course_code" placeholder="Course Code">
                       </div>
                       <div class="col-12 col-xl-12">
-                        <input type="text" class="form-control form-control-alt text-uppercase" id="course_duration" name="course_duration" placeholder="Course Duration">
+                        <input type = "text" class = "form-control form-control-alt text-uppercase" id = "course_duration" value="{{ old('course_duration') }}"name="course_duration" placeholder="Course Duration">
                       </div>
                       <div class="col-12 col-xl-12">
-                        <input type="text" class="form-control form-control-alt text-uppercase" id="course_requirements" name="course_requirements" placeholder="Course Requirements">
+                        <textarea value = "{{ old('course_requirements') }}" class = "form-control form-control-alt text-uppercase" id="course_requirements" name="course_requirements" placeholder="Course Requirements"></textarea>
+                        
                       </div>
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-dark">Add</button>
-                    </div>
-                  </form>
-                 
                 </div>
+                
+                <div class="col-lg-4">                
+                    <div class="col-12 col-xl-12">
+                      <input type="text" value="{{ old('subject1') }}" class="form-control form-control-alt text-uppercase" id="subject1" name="subject1" placeholder="subject1">
+                    </div>
+                    <br>
+                    <div class="col-12 col-xl-12">
+                      <input type="text" value="{{ old('subject2') }}"class="form-control form-control-alt text-uppercase" id="subject2" name="subject2" placeholder="subject2">
+                    </div><br>
+                    <div class="col-12 col-xl-12">
+                      <input type="text" value="{{ old('subject3') }}" class="form-control form-control-alt text-uppercase" id="subject3" name="subject3" placeholder="subject3">
+                    </div><br>
+                    <div class="col-12 col-xl-12">
+                      <input type="text"value="{{ old('subject4') }}" class="form-control form-control-alt text-uppercase" id="subject4" name="subject4" placeholder="subject4">
+                    </div>
+
+                    <p class="p-2">
+                      
+                      <b>KEY:</b>  <br>
+                      Format to key in cluster subjects <br>
+                     <span class="small">
+                        MAT B+ <br>
+                        PHY A <br>
+                        ENG A-
+                      </span>
+
+                    </p>
+                </div>
+                <div class="col-12 text-center p-3">
+                  <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Create Course</button>
+                </div>
+              </form>
               </div>
             </div>
           </div>

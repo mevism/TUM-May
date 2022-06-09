@@ -22,4 +22,9 @@ class Intake extends Model
         }
 
     }
+
+    public function available()
+    {
+        return $this->hasMany('\Modules\Courses\Entities\AvailableCourse', 'intake_id');
+    }
 }

@@ -44,10 +44,10 @@
                       </select>
                     </div>
                     <div class="col-12 col-xl-12">
-                      <input type="text" class="form-control form-control-alt text-uppercase" id="name" name="name" placeholder="Name">
+                      <input type="text" value="{{ old('name') }}"  class="form-control form-control-alt text-uppercase" id="name" name="name" placeholder="Name">
                     </div>
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-dark">Add</button>
+                    <div class="col-12 text-center p-3">
+                      <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Create Department</button>
                     </div>
                   </form>
                 </div>

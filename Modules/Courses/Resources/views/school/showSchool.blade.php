@@ -24,28 +24,31 @@
     </div>
     <main id="main-container">
         <!-- Page Content -->
-        <div class="content">
+        
           <!-- Dynamic Table Responsive -->
           <div class="block block-rounded">
            
             <div class="block-content block-content-full">
-              <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
-                <span class="d-flex justify-content-end">
-                    <a class="btn btn-alt-info" href="{{ route('courses.addSchool') }}">Add</a>
-                </span><br>
-                <thead>
-                    <th>Schools</th>
-                </thead>
-                <tbody>@foreach ($data as $school)
-                  <tr>
-                    <td class="fw-semibold fs-sm">{{ $school->name }}</td>
-                    <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editSchool', $school->id) }}">edit</a> </td>
-                    <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroySchool', $school->id) }}">delete</a> </td> 
-                  </tr>
-                  @endforeach
-         
-                </tbody>
-              </table>
+                <div class="row">
+                 <div class="col-12">
+                    <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+                        <span class="d-flex justify-content-end">
+                            <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addSchool') }}">Create</a>
+                        </span><br>
+                        <thead>
+                            <th>Schools</th>
+                        </thead>
+                        <tbody>@foreach ($data as $school)
+                        <tr>
+                            <td class="fw-semibold fs-sm">{{ $school->name }}</td>
+                            <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editSchool', $school->id) }}">edit</a> </td>
+                            <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroySchool', $school->id) }}">delete</a> </td> 
+                        </tr>
+                        @endforeach
+                
+                        </tbody>
+                    </table>
+                </div>
             </div>
           </div>
           <!-- Dynamic Table Responsive -->

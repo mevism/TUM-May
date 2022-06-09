@@ -37,54 +37,47 @@
                       </div>
                         <div  class="col-12">
                           <label for="intake_name">From:</label>
-                          {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_from" placeholder="Name"> --}}
-                          <select class="form-control form-control-alt" name="intake_name_from" id="intake_name">
-                            <option selected disabled> </option>
-                            <option value="Jan">January</option>
-                            <option value="Feb">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="Sept">September</option>
-                            <option value="Oct">October</option>
-                            <option value="Nov">November</option>
-                            <option value="Dec">December</option>
-                          </select>
+                          <input type="month" class="form-control form-control-alt" id="intake_name_from" name="intake_name_from" placeholder="Name">
+                          
                         </div>
                         <br>
                         <div class="col-12">
                           <label for="intake_name">To:</label>
-                          {{-- <input type="month" class="form-control form-control-alt" id="intake_name" name="intake_name_to" placeholder="Name"> --}}
-                          <select type="month" class="form-control form-control-alt" name="intake_name_to" id="intake_name">
-                            <option selected disabled> </option>
-                            <option value="Jan">January</option>
-                            <option value="Feb">February</option>
-                            <option value="March">March</option>
-                            <option value="April">April</option>
-                            <option value="May">May</option>
-                            <option value="June">June</option>
-                            <option value="July">July</option>
-                            <option value="August">August</option>
-                            <option value="Sept">September</option>
-                            <option value="Oct">October</option>
-                            <option value="Nov">November</option>
-                            <option value="Dec">December</option>
-                          </select>
+                          <input type="month" class="form-control form-control-alt" id="intake_name_to" name="intake_name_to" placeholder="Name">
+                          
                         </div>
                     </div>
-                    <select name="course[]" multiple id="course" class="form-control form-control-alt">
+                    {{-- <select name="course[]" multiple id="course" class="form-control form-control-alt">
                       <option selected diasabled>Select Course</option>
                       @foreach ($courses as $course)
                       <option value="{{ $course->course_name }}">{{ $course->course_name }}</option>                      
                       @endforeach
-                    </select>
-          
-                
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-dark">Add</button>
+                    </select> --}}
+                  <div>
+                    <table class="table table-responsive table-striped py-0 table-borderless">
+                      @if (count($courses)>0)
+
+                        @foreach ($courses as $course)
+                          <tr>
+                           <td>
+                            <input type="checkbox" value="{{ $course->id }}" name="course[]">
+                           </td>
+                           <td>
+                            <label for="course" class="form-label"> {{ $course->course_name }} </label>
+                           </td>
+                          </tr>
+                        @endforeach
+
+                        @else
+
+                        <tr>
+                          <span class="small"> no courses to select from </span>
+                        
+                      @endif          
+                        </table>
+                  </div><br>
+                    <div class="col-12 text-center p-3">
+                      <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Create Intake</button>
                     </div>
                   </form>
 
