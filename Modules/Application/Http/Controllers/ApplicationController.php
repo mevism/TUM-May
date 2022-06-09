@@ -21,6 +21,7 @@ use Modules\Application\Entities\Sponsor;
 use Modules\Application\Entities\VerifyEmail;
 use Modules\Application\Entities\VerifyUser;
 use Modules\Application\Entities\WorkExperience;
+use Modules\Courses\Entities\Courses;
 use Session;
 use Auth;
 use Illuminate\Support\Facades\Mail;
@@ -187,9 +188,9 @@ class ApplicationController extends Controller
 
             } else {
 
-            return view('application::applicant.home')->with(['success' => 'Welcome', 'courses' => $courses]);
+                return view('application::applicant.home')->with(['success' => 'Welcome', 'courses' => $courses]);
 
-                    }
+            }
             redirect()->route('application.login')->with('error', 'Please try again');
         }
 
@@ -271,7 +272,6 @@ class ApplicationController extends Controller
     }
 
     public function myCourses(){
-
         $mycourses = Application::where('user_id', Auth::user()->id)->get();
         return view('application::applicant.mycourses')->with('courses', $mycourses);
     }
@@ -281,11 +281,11 @@ class ApplicationController extends Controller
         return view('application::applicant.courses')->with('data', $courses);
     }
 
-    public function applyNow(Course $course){
-
+    public function applyNow($id){
         $schools = School::all();
         $departments = Department::all();
         $courses = Course::all();
+        $course = Course::find($id);
 
         return view('application::applicant.application')
             ->with(['course' => $course, 'schools' => $schools, 'departments' => $departments, 'courses' => $courses]);
@@ -293,42 +293,42 @@ class ApplicationController extends Controller
 
     public function application(Request $request){
         $request->validate([
-            'school' => 'required|string',
-            'department' => 'required|string',
-            'course' => 'required|string',
-            'campus' => 'required|string',
-            'primary' => 'required|string',
-            'primaryqualification' => 'string|required',
-            'pristartdate' => 'string',
-            'prienddate' => 'string',
-            'primarycert' => 'required|max:2048',
+            'subject1' => 'required|string',
+            'subject2' => 'string|required',
+            'subject3' => 'string|required',
+            'subject4' => 'string|required',
             'secondary' => 'string|required',
             'secondaryqualification' => 'string|required',
             'secstartdate' => 'string|required',
             'secenddate' => 'string|required',
-//            'seccert' => 'mimes:image|required',
-//            'tertiary2' => 'string',
-//            'tertiary2qualification' => 'string',
-//            'ter2startdate' => 'string',
-//            'ter2enddate' => 'string',
-////            'ter2cert' => 'mimes|image',
-//            'tertiary3' => 'string',
-//            'tertiary3qualification' => 'string',
-//            'ter3startdate' => 'string',
-//            'ter3enddate' => 'string',
-////            'ter3cert' => 'mimes|image',
-//            'org1' => 'string',
-//            'org1post' => 'string',
-//            'org1startdate' => 'string',
-//            'org1enddate' => 'string',
-//            'org2' => 'string',
-//            'org2post' => 'string',
-//            'org2startdate' => 'string',
-//            'org2enddate' => 'string',
-//            'org3' => 'string',
-//            'org3post' => 'string',
-//            'org3startdate' => 'string',
-//            'org3enddate' => 'string',
+            'seccert' => 'mimes:image,pdf|required|max:2048',
+            'tertiary' => 'string|nullable',
+            'tertiaryqualification' => 'string|nullable',
+            'terstartdate' => 'string|nullable',
+            'terenddate' => 'string|nullable',
+            'tercert' => 'mimes:image,pdf|required|max:2048',
+            'tertiary2' => 'string|nullable',
+            'tertiary2qualification' => 'string|nullable',
+            'ter2startdate' => 'string|nullable',
+            'ter2enddate' => 'string|nullable',
+            'ter2cert' => 'mimes:image,pdf|required|max:2048',
+            'tertiary3' => 'string|nullable',
+            'tertiary3qualification' => 'string|nullable',
+            'ter3startdate' => 'string|nullable',
+            'ter3enddate' => 'string|nullable',
+            'ter3cert' => 'mimes:image,pdf|required|max:2048',
+            'org1' => 'string|nullable',
+            'org1post' => 'string|nullable',
+            'org1startdate' => 'string|nullable',
+            'org1enddate' => 'string|nullable',
+            'org2' => 'string|nullable',
+            'org2post' => 'string|nullable',
+            'org2startdate' => 'string|nullable',
+            'org2enddate' => 'string|nullable',
+            'org3' => 'string|nullable',
+            'org3post' => 'string|nullable',
+            'org3startdate' => 'string|nullable',
+            'org3enddate' => 'string|nullable',
             'parentname' => 'string|required',
             'parentmobile' => 'string|required|regex:/(0)[0-9]{9}/|min:10|max:10',
             'parentcounty' => 'string|required',
@@ -338,7 +338,6 @@ class ApplicationController extends Controller
             'sponsorcounty' => 'string|required',
             'sponsortown' => 'string|required',
         ]);
-//        return $request->all();
 
         $application = new Application;
         $application->user_id = Auth::user()->id;
@@ -346,22 +345,15 @@ class ApplicationController extends Controller
         $application->department = $request->department;
         $application->course = $request->course;
         $application->campus = $request->campus;
+        $application->subject_1 = $request->subject1;
+        $application->subject_2 = $request->subject2;
+        $application->subject_3 = $request->subject3;
+        $application->subject_4 = $request->subject4;
         $application->save();
 
 
         $education = new Education;
         $education->user_id = Auth::user()->id;
-        $education->primary_school = $request->primary;
-        $education->primary_qualification = $request->primaryqualification;
-        $education->primary_start = $request->pristartdate;
-        $education->primary_end = $request->prienddate;
-
-        if ($request->hasFile('primarycert')){
-            $file = $request->primarycert;
-            $fileName = 'primarycert'.time().'.'.$file->getClientOriginalExtension();
-            $request->primarycert->move('certs', $fileName);
-            $education->primary_certificate = $fileName;
-        }
         $education->secondary_school = $request->secondary;
         $education->secondary_qualification = $request->secondaryqualification;
         $education->secondary_start = $request->secstartdate;
@@ -374,7 +366,6 @@ class ApplicationController extends Controller
             $education->secondary_certificate = $fileName;
         }
 
-//        $education->secondary_certificate = $request->seccert;
         $education->tertiary_school = $request->tertiary;
         $education->tertiary_qualification = $request->teriaryqualification;
         $education->tertiary_start = $request->terstartdate;
@@ -387,7 +378,6 @@ class ApplicationController extends Controller
             $education->tertiary_certificate = $fileName;
         }
 
-//        $education->tertiary_certificate = $request->tercert;
         $education->tertiary1_school = $request->tertiary2;
         $education->tertiary1_qualification = $request->teriary2qualification;
         $education->tertiary1_start = $request->ter2startdate;
@@ -400,7 +390,6 @@ class ApplicationController extends Controller
             $education->tertiary1_certificate = $fileName;
         }
 
-//        $education->tertiary1_certificate = $request->ter2cert;
         $education->tertiary2_school = $request->tertiary3;
         $education->tertiary2_qualification = $request->ter3iaryqualification;
         $education->tertiary2_start = $request->ter3startdate;
@@ -413,7 +402,6 @@ class ApplicationController extends Controller
             $education->tertiary2_certificate = $fileName;
         }
 
-//        $education->tertiary2_certificate = $request->ter3cert;
         $education->save();
 
         $work = new WorkExperience;
@@ -449,6 +437,12 @@ class ApplicationController extends Controller
         $sponsor->save();
 
         return redirect()->route('applicant.course')->with('success', 'You submitted your application successfully');
+    }
+
+    public function viewCourse($id){
+        $course = Courses::find($id);
+
+        return view('application::applicant.viewcourse')->with('course', $course);
     }
 
     public function apply(Course $course){

@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('department');
             $table->string('course');
             $table->string('campus');
+            $table->string('subject_1');
+            $table->string('subject_2');
+            $table->string('subject_3');
+            $table->string('subject_4');
             $table->tinyInteger('declaration')->default(1);
             $table->timestamps();
             $table->softDeletes();

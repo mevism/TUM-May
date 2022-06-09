@@ -1,4 +1,7 @@
 {
     "Application": true,
-    "Courses": true
+    "Courses": true,
+    "Approval": true
+
+    
 }
