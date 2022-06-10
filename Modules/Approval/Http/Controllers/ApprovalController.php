@@ -37,9 +37,10 @@ class ApprovalController extends Controller
                 return redirect()->route('application.details')->with(['info' => 'Please update your profile']);
 
             } else {
-
-                return view('approval::cod.index');
-
+                if(json_decode(Auth::guard('user')->user()->role_id)->role == 2)
+                    return view('approval::cod.index');
+                else
+                    return view('approval::dean.index');
             }
             redirect()->route('application.login')->with('error', 'Please try again');
         }
