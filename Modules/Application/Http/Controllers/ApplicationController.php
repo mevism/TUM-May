@@ -21,7 +21,9 @@ use Modules\Application\Entities\Sponsor;
 use Modules\Application\Entities\VerifyEmail;
 use Modules\Application\Entities\VerifyUser;
 use Modules\Application\Entities\WorkExperience;
+use Modules\Courses\Entities\AvailableCourse;
 use Modules\Courses\Entities\Courses;
+use Modules\Courses\Entities\Intake;
 use Session;
 use Auth;
 use Illuminate\Support\Facades\Mail;
@@ -255,8 +257,6 @@ class ApplicationController extends Controller
 
     }
 
-
-
     public function logout(){
         Session::flush();
         Auth::logout();
@@ -277,8 +277,20 @@ class ApplicationController extends Controller
     }
 
     public function allCourses(){
-        $courses = Course::all();
-        return view('application::applicant.courses')->with('data', $courses);
+        $course_id = AvailableCourse::select('course_id')->get();
+        foreach ($course_id as $course){
+
+            $availables[] = Courses::where('id', $course->course_id)->get();
+
+        }
+
+        $intake_id = AvailableCourse::select('intake_id')->get();
+
+//        $intake = $intake_id->courses;
+
+//        return $intake;
+
+        return view('application::applicant.courses')->with(['data' => $availables, 'intake' => $intake_id]);
     }
 
     public function applyNow($id){

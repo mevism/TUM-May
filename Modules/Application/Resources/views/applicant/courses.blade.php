@@ -32,24 +32,24 @@
                         <th>Department</th>
                         <th>School</th>
                         <th>Campus</th>
-{{--                        <th>Requirements</th>--}}
+                        <th>Intake</th>
                         <th>Duration</th>
-                        <th>Course type</th>
-                        <th colspan="2">Action</th>
+                        <th colspan="2" class="text-center">Action</th>
                     </tr>
                     @foreach($data as $course)
 
-                        <tr>
-                            <td> {{ $course->course_name }}</td>
-                            <td> {{ $course->department_id }}</td>
-                            <td> {{ $course->school_id }}</td>
-                            <td> {{ $course->campus_id }}</td>
-{{--                            <td> {{ $course->course_requirements }}</td>--}}
-                            <td> {{ $course->course_duration }}</td>
-                            <td> Full Time</td>
-                            <td nowrap=""> <a class="btn btn-sm btn-alt-secondary" href="{{ route('application.viewOne', $course->id) }}">View </a> </td>
-                            <td nowrap=""> <a class="btn btn-sm btn-alt-info" href="{{ route('application.apply', $course->id) }}">Apply now </a> </td>
-                        </tr>
+                        @foreach($course as $item)
+                            <tr>
+                                <td> {{ $item->course_name }}</td>
+                                <td> {{ $item->department_id }}</td>
+                                <td> {{ $item->school_id }}</td>
+                                <td> {{ $item->campus_id }}</td>
+                                <td> {{ $item->$intake }}</td>
+                                <td> {{ $item->course_duration }}</td>
+                                <td nowrap=""> <a class="btn btn-sm btn-alt-secondary" href="{{ route('application.viewOne', $item->id) }}">View </a> </td>
+                                <td nowrap=""> <a class="btn btn-sm btn-alt-info" href="{{ route('application.apply', $item->id) }}">Apply now </a> </td>
+                            </tr>
+                        @endforeach
                     @endforeach
                 @else
                 <tr>

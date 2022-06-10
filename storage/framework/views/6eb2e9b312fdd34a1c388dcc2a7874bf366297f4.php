@@ -1,5 +1,4 @@
-@extends('application::layouts.backend')
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
@@ -28,32 +27,36 @@
                 <!-- Developer Plan -->
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-header">
-                        <h3 class="fw-bold block-title">{{ $course->course_name }}</h3>
+                        <h3 class="fw-bold block-title"><?php echo e($course->course_name); ?></h3>
                     </div>
                     <div class="block-content bg-body-light">
                         <div class="py-2">
-                            <p class="mb-2">{{ $course->course_requirements }}</p>
+                            <p class="mb-2"><?php echo e($course->course_requirements); ?></p>
                         </div>
                     </div>
                     <div class="block-content">
                         <div class="h5 fw-semibold mb-2">Cluster Subjects </div>
                         <div class="fs-sm py-2">
                             <p>
-                                {{ $course->subject1 }}
+                                <?php echo e($course->subject1); ?>
+
                             </p>
                             <p>
-                                {{ $course->subject2 }}
+                                <?php echo e($course->subject2); ?>
+
                             </p>
                             <p>
-                                {{ $course->subject3 }}
+                                <?php echo e($course->subject3); ?>
+
                             </p>
                             <p>
-                                {{ $course->subject4 }}
+                                <?php echo e($course->subject4); ?>
+
                             </p>
                         </div>
                     </div>
                     <div class="block-content block-content-full bg-body-light text-center">
-                        <a href="{{ route('application.apply', $course->id) }}" class="btn btn-alt-success btn-sm" data-toggle="click-ripple">Apply now</a>
+                        <a href="<?php echo e(route('application.apply', $course->id)); ?>" class="btn btn-alt-success btn-sm" data-toggle="click-ripple">Apply now</a>
                     </div>
                 </a>
                 <!-- END Developer Plan -->
@@ -61,4 +64,6 @@
         </div>
     </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('application::layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\TUM\Modules/Application\Resources/views/applicant/viewcourse.blade.php ENDPATH**/ ?>

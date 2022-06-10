@@ -10,7 +10,7 @@ class Intake extends Model
     use HasFactory;
 
     protected $fillable = [];
-    
+
     protected static function newFactory()
     {
         return \Modules\Courses\Database\factories\IntakeFactory::new();
@@ -27,4 +27,9 @@ class Intake extends Model
     {
         return $this->hasMany('\Modules\Courses\Entities\AvailableCourse', 'intake_id');
     }
+
+    public function courses(){
+        $this->hasOne(Courses::class, 'id');
+    }
+
 }
