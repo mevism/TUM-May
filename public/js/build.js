@@ -1,5 +1,5 @@
     const ServerData = new (function(){
-        this.studies = ['Diploma','Certificate','Graduate','Non-standard','Post-Graduate','Under-Graduate'];
+        this.studies = ['Diploma','Certificate','Graduate','Non-standard','Post-Graduate','Under-Graduate','Masters','PHD'];
         this.attendance_arr = ['REGULAR','FULL-TIME','PART-TIME','ONLINE-LEARNING','HOLIDAY-LEARNING','DISTANCE-LEARNING','EVENING']
         this.bindAuth = async function(r, h, c, m){
             let pop = { method : r }
@@ -85,7 +85,7 @@
             let offset = (limit - 100)
             console.log({ 'course' : course, 'level' : level, 'attendance' : attendance, 'year' : year, 'status' : status, 'intake' : intake, 'limit' : limit, 'offset' : offset })
             let applications = await this.bindAuth('POST',`/approval/getApplications`,true,{ 'course' : course, 'level' : level, 'attendance' : attendance, 'year' : year, 'status' : status, 'intake' : intake, 'limit' : limit, 'offset' : offset, filter })
-            console.log(applications.user)
+            console.log(applications)
             ServerData.Page = applications.page
             let pages = [];
             for(let x = 1;x <= ServerData.Page;x++)
@@ -116,34 +116,44 @@
                                     ?
                                     `
                                         <div>
-                                            ${ (a.final_status == 0)? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 1) ? `<p>COD Approved</p>` : (a.final_status == 2) ? `<p>COD Rejected</p>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS`  : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION`  : 'false'  }
+                                            ${ (a.final_status == 0)? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 1) ? `<p>COD Approved</p>` : (a.final_status == 2) ? `<p>COD Rejected</p>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS`  : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION`  : 'false'  }
                                         </div>
                                         <div>
-                                            ${ (a.final_status == 0)? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : (a.final_status == 1) ? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : (a.final_status == 2) ? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS` : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION` : 'false'  }
+                                            ${ (a.final_status == 0)? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : (a.final_status == 1) ? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : (a.final_status == 2) ? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS` : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION` : 'false'  }
                                         </div>
                                     `
                                     :
                                     `
                                         <div>
-                                            ${ (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 10) ? `DEAN PUSHED REJECTED APPLICATION`  : 'false'  }
+                                            ${ (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 10) ? `DEAN PUSHED REJECTED APPLICATION`  : 'false'  }
                                         </div>
                                         <div>
-                                            ${  (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : 'false'  }
+                                            ${  (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : 'false'  }
                                         </div>
                                     `
                                 }
 
                             </section>
                             <section class = 'inner-part-level'>
+                                <h3>Academics Profile</h3>
                                 <div id = 'other-table'>
-                                    ${ (a.academics) ? $.parseJSON(a.academic).map( a =>
-                                        `<div>
+                                    ${ (a.academics) ? $.parseJSON(a.academics).map( a =>
+                                        `
+                                        <div>
+                                            <p>Institution</p>
+                                            ${ a.institution }
+                                        </div>
+                                        <div>
+                                            <p>Name</p>
+                                            ${ a.name }
+                                        </div>
+                                        <div>
                                             <p>Grade</p>
                                             ${ a.grade }
                                         </div>
                                         <div>
                                             <p>Certificate</p>
-                                            ${ a.certificate }
+                                            <a href = '/certs/${ a.certificate }' class = 'btn btn-alt-success'>Download</a>
                                         </div>
                                         <div>
                                             <p>Start</p>
@@ -157,11 +167,16 @@
                                         `
                                     ) : '<p>No academic profile</p>'}
                                 </div>
+                                <h3>Work Profile</h3>
                                 <div id = 'other-table'>
                                     ${ (a.work) ? $.parseJSON(a.work).map( a =>
                                         `<div>
                                             <p>Institution</p>
-                                            ${ a.institution }
+                                            ${ a.name }
+                                        </div>
+                                        <div>
+                                            <p>Job</p>
+                                            ${ a.post }
                                         </div>
                                         <div>
                                             <p>Start</p>
@@ -175,6 +190,7 @@
                                         `
                                     ) : '<p>No work profile</p>'}
                                 </div>
+                                <h3>Application Process</h3>
                                 <div id = 'other-table'>
                                     ${ (a.status) ? $.parseJSON(a.status).map( (a,k) =>
                                         `
@@ -398,7 +414,7 @@
                                         <p>${ a.number }</p>
                                     </div>
                                     <div>
-                                        <button id = 'view-application-list' app = '${ p.intake }' program = '${ a.program }' status = '${ id }' name = '${ p.name }'>
+                                        <button id = 'view-application-list' app = '${ p.intake }' program = '${ a.program }' status = '${ id }' name = '${ p.name }' class = 'btn btn-alt-info' data-toggle = 'click-ripple'>
                                             View
                                         </button>
                                     </div>
@@ -411,7 +427,7 @@
                                 <p>${ (p.expire) ? "Intake in session" : "" }</p>
                             </div>
                             <div>
-                                ${ ([10,9,7,6].includes(p.status)) ? "List Has Been Pushed By COD" : "<button id = 'push-list' list = '${ p.intake }' status = '${ p.status }'>Push List</button>" }
+                                ${ ([10,9,7,6].includes(p.status)) ? "List Has Been Pushed By COD" : "<button id = 'push-list' list = '${ p.intake }' status = '${ p.status }' class = 'btn btn-alt-info' data-toggle = 'click-ripple'>Push List</button>" }
                             </div>
                         </section>
                     </div>
@@ -524,26 +540,26 @@
                                     ?
                                     `
                                         <div>
-                                            ${ (a.final_status == 0)? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 1) ? `<p>COD Approved</p>` : (a.final_status == 2) ? `<p>COD Rejected</p>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS`  : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION`  : 'false'  }
+                                            ${ (a.final_status == 0)? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 1) ? `<p>COD Approved</p>` : (a.final_status == 2) ? `<p>COD Rejected</p>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS`  : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION`  : 'false'  }
                                         </div>
                                         <div>
-                                            ${ (a.final_status == 0)? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : (a.final_status == 1) ? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : (a.final_status == 2) ? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS` : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION` : 'false'  }
+                                            ${ (a.final_status == 0)? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : (a.final_status == 1) ? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : (a.final_status == 2) ? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 6) ? `COD PUSHED APPROVED APPLICATIONS` : (a.final_status == 9) ? `COD PUSHED REJECTED APPLICATION` : 'false'  }
                                         </div>
                                     `
                                     :
                                     `
                                         <div>
-                                            ${ (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'approve-button' index = '${ a.applications_id }'>Approve</button>` : (a.final_status == 10) ? `DEAN PUSHED REJECTED APPLICATION`  : 'false'  }
+                                            ${ (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'approve-button' index = '${ a.applications_id }' class = 'btn btn-alt-success' data-toggle = 'click-ripple'>Approve</button>` : (a.final_status == 10) ? `DEAN PUSHED REJECTED APPLICATION`  : 'false'  }
                                         </div>
                                         <div>
-                                            ${  (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'reject-button' index = '${ a.applications_id }'>Reject</button>` : 'false'  }
+                                            ${  (a.final_status == 3) ? `<p>COD Approved & Dean Approved</p>` : (a.final_status == 4) ? `<p>COD Approved & Dean Rejected</p>` : (a.final_status == 5) ? `<p>COD Rejected & Dean Approve</p>` : (a.final_status == 6) ? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : (a.final_status == 7) ? `DEAN PUSHED ACCEPTED APPLICATION` : (a.final_status == 8) ? `COD & DEAN REJECTED`  : (a.final_status == 9) ? `<button id = 'reject-button' index = '${ a.applications_id }' class = 'btn btn-alt-warning' data-toggle = 'click-ripple'>Reject</button>` : 'false'  }
                                         </div>
                                     `
                                 }
                             </section>
                             <section class = 'inner-part-level'>
                                 <div id = 'other-table'>
-                                    ${ (a.academics) ? $.parseJSON(a.academic).map( a =>
+                                    ${ (a.academics) ? $.parseJSON(a.academics).map( a =>
                                         `<div>
                                             <p>Grade</p>
                                             ${ a.grade }
@@ -740,7 +756,7 @@
                             <p>Reason For Rejection</p>
                             <form accept-charset=utf8>
                                 <textarea id = 'rejection-reason' class = 'message-area'></textarea>
-                                <button id = 'confirm-reject' carry-id = '${ e.currentTarget.attributes[1].value }' type = 'submit' class = 'button-area'>Confirm</button>
+                                <button id = 'confirm-reject' carry-id = '${ e.currentTarget.attributes[1].value }' type = 'submit' class = 'button-area' class = 'btn btn-alt-info' data-toggle = 'click-ripple'>Confirm</button>
                             </form>
                         </div>
                     </div>

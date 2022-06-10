@@ -23,7 +23,7 @@
         <div id = 'search-section-left'>
             <form accept-charset=utf8 id = 'search-form'>
                 <input type = 'search' id = 'search-input' placeholder = 'Search Here'>
-                <button type = 'submit' id = 'search-query-button'><i class='fas fa-search'></i></button>
+                <button type = 'submit' id = 'search-query-button' class = 'btn btn-alt-info' data-toggle = 'click-ripple'><i class='fas fa-search'></i></button>
             </form>
         </div>
     </div>

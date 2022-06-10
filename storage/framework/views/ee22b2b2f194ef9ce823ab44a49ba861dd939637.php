@@ -5,13 +5,23 @@
 <link href="<?php echo e(asset('/css/index.css')); ?>" rel="stylesheet" />
 <script src = "<?php echo e(asset('/js/select.js')); ?>" defer></script>
 <script src = "<?php echo e(asset('jquery.js')); ?>" ></script>
-
+    <div class="bg-body-light">
+        <div class="content content-full">
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
+                <div class="flex-grow-1">
+                    <h1 class="h5 fw-bold mb-2">
+                        Search
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class = 'content-force'>
     <div id = 'search-section'>
         <div id = 'search-section-left'>
             <form accept-charset=utf8 id = 'search-form'>
                 <input type = 'search' id = 'search-input' placeholder = 'Search Here'>
-                <button type = 'submit' id = 'search-query-button'><i class='fas fa-search'></i></button>
+                <button type = 'submit' id = 'search-query-button' class = 'btn btn-alt-info' data-toggle = 'click-ripple'><i class='fas fa-search'></i></button>
             </form>
         </div>
     </div>

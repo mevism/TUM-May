@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('work_approval', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->text('academics');
+            $table->text('work');
             $table->timestamps();
         });
     }

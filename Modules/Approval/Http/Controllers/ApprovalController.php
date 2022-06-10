@@ -136,27 +136,18 @@ class ApprovalController extends Controller
     }
     public function searchValue(Request $request){
         $data = $request->json()->all();
-        $search_app = Application::join('applicants_approve', 'applicants_approve.id', '=', 'applications_approval.applications_id')
-              		->join('education_approval', 'education_approval.user_id', '=', 'applicants_approve.id')
-              		->join('work_approval', 'work_approval.user_id', '=', 'applicants_approve.id')
+
+        $apps = DB::table('applications_approval')
+                    ->leftJoin('applicants_approve', 'applicants_approve.user_id', '=', 'applications_approval.user_id')
+              		->leftJoin('education_approval', 'education_approval.user_id', '=', 'applicants_approve.id')
+              		->leftJoin('work_approval', 'work_approval.user_id', '=', 'applicants_approve.id')
                     ->orWhere('id_number', 'LIKE', '%'.$data['value'].'%')
                     ->orWhere('index_number', 'LIKE', '%'.$data['value'].'%')
+                    ->orWhere('name', 'LIKE', '%'.$data['value'].'%')
                     ->orWhere('county', 'LIKE', '%'.$data['value'].'%')
                     ->orWhere('sub_county', 'LIKE', '%'.$data['value'].'%')
                     ->orWhere('town', 'LIKE', '%'.$data['value'].'%')
                     ->orWhere('address', 'LIKE', '%'.$data['value'].'%')
-                    ->whereJsonContains('academics->kcse', 'LIKE', '%'.$data['value'].'%')
-                    ->whereJsonContains('academics->kcpe', 'LIKE', '%'.$data['value'].'%')
-                    ->orWhere('name', 'LIKE', '%'.$data['value'].'%')
-              		->get();
-
-        $apps = DB::table('applications_approval')
-                    ->leftJoin('applicants_approve', 'applicants_approve.user_id', '=', 'applications_approval.user_id')
-                    ->orWhere('id_number', 'LIKE', '%'.$data['value'].'%')
-                    ->orWhere('index_number', 'LIKE', '%'.$data['value'].'%')
-                    ->orWhere('kcse', 'LIKE', '%'.$data['value'].'%')
-                    ->orWhere('kcpe', 'LIKE', '%'.$data['value'].'%')
-                    ->orWhere('name', 'LIKE', '%'.$data['value'].'%')
                     ->get();
         print_r(json_encode(['user' => $apps, 'role' => json_decode(Auth::guard('user')->user()->role_id)->role]));
     }
@@ -187,27 +178,45 @@ class ApprovalController extends Controller
             if($data['filter'] === 1){
                 $apps = DB::table('applications_approval')
                             ->leftJoin('applicants', 'applicants.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('education_approval', 'education_approval.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('work_approval', 'work_approval.id', '=', 'applications_approval.user_id')
                             ->where('intake_id', '=', (int)$data['intake'])
                             ->where('academic_program', '=', (int)$data['level'])
                             ->where('final_status', '=', (int)$opt)
                             ->where('attendance', '=', (int)$data['attendance'])
+                            ->orWhere('intake_id', '=', (int)$data['intake'])
+                            ->where('academic_program', '=', (int)$data['level'])
+                            ->where('final_status', '=', (int)$opt)
                             ->where('course', '=', (int)$data['course'])
+                            ->orWhere('intake_id', '=', (int)$data['intake'])
+                            ->where('academic_program', '=', (int)$data['level'])
+                            ->where('final_status', '=', (int)$opt)
                             ->where('year', '=', (int)$data['year'])
                             ->offset($data['offset'])
                             ->limit($data['limit'])
                             ->get();
                 $apps_count = DB::table('applications_approval')
                             ->leftJoin('applicants', 'applicants.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('education_approval', 'education_approval.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('work_approval', 'work_approval.id', '=', 'applications_approval.user_id')
                             ->where('intake_id', '=', (int)$data['intake'])
                             ->where('academic_program', '=', (int)$data['level'])
                             ->where('final_status', '=', (int)$opt)
                             ->where('attendance', '=', (int)$data['attendance'])
+                            ->orWhere('intake_id', '=', (int)$data['intake'])
+                            ->where('academic_program', '=', (int)$data['level'])
+                            ->where('final_status', '=', (int)$opt)
                             ->where('course', '=', (int)$data['course'])
+                            ->orWhere('intake_id', '=', (int)$data['intake'])
+                            ->where('academic_program', '=', (int)$data['level'])
+                            ->where('final_status', '=', (int)$opt)
                             ->where('year', '=', (int)$data['year'])
                             ->count();
             }else{
                 $apps = DB::table('applications_approval')
                             ->leftJoin('applicants', 'applicants.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('education_approval', 'education_approval.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('work_approval', 'work_approval.id', '=', 'applications_approval.user_id')
                             ->where('intake_id', '=', (int)$data['intake'])
                             ->where('academic_program', '=', (int)$data['level'])
                             ->where('final_status', '=', (int)$opt)
@@ -216,6 +225,8 @@ class ApprovalController extends Controller
                             ->get();
                 $apps_count = DB::table('applications_approval')
                             ->leftJoin('applicants', 'applicants.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('education_approval', 'education_approval.id', '=', 'applications_approval.user_id')
+                            ->leftJoin('work_approval', 'work_approval.id', '=', 'applications_approval.user_id')
                             ->where('intake_id', '=', (int)$data['intake'])
                             ->where('academic_program', '=', (int)$data['level'])
                             ->where('final_status', '=', (int)$opt)
@@ -227,7 +238,7 @@ class ApprovalController extends Controller
         if($page_count < 1)
             $page_count = 1;
 
-        print_r(json_encode(['user' => $apps, 'page' => $page_count, 'role' => Auth::guard('user')->user()->role_id]));
+        print_r(json_encode(['user' => $apps, 'page' => $page_count, 'role' => json_decode(Auth::guard('user')->user()->role_id)->role]));
 
     }
     public function reject(Request $request){
