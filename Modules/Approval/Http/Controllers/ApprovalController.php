@@ -38,7 +38,10 @@ class ApprovalController extends Controller
 
             } else {
 
-                return view('approval::cod.index');
+                if()
+                    return view('approval::cod.index');
+                else
+                    return view('approval::dean.index');
 
             }
             redirect()->route('application.login')->with('error', 'Please try again');
