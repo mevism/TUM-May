@@ -1,6 +1,4 @@
-@extends('layouts.backend')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="bg-body-light">
   <div class="content content-full">
       <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
@@ -21,18 +19,18 @@
               <div class="row">
                 <div class="col-lg-12 space-y-0">
 
-                   <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.updateClasses',$data->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
+                   <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo e(route('courses.updateClasses',$data->id)); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <?php echo method_field('PUT'); ?>
                     <div class="col-12 col-xl-12">
-                      <input type="text" value="{{ $data->name }}" class="form-control form-control-alt text-uppercase"  id="name" name="name" placeholder="Name">
+                      <input type="text" value="<?php echo e($data->name); ?>" class="form-control form-control-alt text-uppercase"  id="name" name="name" placeholder="Name">
                     </div>
                     <div class="col-12 col-xl-12">
                       <select name="attendance" id="attendance"class="form-control form-control-alt text-uppercase">
-                        <option  selected value="{{ $data->attendance_id }}">{{ $data->attendance_id }}</option>
-                        @foreach ($attendances as $attendance)
-                        <option value="{{ $attendance->attendance_name }}">{{ $attendance->attendance_name }}</option>        
-                      @endforeach
+                        <option  selected value="<?php echo e($data->attendance_id); ?>"><?php echo e($data->attendance_id); ?></option>
+                        <?php $__currentLoopData = $attendances; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $attendance): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($attendance->attendance_name); ?>"><?php echo e($attendance->attendance_name); ?></option>        
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                       </select>
                     </div>
                     <div class="col-12 text-center p-3">
@@ -45,4 +43,5 @@
             </div>
           </div>
     </div> 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/tum/Modules/Courses/Resources/views/class/editClasses.blade.php ENDPATH**/ ?>

@@ -17,6 +17,11 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('intake_from')->unique();
             $table->string('intake_to')->unique();
+            $table->date('intake_date')->nullable();
+            $table->longText('academic_programs')->nullable();
+            $table->longText('attendances')->nullable();
+            $table->string('years')->nullable();
+            $table->longText('courses')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

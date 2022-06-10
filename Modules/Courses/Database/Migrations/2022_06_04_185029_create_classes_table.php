@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
+            $table->string('attendance_id');
             $table->timestamps();
             $table->softDeletes();
         });

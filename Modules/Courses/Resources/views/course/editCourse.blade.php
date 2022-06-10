@@ -61,9 +61,9 @@
                       <div class="col-12 col-xl-12">
                         <input type="text" class="form-control form-control-alt text-uppercase"  value="{{ $data->course_requirements }}"  id="course_requirements" name="course_requirements" placeholder="Course Requirements">
                       </div>
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-dark">Update</button>
-                    </div>
+                      <div class="col-12 text-center p-3">
+                        <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Update</button>
+                      </div> 
                   </form>
                  
                 </div>

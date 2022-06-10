@@ -1,6 +1,4 @@
-@extends('layouts.backend')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="bg-body-light">
     <div class="content content-full">
         <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-0">
@@ -22,12 +20,7 @@
         </div>
     </div>
 </div>
-{{-- <div>
-  <form action="{{ route('courses.searchCourse') }}" method = "POST" accept-charset=utf8>
-    <input type="search" name = 'search-courses'>
-    <button type = 'submit'>Search</button>
-</form>
-</div> --}}
+
 
  <!-- Main Container -->
  <main id="main-container">
@@ -43,7 +36,7 @@
         <!-- DataTables init on table by adding .js-dataTable-responsive class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
         <table class="table table-borderless table-striped table-vcenter js-dataTable-responsive">
           <span class="d-flex justify-content-end">
-            <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addCourse') }}">Create</a>
+            <a class="btn btn-alt-info btn-sm" href="<?php echo e(route('courses.addCourse')); ?>">Create</a>
         </span><br>
           <thead>
             <tr>
@@ -55,16 +48,16 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($data as $courses)
+            <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $courses): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <tr>            
-              <td >{{ $courses->campus_id }}</td>
-              <td >{{ $courses->school_id }}</td>
-              <td >{{ $courses->department_id }}</td>
-              <td >{{ $courses->course_name }}</td>
-              <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editCourse', $courses->id) }}">edit</a> </td>
-              <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroyCourse', $courses->id) }}">delete</a> </td> 
+              <td ><?php echo e($courses->campus_id); ?></td>
+              <td ><?php echo e($courses->school_id); ?></td>
+              <td ><?php echo e($courses->department_id); ?></td>
+              <td ><?php echo e($courses->course_name); ?></td>
+              <td> <a class="btn btn-sm btn-alt-info" href="<?php echo e(route('courses.editCourse', $courses->id)); ?>">edit</a> </td>
+              <td> <a class="btn btn-sm btn-alt-danger" href="<?php echo e(route('courses.destroyCourse', $courses->id)); ?>">delete</a> </td> 
             </tr>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
           </tbody>
         </table>
         </div>
@@ -77,4 +70,5 @@
 <!-- END Main Container -->
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/tum/Modules/Courses/Resources/views/course/showCourse.blade.php ENDPATH**/ ?>

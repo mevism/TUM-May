@@ -1,7 +1,4 @@
-
-@extends('layouts.backend')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="bg-body-light">
         <div class="content content-full">
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
@@ -37,7 +34,7 @@
                 <div class="col-12">
               <table class="table table-borderless table-striped table-vcenter js-dataTable-responsive">
                 <span class="d-flex justify-content-end">
-                  <a class="btn btn-alt-info btn-sm" href="{{ route('courses.showIntake') }}">Back</a>
+                  <a class="btn btn-alt-info btn-sm" href="<?php echo e(route('courses.showIntake')); ?>">Back</a>
               </span><br>
                 <thead>
                     
@@ -52,23 +49,23 @@
                   
                 </thead>
                 <tbody>
-                    @foreach ($courses as $course)
+                    <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     
-                         @foreach ($course as $item)
+                         <?php $__currentLoopData = $course; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                          <tr>
-                            <td>{{ $item->course_code }}</td>
-                            <td>{{ $item->course_name }}</td>
-                            <td>{{ $item->department_id }}</td>
-                            <td>{{ $item->campus_id }}</td>
-                            <td>{{ $item->course_duration }}</td>
+                            <td><?php echo e($item->course_code); ?></td>
+                            <td><?php echo e($item->course_name); ?></td>
+                            <td><?php echo e($item->department_id); ?></td>
+                            <td><?php echo e($item->campus_id); ?></td>
+                            <td><?php echo e($item->course_duration); ?></td>
                             <td><a href="" class="btn btn-sm btn-alt-secondary" data-toggle="click-ripple">view</a></td>
                             <td><a href="" class="btn btn-sm btn-alt-info" data-toggle="click-ripple">edit</a></td>
                             <td><a href="" class="btn btn-sm btn-alt-danger" data-toggle="click-ripple">delete</a></td>
 
                          </tr>
-                         @endforeach
+                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
-                     @endforeach
+                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 
                 </tbody>
               </table>
@@ -79,4 +76,6 @@
         </div>
         <!-- END Page Content -->
     </main>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/tum/Modules/Courses/Resources/views/intake/viewIntake.blade.php ENDPATH**/ ?>

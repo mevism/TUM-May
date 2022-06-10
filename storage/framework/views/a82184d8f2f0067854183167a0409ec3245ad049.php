@@ -1,6 +1,4 @@
-@extends('layouts.backend')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="bg-body-light">
   <div class="content content-full">
@@ -32,11 +30,11 @@
               <div class="row">
                 <div class="col-lg-12 space-y-0">
 
-                   <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.storeAttendance') }}" method="POST">
-                    @csrf
+                   <form class="row row-cols-lg-auto g-3 align-items-center" action="<?php echo e(route('courses.storeAttendance')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
                     
                     <div class="col-12 col-xl-12">
-                      <input type="text" class="form-control form-control-alt" value="{{ old('attendance_name') }}"id="attendance_name" name="attendance_name" placeholder="Name">
+                      <input type="text" class="form-control form-control-alt" value="<?php echo e(old('attendance_name')); ?>"id="attendance_name" name="attendance_name" placeholder="Name">
                     </div>
                     <div class="col-12 text-center p-3">
                       <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Create Attendance</button>
@@ -47,4 +45,5 @@
             </div>
           </div>
     </div> 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.backend', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /var/www/html/tum/Modules/Courses/Resources/views/attendance/addAttendance.blade.php ENDPATH**/ ?>

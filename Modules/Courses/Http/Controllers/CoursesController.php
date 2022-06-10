@@ -51,14 +51,6 @@ class CoursesController extends Controller
             }
         return view('courses::intake.viewIntake')->with('courses', $courses);
 
-        // $course = AvailableCourse::find($id);
-        // foreach($course as $item){
-
-        //     return $item->course_id;
-
-        // }
-
-        // return $course;
 
     }
 
@@ -95,16 +87,32 @@ class CoursesController extends Controller
   
     public function editIntake($id)
     {   
+        $courses   = Course::all();
+        $course[]   = AvailableCourse::find($id);
+        foreach($course as $id){
+
+            return $id;
+        }
         $data    =   Intake::find($id);
-        return view('courses::intake.editIntake')->with('data',$data);
+        return $course;
+        return view('courses::intake.editIntake')->with(['data'=>$data,'courses'=>$courses,'course'=>$course]);
     }
 
 
     public function updateIntake(Request $request, $id)
     {
         $data                =   Intake::find($id);
-        $data->intake_name   =   $request->input('intake_name_from')."-".$request->input('intake_name_to')." ".date('Y');
-        $data->update();
+        $data->intake_from   =    $request->input('intake_name_from');
+        $data->intake_to     =    $request->input('intake_name_to');
+        $data->save();
+
+        foreach($request->input('course') as $course_id){
+            $intakes = AvailableCourse::find($course_id)->id;
+            $intakes->course_id = $course_id;
+            $intakes->intake_id  =  $data->id;
+            $intakes->save();
+        }
+            $data->update();
         return redirect()->route('courses.showIntake')->with('status','Data Updated Successfully');
 
     }
@@ -121,8 +129,7 @@ class CoursesController extends Controller
      * Information about School
     */
     public function addAttendance(){
-        $intakes = Intake::all();
-        return view('courses::attendance.addAttendance')->with('intakes',$intakes);
+        return view('courses::attendance.addAttendance');
     }
     public function showAttendance(){
 
@@ -133,15 +140,13 @@ class CoursesController extends Controller
 
     public function editAttendance($id){
         $data     =   Attendance::find($id);
-        $intakes  = Intake::all();
-        return view('courses::attendance.editAttendance')->with(['data'=>$data,'intakes'=>$intakes]);
+        return view('courses::attendance.editAttendance')->with('data',$data);
     }
 
     public function updateAttendance(Request $request, $id){
         //return $request->input('attendance_name');
         $data                   =   Attendance::find($id);
         $data->attendance_name  =     $request->input('attendance_name');
-        $data->intake_id        =     $request->input('intake');
         $data->save();
         $data->update();
         return redirect()->route('courses.showAttendance')->with('status','Data Updated Successfully');
@@ -149,13 +154,11 @@ class CoursesController extends Controller
     }
     public function storeAttendance(Request $request){
         $vz                       =    $request->validate([
-            'attendance_name'     =>  'required',
-            'intake'              =>   'required'
+            'attendance_name'     =>  'required'
         ]);
        
         $attendances                   =     new Attendance;
         $attendances->attendance_name  =     $request->input('attendance_name');
-        $attendances->intake_id        =     $request->input('intake');
         $attendances->save();
 
         return redirect()->route('courses.showAttendance')->with('success','Attendance Created');
@@ -364,16 +367,19 @@ class CoursesController extends Controller
      */
 
     public function addClasses(){
-        return view('courses::class.addClasses');
+        $attendances = Attendance::all();
+        return view('courses::class.addClasses')->with('attendances',$attendances);
     }
 
     public function storeClasses(Request $request){
         $vz            = $request->validate([
+            'attendance' => 'required',
             'name'     =>  'required',
         
         ]);
 
         $class         =    new Classes;
+        $class->attendance_id  =  $request->input('attendance');
         $class->name   =    $request->input('name');
         $class->save();
 
@@ -386,12 +392,14 @@ class CoursesController extends Controller
         return view('courses::class.showClasses')->with('data',$data);
     }
     public function editClasses($id){
+        $attendances  = Attendance::all();
         $data    =   Classes::find($id);
-        return view('courses::class.editClasses')->with('data',$data);
+        return view('courses::class.editClasses')->with(['data'=>$data,'attendances'=>$attendances]);
     }
 
     public function updateClasses(Request $request, $id){
         $data         =   Classes::find($id);
+        $data->attendance_id  =  $request->input('attendance');
         $data->name   =   $request->input('name');
         $data->update();
         return redirect()->route('courses.showClasses')->with('status','Data Updated Successfully');
