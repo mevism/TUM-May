@@ -34,14 +34,7 @@
                 <div class="col-lg-8 space-y-0">
                    <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.storeCourse') }}" method="POST">
                     @csrf 
-                    <div class="col-12 col-xl-12">
-                      <select name="campus" id="campus" value="{{ old('campus') }}" class="form-control form-control-alt text-uppercase">
-                        <option selected diasabled>Select Campus</option>
-                        @foreach ($campuses as $campus)
-                        <option value="{{ $campus->name }}">{{ $campus->name }}</option>                      
-                        @endforeach
-                      </select>
-                    </div>                  
+                                   
                     <div class="col-12 col-xl-12">
                       <select name="school" id="school" value="{{ old('school') }}" class="form-control form-control-alt text-uppercase">
                         <option selected disabled> Select School</option>
@@ -59,6 +52,16 @@
                       </select>
                     </div>
                     <div class="col-12 col-xl-12">
+                    <select name="level" id="level"value="{{ old('level') }}" class="form-control form-control-alt text-uppercase form-select">
+                      <option disabled selected>Level of Study</option>
+                      <option value="1">Certificate</option>
+                      <option value="2">Diploma</option>
+                      <option value="3">Degree</option>
+                      <option value="4">Masters</option>
+                      <option value="5">PhD</option>
+                    </select>
+                    </div>
+                    <div class="col-12 col-xl-12">
                       <input type = "text" class = "form-control form-control-alt text-uppercase" id = "course_name"value="{{ old('course_name') }}" name="course_name" placeholder="Course Name">
                     </div>
                     <div class="col-12 col-xl-12">
@@ -68,7 +71,7 @@
                         <input type = "text" class = "form-control form-control-alt text-uppercase" id = "course_duration" value="{{ old('course_duration') }}"name="course_duration" placeholder="Course Duration">
                       </div>
                       <div class="col-12 col-xl-12">
-                        <textarea value = "{{ old('course_requirements') }}" class = "form-control form-control-alt text-uppercase" id="course_requirements" name="course_requirements" placeholder="Course Requirements"></textarea>
+                        <textarea class = "form-control form-control-alt text-uppercase" id="course_requirements" name="course_requirements" placeholder="Course Requirements">{{ old('course_requirements') }}</textarea>
                         
                       </div>
                 </div>
@@ -81,12 +84,15 @@
                     <div class="col-12 col-xl-12">
                       <input type="text" value="{{ old('subject2') }}"class="form-control form-control-alt text-uppercase" id="subject2" name="subject2" placeholder="subject2">
                     </div><br>
+                   
                     <div class="col-12 col-xl-12">
-                      <input type="text" value="{{ old('subject3') }}" class="form-control form-control-alt text-uppercase" id="subject3" name="subject3" placeholder="subject3">
+                      <input type="text" value="{{ old('subject3') }}"class="form-control form-control-alt text-uppercase" id="subject3" name="subject3" placeholder="One Humanity">
                     </div><br>
+                   
+
                     <div class="col-12 col-xl-12">
-                      <input type="text"value="{{ old('subject4') }}" class="form-control form-control-alt text-uppercase" id="subject4" name="subject4" placeholder="subject4">
-                    </div>
+                      <input type="text" value="{{ old('subject4') }}"class="form-control form-control-alt text-uppercase" id="subject4" name="subject4" placeholder="one science">
+                    </div><br>
 
                     <p class="p-2">
                       
@@ -94,7 +100,6 @@
                       Format to key in cluster subjects <br>
                      <span class="small">
                         MAT B+ <br>
-                        PHY A <br>
                         ENG A-
                       </span>
 

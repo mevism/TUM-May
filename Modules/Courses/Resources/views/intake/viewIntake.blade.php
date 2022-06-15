@@ -7,7 +7,7 @@
             <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center">
                 <div class="flex-grow-1">
                     <h5 class="h5 fw-bold mb-0">
-                        VIEW Courses
+                        COURSES AVAILABLE
                     </h5>
                 </div>
                 <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
@@ -42,7 +42,6 @@
                     <th>Course Code</th>
                     <th>Courses</th>
                     <th>Department</th>
-                    <th>Campus</th>
                     <th>Period</th>
                     <th colspan="3" class="text-center" >Action</th>
                   </tr>
@@ -56,11 +55,10 @@
                             <td>{{ $item->course_code }}</td>
                             <td>{{ $item->course_name }}</td>
                             <td>{{ $item->department_id }}</td>
-                            <td>{{ $item->campus_id }}</td>
                             <td>{{ $item->course_duration }}</td>
                             <td><a href="" class="btn btn-sm btn-alt-secondary" data-toggle="click-ripple">view</a></td>
                             <td><a href="" class="btn btn-sm btn-alt-info" data-toggle="click-ripple">edit</a></td>
-                            <td><a href="" class="btn btn-sm btn-alt-danger" data-toggle="click-ripple">delete</a></td>
+                            <td><a href="{{  route('courses.destroyCoursesAvailable', $item->id)  }}" class="btn btn-sm btn-alt-danger" data-toggle="click-ripple">delete</a></td>
 
                          </tr>
                          @endforeach

@@ -21,23 +21,48 @@
               <div class="row">
                 <div class="col-lg-12 space-y-0">
 
-                   <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.updateIntake',$data->id) }}" method="POST">
+                   
+                  <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.updateIntake',$data->id) }}"method="POST">
                     @csrf
                     @method('PUT')
                     <div class="row">
-                      <div  class="col-12">
-                        <label for="intake_name">From:</label>
-                        <input type="month" class="form-control form-control-alt" id="intake_name_from" name="intake_name_from" placeholder="Name">
-                      
+                      <div class="col-12">                
                       </div>
-                      <br>
-                      <div class="col-12">
-                        <label for="intake_name">To:</label>
-                        <input type="month" class="form-control form-control-alt" id="intake_name_to" name="intake_name_to" placeholder="Name">
-                      </div>
-                  </div>
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-dark">update</button>
+                        <div  class="col-12">
+                          <label for="intake_name">From:</label>
+                          <input type="date" class="form-control form-control-alt" id="intake_name_from" name="intake_name_from" placeholder="Intake From">
+                          
+                        </div>
+                        <br>
+                        <div class="col-12">
+                          <label for="intake_name">To:</label>
+                          <input type="date" class="form-control form-control-alt" id="intake_name_to" name="intake_name_to" placeholder="Intake To">
+                          
+                        </div>
+                    </div>
+                    
+                  <div>
+                   
+                    <table class="table table-responsive table-striped py-0 table-borderless">
+                      {{-- <input type="checkbox" name="course[]" id="course"/>Select All<br><br> --}}
+                      {{-- @if (count($courses) > 0) --}}
+
+                        @foreach ($courses as $course)
+                          <tr>
+                           <td>
+                            <input type="checkbox" value="{{ $course->id }}" name="course[]">
+                           </td>
+                           <td>
+                            <label for="course" class="form-label"> {{ $course->course_name }} </label>
+                           </td>
+                          </tr>
+                        @endforeach
+
+                      {{-- @endif           --}}
+                        </table>
+                  </div><br>
+                    <div class="col-12 text-center p-3">
+                      <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">update Intake</button>
                     </div>
                   </form>
 

@@ -37,14 +37,14 @@
                     
                     <div class="col-12 col-xl-12">
                       <select name="school" class="form-control form-control-alt text-uppercase">
-                        <option selected disabled> Select School</option>
+                        <option selected disabled> Select School </option>
                         @foreach ($schools as $school)
                         <option value="{{ $school->name }}">{{ $school->name }}</option>        
                         @endforeach
                       </select>
                     </div>
                     <div class="col-12 col-xl-12">
-                      <input type="text" value="{{ old('name') }}"  class="form-control form-control-alt text-uppercase" id="name" name="name" placeholder="Name">
+                      <input type="text" value="{{ old('name') }}"  class="form-control form-control-alt text-uppercase" id="name" name="name" placeholder="Department">
                     </div>
                     <div class="col-12 text-center p-3">
                       <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Create Department</button>

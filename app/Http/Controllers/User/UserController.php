@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\User;
 
-use http\Env\Response;
 use Session;
 use App\Models\User;
 use App\Models\Course;
 use App\Models\Intake;
 use App\Models\School;
+use http\Env\Response;
 use App\Models\Classes;
 use App\Models\Department;
 use Illuminate\Http\Request;
@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Modules\Application\Entities\VerifyUser;
+use Modules\Application\Entities\Application;
+use Modules\Courses\Entities\AvailableCourse;
 
 class UserController extends Controller
 {
@@ -60,10 +62,12 @@ class UserController extends Controller
     public function dashboard(){
 
        if (Auth::guard('user')->user()->role_id === 1){
+        $courses = AvailableCourse::count();
+        $applications = Application::count();
            if (!Auth::guard('user')->check()){
                abort(403);
            } else{
-               return view('admin.index');
+               return view('admin.index')->with(['courses'=>$courses,'applications'=>$applications]);
            }
        }elseif (Auth::guard('user')->user()->role_id === 6){
            if (!Auth::guard('user')->check()){

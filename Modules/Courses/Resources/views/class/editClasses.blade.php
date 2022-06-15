@@ -25,10 +25,34 @@
                     @csrf
                     @method('PUT')
                     <div class="col-12 col-xl-12">
-                      <input type="text" value="{{ $data->name }}" class="form-control form-control-alt text-uppercase"  id="name" name="name" placeholder="Name">
+                      <select name="intake_from" id="intake_from" class="form-control form-control-alt">
+                        <option selected disabled>{{ $data->name }}</option>
+                        @foreach ($intakes as $intake)
+                          <option value="{{ $intake->intake_from }}">{{ Carbon\Carbon::parse($intake->intake_from)->format('M-Y') }} - {{ Carbon\Carbon::parse($intake->intake_to)->format('M-Y') }}</option>
+                        @endforeach
+                      </select>
                     </div>
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-dark">update</button>
+                    <div class="col-12 col-xl-12">
+                      <select name="attendance" id="attendance"value="{{ $data->attendance }}" class="form-control form-control-alt">
+                        <option  disabled> {{ $data->attendance_id }}</option>
+                        @foreach ($attendances as $attendance)
+                          <option value="{{ $attendance->attendance_name }}">{{ $attendance->attendance_name }}</option>        
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-12 col-xl-12">
+                      <select name="course" id="course" value="{{ $data->course }}"class="form-control form-control-alt">
+                        <option selected disabled> {{ $data->course_id }}</option>
+                        @foreach ($courses as $course)
+                          <option value="{{ $course->course_name }}">{{ $course->course_name }}</option>        
+                        @endforeach
+                      </select>
+                    </div>
+                    {{-- <div class="col-12 col-xl-12">
+                      <input type="text" value="{{ $data->name }}" class="form-control form-control-alt text-uppercase"  id="name" name="name" placeholder="Name">
+                    </div> --}}
+                    <div class="col-12 text-center p-3">
+                      <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Update Class</button>
                     </div>
                   </form>
                  

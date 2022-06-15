@@ -34,18 +34,22 @@
         <div class="block-content block-content-full">
           <div class="row">
             <div class="col-12">
-          <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+          <table class="table table-borderless table-striped table-vcenter js-dataTable-responsive">
             <span class="d-flex justify-content-end">
                 <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addClasses') }}">Create</a>
             </span><br>
             <thead>
               <tr>
-                <th>Classes</th>
+                <th tyle="text-transform: uppercase">Course</th>
+                {{-- <th tyle="text-transform: uppercase">Attendanc Mode</th> --}}
+                <th tyle="text-transform: uppercase">Classes</th>
               </tr>
             </thead>
             <tbody>@foreach ($data as $class)
               <tr>
-                <td class="fw-semibold fs-sm">{{ $class->name }}</td>
+                <td style="text-transform: uppercase"class="fw-semibold fs-sm">{{ $class->course_id }}</td>
+                {{-- <td style="text-transform: uppercase" class="fw-semibold fs-sm">{{ $class->attendance_id }}</td> --}}
+                <td style="text-transform: uppercase" class="fw-semibold fs-sm">{{ $class->name }}</td>
                 <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editClasses', $class->id) }}">edit</a> </td>
                 <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroyClasses', $class->id) }}">delete</a> </td> 
               </tr>
@@ -53,6 +57,7 @@
      
             </tbody>
           </table>
+          {{ $data->links('pagination::bootstrap-5') }}
             </div>
         </div>
       </div>

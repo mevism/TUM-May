@@ -17,12 +17,13 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('course_name');
             $table->string('school_id');
+            $table->string('level');
+            $table->string('fee');
             $table->string('subject1');
             $table->string('subject2');
             $table->string('subject3');
             $table->string('subject4');
             $table->string('department_id');
-            $table->string('campus_id');
             $table->string('course_code')->unique();
             $table->integer('course_duration');
             $table->longText('course_requirements');

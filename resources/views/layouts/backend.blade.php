@@ -82,6 +82,14 @@
 
               </a>
             </li>
+            <li class="nav-main-item">
+              <i class="nav-main-link-icon"></i>
+              <a class="nav-main-link {{ request()->is('approve/approveIndex') ? ' active' : '' }}" href="{{ route('courses.approveIndex') }}">
+                <i class="nav-main-link-icon si si-user"></i>
+                <span class="nav-main-link-name">Review</span>
+
+              </a>
+            </li>
             <li class="nav-main-item{{ request()->is('intakes/*') ? ' open' : '' }}">
               <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
                 <i class="nav-main-link-icon si si-graduation"></i>

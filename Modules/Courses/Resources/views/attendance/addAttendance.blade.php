@@ -36,16 +36,12 @@
                     @csrf
                     
                     <div class="col-12 col-xl-12">
-                      <select name="intake" value="{{ old('intake') }}" class="form-control form-control-alt">
-                        <option selected disabled> Select Intake</option>
-                        @foreach ($intakes as $intake)
-                        <option value="{{ $intake->intake_from }} - {{ $intake->intake_to }}">{{ $intake->intake_from }} - {{ $intake->intake_to }}</option>        
-                        @endforeach
-                      </select>
+                      <input type="text" class="form-control form-control-alt" value="{{ old('attendance_name') }}"id="attendance_name" name="attendance_name" placeholder="Attendance Name">
                     </div>
                     <div class="col-12 col-xl-12">
-                      <input type="text" class="form-control form-control-alt" value="{{ old('attendance_name') }}"id="attendance_name" name="attendance_name" placeholder="Name">
+                      <input type="text" class="form-control form-control-alt"  value="{{ old('attendance_code') }}"id="attendance_code" name="attendance_code" placeholder="Attendance Code">
                     </div>
+                    
                     <div class="col-12 text-center p-3">
                       <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Create Attendance</button>
                     </div>

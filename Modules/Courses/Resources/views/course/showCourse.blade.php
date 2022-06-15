@@ -41,31 +41,31 @@
         <div class="row">
           <div class="col-12">
         <!-- DataTables init on table by adding .js-dataTable-responsive class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-        <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+        <table class="table table-borderless table-striped table-vcenter js-dataTable-responsive">
           <span class="d-flex justify-content-end">
             <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addCourse') }}">Create</a>
         </span><br>
           <thead>
             <tr>
-              <th>  Campus     </th>
-              <th>  Schools     </th>
-              <th>  Departments </th>
-              <th> Courses       </th>
+              <th tyle="text-transform: uppercase">  Schools     </th>
+              <th tyle="text-transform: uppercase">  Departments </th>
+              <th tyle="text-transform: uppercase"> Courses       </th>
             </tr>
           </thead>
           <tbody>
             @foreach ($data as $courses)
             <tr>            
-              <td >{{ $courses->campus_id }}</td>
-              <td >{{ $courses->school_id }}</td>
-              <td >{{ $courses->department_id }}</td>
-              <td >{{ $courses->course_name }}</td>
+              <td style="text-transform: uppercase" >{{ $courses->school_id }}</td>
+              <td style="text-transform: uppercase" >{{ $courses->department_id }}</td>
+              <td style="text-transform: uppercase" >{{ $courses->course_name }}</td>
               <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editCourse', $courses->id) }}">edit</a> </td>
               <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroyCourse', $courses->id) }}">delete</a> </td> 
             </tr>
             @endforeach
           </tbody>
+          
         </table>
+        {{ $data->links('pagination::bootstrap-5') }}
         </div>
       </div>
     </div>

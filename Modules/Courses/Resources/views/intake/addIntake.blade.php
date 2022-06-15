@@ -37,24 +37,21 @@
                       </div>
                         <div  class="col-12">
                           <label for="intake_name">From:</label>
-                          <input type="month" class="form-control form-control-alt" id="intake_name_from" name="intake_name_from" placeholder="Name">
+                          <input type="date" class="form-control form-control-alt" id="intake_name_from" name="intake_name_from" placeholder="Intake From">
                           
                         </div>
                         <br>
                         <div class="col-12">
                           <label for="intake_name">To:</label>
-                          <input type="month" class="form-control form-control-alt" id="intake_name_to" name="intake_name_to" placeholder="Name">
+                          <input type="date" class="form-control form-control-alt" id="intake_name_to" name="intake_name_to" placeholder="Intake To">
                           
                         </div>
                     </div>
-                    {{-- <select name="course[]" multiple id="course" class="form-control form-control-alt">
-                      <option selected diasabled>Select Course</option>
-                      @foreach ($courses as $course)
-                      <option value="{{ $course->course_name }}">{{ $course->course_name }}</option>                      
-                      @endforeach
-                    </select> --}}
+                    
                   <div>
+                   
                     <table class="table table-responsive table-striped py-0 table-borderless">
+                      {{-- <input type="checkbox" name="course[]" id="course"/>Select All<br><br> --}}
                       @if (count($courses)>0)
 
                         @foreach ($courses as $course)
@@ -87,3 +84,19 @@
           </div>
     </div>
 @endsection
+{{-- <script>
+$(document).ready(function(){
+  var dtToday = new Date();
+  var month = dtToday.getMonth() + 1;
+  var day  =  dtToday.getDate();
+  var year = dtToday.getFullYear();
+  if(month < 10)
+  month = '0' + month.toString();
+  if(day < 10)
+  day = '0' + day.toString();
+
+  var maxDate = year + '-' +month+ '-' +day;
+  $('#dateControl').attr('min',maxDate);
+});
+</script> --}}
+

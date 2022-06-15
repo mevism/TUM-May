@@ -26,9 +26,11 @@
                     <div class="col-12 col-xl-12">
                       <input type="text" class="form-control form-control-alt text-uppercase" value="{{ $data->name }}" id="name" name="name" placeholder="Name">
                     </div>
-                    <div class="col-12">
-                        {{-- {{ Form::hidden('_method','PUT') }} --}}
-                      <button type="submit" class="btn btn-dark">Update</button>
+                    <div class="col-12 col-xl-12">
+                      <input type="text" class="form-control form-control-alt text-uppercase" value="{{ $data->initials }}" id="initials" name="initials" placeholder="Initials">
+                    </div>
+                    <div class="col-12 text-center p-3">
+                      <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Update School</button>
                     </div>
                   </form>
                  

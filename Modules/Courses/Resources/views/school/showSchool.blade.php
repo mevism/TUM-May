@@ -31,23 +31,25 @@
             <div class="block-content block-content-full">
                 <div class="row">
                  <div class="col-12">
-                    <table class="table table-bordered table-striped table-vcenter js-dataTable-responsive">
+                    <table class="table table-borderless table-striped table-vcenter js-dataTable-responsive">
                         <span class="d-flex justify-content-end">
                             <a class="btn btn-alt-info btn-sm" href="{{ route('courses.addSchool') }}">Create</a>
                         </span><br>
                         <thead>
-                            <th>Schools</th>
+                            <th style="text-transform: uppercase">School Code</th>
+                            <th style="text-transform: uppercase">Schools</th>
                         </thead>
                         <tbody>@foreach ($data as $school)
                         <tr>
-                            <td class="fw-semibold fs-sm">{{ $school->name }}</td>
+                            <td style="text-transform: uppercase"class="fw-semibold fs-sm">{{ $school->initials }}</td>
+                            <td style="text-transform: uppercase"class="fw-semibold fs-sm">{{ $school->name }}</td>
                             <td> <a class="btn btn-sm btn-alt-info" href="{{ route('courses.editSchool', $school->id) }}">edit</a> </td>
                             <td> <a class="btn btn-sm btn-alt-danger" href="{{ route('courses.destroySchool', $school->id) }}">delete</a> </td> 
                         </tr>
                         @endforeach
                 
                         </tbody>
-                    </table>
+                    </table>{{ $data->links('pagination::bootstrap-5') }}
                 </div>
             </div>
           </div>

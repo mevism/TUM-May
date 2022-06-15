@@ -17,6 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('intake_from')->unique();
             $table->string('intake_to')->unique();
+            $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
         });

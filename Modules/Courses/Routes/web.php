@@ -12,7 +12,19 @@
 */
 
 Route::prefix('courses')->group(function() {
+
+    Route::get('/search', 'CoursesController@search')->name('courses.search');
+    Route::get('/autocomplete', 'CoursesController@autocomplete')->name('courses.autocomplete');
+
+    Route::get('/offer', 'CoursesController@offer')->name('courses.offer');
+    Route::get('/profile', 'CoursesController@profile')->name('courses.profile');
+    Route::get('/review', 'CoursesController@review')->name('courses.review');
+
+    Route::get('/destroyCoursesAvailable/{id}', 'CoursesController@destroyCoursesAvailable')->name('courses.destroyCoursesAvailable');
+
+    
     Route::get('/', 'CoursesController@index')->name('courses.index');
+    Route::get('approveIndex', 'CoursesController@approveIndex')->name('courses.approveIndex');
     Route::get('/addIntake', 'CoursesController@addIntake')->name('courses.addIntake');
     Route::post('/storeIntake', 'CoursesController@storeIntake')->name('courses.storeIntake');
     Route::get('/showIntake', 'CoursesController@showIntake')->name('courses.showIntake');
@@ -20,6 +32,9 @@ Route::prefix('courses')->group(function() {
     Route::put('/updateIntake/{id}', 'CoursesController@updateIntake')->name('courses.updateIntake');
     Route::get('/destroyIntake/{id}', 'CoursesController@destroyIntake')->name('courses.destroyIntake');
     Route::get('/viewIntake/{id}', 'CoursesController@viewIntake')->name('courses.viewIntake');
+    Route::put('/statusIntake/{id}', 'CoursesController@statusIntake')->name('courses.statusIntake');
+    Route::get('/editstatusIntake/{id}', 'CoursesController@editstatusIntake')->name('courses.editstatusIntake');
+
 
 
     Route::get('/addSchool', 'CoursesController@addSchool')->name('courses.addSchool');

@@ -35,8 +35,8 @@
                     <div class="col-12 col-xl-12">
                       <input type="text" class="form-control form-control-alt text-uppercase"value="{{ $data->name }}" id="name" name="name" placeholder="Name">
                     </div>
-                    <div class="col-12">
-                      <button type="submit" class="btn btn-dark">Update</button>
+                    <div class="col-12 text-center p-3">
+                      <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Update Department</button>
                     </div>
                   </form>
                 </div>

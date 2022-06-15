@@ -33,17 +33,38 @@
 
                    <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.storeClasses') }}" method="POST">
                     @csrf
-                    {{-- <div class="col-12 col-xl-12">
+                    <div class="col-12 col-xl-12">
+                      <select name="name" id="name" class="form-control form-control-alt">
+                        <option selected disabled>Select Intake</option>
+                        @foreach ($intakes as $intake)
+                          <option value="{{ $intake->intake_from }}-{{ $intake->intake_to }}">{{ Carbon\Carbon::parse($intake->intake_from)->format('M-Y') }} - {{ Carbon\Carbon::parse($intake->intake_to)->format('M-Y') }}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                    <div class="col-12 col-xl-12">
                       <select name="course" id="course" class="form-control form-control-alt">
                         <option selected disabled> Select Course</option>
                         @foreach ($courses as $course)
-                          <option value="{{ $course->id }}">{{ $course->course_name }}</option>        
+                          <option value="{{ $course->course_name }}">{{ $course->course_name }}</option>
+                                 
                         @endforeach
+                        <input type="hidden" name="course_code" value="{{ $course->course_code }}"> 
+                        <input type="hidden" name="course_id" value="{{ $course->id }}"> 
                       </select>
-                    </div> --}}
-                    <div class="col-12 col-xl-12">
-                      <input type="text" value="{{ old('name') }}" class="form-control form-control-alt text-uppercase" id="name" name="name" placeholder="Name">
                     </div>
+                    <div class="col-12 col-xl-12">
+                      <select name="attendance" id="attendance" class="form-control form-control-alt">
+                        <option selected disabled> Select Attendance</option>
+                        @foreach ($attendances as $attendance)
+                          <option value="{{ $attendance->attendance_name }}">{{ $attendance->attendance_name }}</option>        
+                        @endforeach
+                        <input type="hidden" name="attendance_code" value="{{ $attendance->attendance_code }}"> 
+                      </select>
+                    </div>
+                    
+                    {{-- <div class="col-12 col-xl-12">
+                      <input type="text" value="{{ old('name') }}" class="form-control form-control-alt text-uppercase" id="name" name="name" placeholder="Class">
+                    </div> --}}
                     <div class="col-12 text-center p-3">
                       <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Create Class</button>
                     </div>

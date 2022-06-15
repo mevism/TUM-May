@@ -23,20 +23,16 @@
                    <form class="row row-cols-lg-auto g-3 align-items-center" action="{{ route('courses.updateAttendance',$data->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="col-12 col-xl-12">
-                        <select name="intake" class="form-control form-control-alt">
-                          <option selected value="{{ $data->intake_id }}"> {{ $data->intake_id }}</option>
-                          @foreach ($intakes as $intake)
-                          <option value="{{ $intake->intake_name }}">{{ $intake->intake_name }}</option>        
-                          @endforeach
-                        </select>
-                      </div>
+                    
                     <div class="col-12 col-xl-12">
                       <input type="text" class="form-control form-control-alt" value="{{ $data->attendance_name }}" id="attendance_name" name="attendance_name" placeholder="Name">
                     </div>
-                    <div class="col-12">
-                        {{-- {{ Form::hidden('_method','PUT') }} --}}
-                      <button type="submit" class="btn btn-dark">Update</button>
+                    <div class="col-12 col-xl-12">
+                      <input type="text" class="form-control form-control-alt" value="{{ $data->attendance_code }}"id="attendance_code" name="attendance_code" placeholder="Attendance Code">
+                    </div>
+                    
+                    <div class="col-12 text-center p-3">
+                      <button type="submit" class="btn btn-alt-success" data-toggle="click-ripple">Update Attendance</button>
                     </div>
                   </form>
                  
