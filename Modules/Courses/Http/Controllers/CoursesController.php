@@ -60,11 +60,25 @@ class CoursesController extends Controller
         return redirect()->route('courses.showIntake')->with('status','Data Updated Successfully');
         }
 
+        public function viewCourse($id){
+
+            $course  =  AvailableCourse::where('id', $id)->select('course_id')->get();
+                        
+            
+            foreach($course as $data){
+
+                $courses[] =  Course::where('id',$data->course_id)->get();
+               
+            }
+
+            return view('courses::intake.viewCourse')->with('courses',$courses);
+        }
+
     public function viewIntake($id){
 
         $course  =  AvailableCourse::where('intake_id', $id)
-        ->select('course_id')
-        ->get();
+                    ->select('course_id')
+                    ->get();
 
         // return $course->course_id;
 
@@ -504,11 +518,11 @@ class CoursesController extends Controller
         return redirect()->route('courses.showClasses');
 
     }
-
-    public function destroyCoursesAvailable($id){
-        $data = AvailableCourse::where('course_id',$id)->select('id')->get();
+    public function destroyCoursesAvailable(Request $request, $id){
+        $data = AvailableCourse::findOrFail($id);
         //return $data;
-        $data->delete();
+        $data->forceDelete();
+       
         return redirect()->route('courses.offer');
     }
 

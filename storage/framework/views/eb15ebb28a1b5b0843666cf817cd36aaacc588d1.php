@@ -32,7 +32,6 @@
                         <th>Course name</th>
                         <th>Department</th>
                         <th>School</th>
-                        <th>Campus</th>
                         <th>Intake</th>
                         <th>Duration</th>
                         <th colspan="2" class="text-center">Action</th>
@@ -44,7 +43,6 @@
                                 <td> <?php echo e($item->course_name); ?></td>
                                 <td> <?php echo e($item->department_id); ?></td>
                                 <td> <?php echo e($item->school_id); ?></td>
-                                <td> <?php echo e($item->campus_id); ?></td>
                                 <td> <?php echo e($item->$intake); ?></td>
                                 <td> <?php echo e($item->course_duration); ?></td>
                                 
@@ -59,6 +57,7 @@
                 </tr>
                 <?php endif; ?>
         </table>
+        
         </div>
             </div>
         </div>

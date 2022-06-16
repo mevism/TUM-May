@@ -33,7 +33,6 @@
                         <th>Course name</th>
                         <th>Department</th>
                         <th>School</th>
-                        <th>Campus</th>
                         <th>Intake</th>
                         <th>Duration</th>
                         <th colspan="2" class="text-center">Action</th>
@@ -45,7 +44,6 @@
                                 <td> {{ $item->course_name }}</td>
                                 <td> {{ $item->department_id }}</td>
                                 <td> {{ $item->school_id }}</td>
-                                <td> {{ $item->campus_id }}</td>
                                 <td> {{ $item->$intake }}</td>
                                 <td> {{ $item->course_duration }}</td>
                                 {{-- <td nowrap=""> <a class="btn btn-sm btn-alt-secondary" href="{{ route('courses.viewOne', $item->id) }}">view </a> </td> --}}
@@ -60,6 +58,7 @@
                 </tr>
                 @endif
         </table>
+        {{-- {{ $course_id->links('pagination::bootstrap-5') }} --}}
         </div>
             </div>
         </div>

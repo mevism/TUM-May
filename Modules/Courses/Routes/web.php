@@ -19,7 +19,7 @@ Route::prefix('courses')->group(function() {
     Route::get('/offer', 'CoursesController@offer')->name('courses.offer');
     Route::get('/profile', 'CoursesController@profile')->name('courses.profile');
     Route::get('/review', 'CoursesController@review')->name('courses.review');
-
+    
     Route::get('/destroyCoursesAvailable/{id}', 'CoursesController@destroyCoursesAvailable')->name('courses.destroyCoursesAvailable');
 
     
@@ -32,6 +32,7 @@ Route::prefix('courses')->group(function() {
     Route::put('/updateIntake/{id}', 'CoursesController@updateIntake')->name('courses.updateIntake');
     Route::get('/destroyIntake/{id}', 'CoursesController@destroyIntake')->name('courses.destroyIntake');
     Route::get('/viewIntake/{id}', 'CoursesController@viewIntake')->name('courses.viewIntake');
+    Route::get('/viewCourse/{id}', 'CoursesController@viewCourse')->name('courses.viewCourse');
     Route::put('/statusIntake/{id}', 'CoursesController@statusIntake')->name('courses.statusIntake');
     Route::get('/editstatusIntake/{id}', 'CoursesController@editstatusIntake')->name('courses.editstatusIntake');
 
